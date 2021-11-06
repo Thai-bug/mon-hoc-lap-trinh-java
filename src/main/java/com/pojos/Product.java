@@ -1,17 +1,15 @@
 package com.pojos;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "category")
-public class Category implements Serializable {
+@Table(name = "product")
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,6 +17,13 @@ public class Category implements Serializable {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name="price")
+    private float price;
+
+    @Column(name = "image")
+    @ColumnDefault("true")
+    private String image;
 
     @Column(name = "status")
     @ColumnDefault("true")
@@ -29,28 +34,27 @@ public class Category implements Serializable {
             columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = new Date();
-    }
-    public Category() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "category", nullable = false)
+    private Category category;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
-    private Set<Product> products;
+    @Transient
+    private MultipartFile imageFile;
 
-    public Set<Product> getProducts() {
-        return products;
+    public String getImage() {
+        return image;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public Category(String title, boolean status, Date createdAt) {
-        this.title = title;
-        this.status = status;
-        this.createdAt = createdAt;
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -69,6 +73,14 @@ public class Category implements Serializable {
         this.title = title;
     }
 
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     public boolean isStatus() {
         return status;
     }
@@ -84,4 +96,5 @@ public class Category implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
 }

@@ -15,8 +15,7 @@ public class CategoryController {
 
     @RequestMapping("/")
     public String getCategories(Model model){
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "baseLayout";
+        return "index";
     }
 
     @RequestMapping("/create")

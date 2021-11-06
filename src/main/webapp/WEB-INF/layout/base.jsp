@@ -12,25 +12,33 @@
            uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring"
            uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <link href="<c:url value="/css/tailwind.min.css"/>" rel="stylesheet"/>
+    <link href="<c:url value="/css/style.css"/>" rel="stylesheet"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
+            rel="stylesheet"
+    />
     <title>
         <tiles:insertAttribute name="title" />
     </title>
 </head>
 <body>
 <%--HEADER--%>
-<tiles:insertAttribute name="header" />
+<div class="md:container md:mx-auto my-4">
+    <tiles:insertAttribute name="header" />
 
-<%--CONTENT--%>
-<tiles:insertAttribute name="content" />
+    <%--CONTENT--%>
+    <tiles:insertAttribute name="content" />
 
-<%--FOOTER--%>
-<tiles:insertAttribute name="footer" />
+    <%--FOOTER--%>
+    <tiles:insertAttribute name="footer" />
+</div>
 
+<script src="<c:url value="/js/index.js"/>"></script>
 </body>
 </html>

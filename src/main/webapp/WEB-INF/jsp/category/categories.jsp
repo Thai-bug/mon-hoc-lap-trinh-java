@@ -20,9 +20,9 @@
 <body>
 <h1>Category</h1>
 <ul>
-    <c:forEach var="cat" items="${categories}">
-    <li>${cat.id} - ${cat.title}</li>
-        </c:forEach>
+<%--    <c:forEach var="cat" items="${categories}">--%>
+<%--    <li>${cat.id} - ${cat.title}</li>--%>
+<%--        </c:forEach>--%>
 </ul>
 </body>
 </html>
