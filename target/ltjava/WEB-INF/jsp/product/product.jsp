@@ -10,7 +10,9 @@
            uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <h1>Quản lý sản phẩm</h1>
-<form:form method="post" modelAttribute="${product}">
+<c:url value="/admin/products/create" var="action" />
+
+<form:form method="post" action="${action}" modelAttribute="product">
     <div class="py-20 bg-gray-300 px-2 flex justify-between">
         <div class="w-9/12  mx-auto bg-white rounded-lg overflow-hidden ">
             <div class="md:flex h-68">
@@ -25,21 +27,13 @@
                                             class="block text-gray-400 font-normal">hoặc</span> <span
                                             class="block text-blue-400 font-normal">Dẫn tới hình ảnh</span></div>
                                 </div>
-                                <input type="file" class="h-full w-full opacity-0" id="imgInp" name="" accept="image/*">
+                                <form:input type="file" path="file" class="h-full w-full opacity-0" id="imgInp" name="" accept="image/*" />
                             </div>
                         </div>
-<%--                        <div class="mt-4 text-center pb-2">--%>
-<%--                            <button class="w-full h-12 text-lg w-32 bg-blue-600 rounded text-white hover:bg-blue-700">--%>
-<%--                                Create--%>
-<%--                            </button>--%>
-<%--                        </div>--%>
                     </div>
                 </div>
             </div>
         </div>
-<%--        <div class="max-w-sm rounded overflow-hidden shadow-lg p-10 hidden " id="uploaded-image">--%>
-<%--            <img   class=""/>--%>
-<%--        </div>--%>
         <div class=" hidden mr-9" id="uploaded-image">
             <img class= "w-40" src="#" id="image"/>
         </div>

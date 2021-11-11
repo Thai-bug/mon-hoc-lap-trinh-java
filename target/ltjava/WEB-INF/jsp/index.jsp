@@ -15,7 +15,7 @@
   <span class=" z-10 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
     <i class="fas fa-search"></i>
   </span>
-            <input type="text" placeholder="Search" class="
+            <input type="text" placeholder="Tìm kiếm" class="
       px-2
       py-1
       placeholder-gray-400

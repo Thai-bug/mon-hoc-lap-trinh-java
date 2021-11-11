@@ -39,7 +39,15 @@ public class Product implements Serializable {
     private Category category;
 
     @Transient
-    private MultipartFile imageFile;
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     public String getImage() {
         return image;
