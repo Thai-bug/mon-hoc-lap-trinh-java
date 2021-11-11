@@ -32,7 +32,6 @@ public class HomeController {
     public String index(Model model, @RequestParam(value = "kw", required = false, defaultValue = "") String kw){
         List<Product> products = this.productService.getProductsByName(kw);
         model.addAttribute("products", products);
-
         return "index";
     }
 }

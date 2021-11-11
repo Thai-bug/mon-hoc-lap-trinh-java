@@ -23,6 +23,10 @@
             href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
             rel="stylesheet"
     />
+    <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+    />
     <title>
         <tiles:insertAttribute name="title" />
     </title>
