@@ -51,8 +51,7 @@ public class MyWebConfigs implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
-        resource.addBasenames("messages");
-        
+        resource.addBasenames("user");
         return resource;
     }
     
@@ -60,9 +59,11 @@ public class MyWebConfigs implements WebMvcConfigurer {
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
-        
         return bean;
     }
 
-    
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
 }

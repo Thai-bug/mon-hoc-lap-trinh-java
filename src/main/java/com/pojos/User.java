@@ -3,6 +3,7 @@ package com.pojos;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +14,36 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @Column(name="first_name", nullable = false)
+    @ColumnDefault("")
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    @ColumnDefault("")
+    private String lastName;
+
+    @Column(name = "email", nullable = false)
+    @ColumnDefault("")
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    @ColumnDefault("")
+    private String password;
+
+    @Column(name = "phone_number", nullable = false)
+//    @ColumnDefault("")
+    @NotNull(message = "{user.error.phoneNumber.required }")
+    private String phoneNumber;
+
+    @Column(name = "status", nullable = false)
+    @ColumnDefault("true")
+    private boolean status;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="created_at", nullable = false,
+            columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+    private Date createdAt = new Date();
 
     public int getId() {
         return id;
@@ -78,32 +109,4 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
 
-    @Column(name="first_name", nullable = false)
-    @ColumnDefault("")
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    @ColumnDefault("")
-    private String lastName;
-
-    @Column(name = "email", nullable = false)
-    @ColumnDefault("")
-    private String email;
-
-    @Column(name = "password", nullable = false)
-    @ColumnDefault("")
-    private String password;
-
-    @Column(name = "phone_number", nullable = false)
-    @ColumnDefault("")
-    private String phoneNumber;
-
-    @Column(name = "status", nullable = false)
-    @ColumnDefault("true")
-    private boolean status;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_at", nullable = false,
-            columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
-    private Date createdAt = new Date();
 }

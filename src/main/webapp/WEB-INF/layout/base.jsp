@@ -27,13 +27,14 @@
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
     />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <title>
         <tiles:insertAttribute name="title" />
     </title>
 </head>
 <body>
 <%--HEADER--%>
-<div class="md:container md:mx-auto my-4">
+<div class="h-screen md:container md:mx-auto">
     <tiles:insertAttribute name="header" />
 
     <%--CONTENT--%>

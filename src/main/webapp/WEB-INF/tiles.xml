@@ -5,22 +5,31 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 <tiles-definitions>
     <definition name="baseLayout"
                 template="/WEB-INF/layout/base.jsp">
-        <put-attribute name="title" value="" />
+        <put-attribute name="title" value=""/>
         <put-attribute name="header"
-                       value="/WEB-INF/layout/header.jsp" />
-        <put-attribute name="content" value="BASE" />
+                       value="/WEB-INF/layout/header.jsp"/>
+        <put-attribute name="content" value="BASE"/>
         <put-attribute name="footer"
-                       value="/WEB-INF/layout/footer.jsp" />
+                       value="/WEB-INF/layout/footer.jsp"/>
     </definition>
     <definition name="index" extends="baseLayout">
-        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="title" value="Trang chủ"/>
         <put-attribute name="content"
-                       value="/WEB-INF/jsp/index.jsp" />
+                       value="/WEB-INF/jsp/index.jsp"/>
     </definition>
 
     <definition name="product" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý sản phẩm" />
+        <put-attribute name="title" value="Quản lý sản phẩm"/>
         <put-attribute name="content"
-                       value="/WEB-INF/jsp/product/product.jsp" />
+
+                       value="/WEB-INF/jsp/product/product.jsp"/>
+    </definition>
+
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Đăng nhập"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/login.jsp"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="footer" value=""/>
     </definition>
 </tiles-definitions>
