@@ -1,5 +1,3 @@
 Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: thai-bug
-Build-Jdk: version 15.0.2
+Class-Path: 
 
