@@ -1,6 +1,8 @@
 package com.pojos;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -11,6 +13,10 @@ import java.util.Date;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+    public static final String ADMIN = "ADMIN";
+    public static final String MANAGER = "MANAGER";
+    public static final String USER = "USER";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,6 +40,9 @@ public class User implements Serializable {
     @Column(name = "status")
     @ColumnDefault("true")
     private boolean status;
+
+    @Column(name = "role")
+    private String role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_at",
@@ -104,8 +113,14 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public String getRole() {
+        return this.role;
+    }
+
     public User(){
         this.password = null;
         this.phoneNumber = null;
     }
+
+
 }

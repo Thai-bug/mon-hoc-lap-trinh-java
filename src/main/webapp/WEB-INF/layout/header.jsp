@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"
            uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url var="login" value="/login"/>
 <nav class="bg-gray-100 rounded-md">
     <div class="max-w-6xl mx-auto px-4">
         <div class="flex justify-between">
@@ -32,11 +33,17 @@
                 </div>
             </div>
 
-            <!-- secondary nav -->
-            <div class="hidden md:flex items-center space-x-1">
-                <a href="" class="py-5 px-3">Login</a>
-<%--                <a href="" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">Signup</a>--%>
-            </div>
+            <c:if test="${pageContext.request.userPrincipal.name == null}">
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="${login}" class="py-5 px-3">Login</a>
+                </div>
+            </c:if>
+
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <div class="hidden md:flex items-center space-x-1">
+                    <div class="py-5 px-3">${pageContext.request.userPrincipal.name}</div>
+                </div>
+            </c:if>
 
             <!-- mobile button goes here -->
             <div class="md:hidden flex items-center">
