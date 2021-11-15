@@ -1,9 +1,10 @@
 package com.pojos;
 
 import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,33 +16,27 @@ public class User implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name="first_name", nullable = false)
-    @ColumnDefault("")
+    @Column(name="first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
-    @ColumnDefault("")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email", nullable = false)
-    @ColumnDefault("")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
-    @ColumnDefault("")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "phone_number", nullable = false)
-//    @ColumnDefault("")
-    @NotNull(message = "{user.error.phoneNumber.required }")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @ColumnDefault("true")
     private boolean status;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_at", nullable = false,
+    @Column(name="created_at",
             columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
@@ -109,4 +104,8 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public User(){
+        this.password = null;
+        this.phoneNumber = null;
+    }
 }

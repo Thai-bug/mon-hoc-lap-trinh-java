@@ -65,8 +65,9 @@
                         Số điện thoại
                     </label>
                 </div>
-                <form:errors path="phoneNumber" cssClass="text-red-500" />
+                <form:errors path="phoneNumber"/>
             </div>
+
 
             <div class="relative  my-5 py-1 ">
                 <div class="form-field">

@@ -1,6 +1,5 @@
 package com.repositories.impl;
 
-import com.pojos.Product;
 import com.pojos.User;
 import com.repositories.UserRepository;
 import org.hibernate.Session;
@@ -24,11 +23,11 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getUserByPhone(String phone) {
         Session session = sessionFactory.getObject().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Product> query = builder.createQuery(Product.class);
-        Root root = query.from(Product.class);
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root root = query.from(User.class);
         query = query.select(root);
 
-        Predicate p = builder.like(root.get("phone_number").as(String.class), phone);
+        Predicate p = builder.like(root.get("phoneNumber").as(String.class), phone);
         query = query.where(p);
         Query q = session.createQuery(query);
         return q.getResultList();

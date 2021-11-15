@@ -14,14 +14,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User login(String username, String password) {
-        List<User> users = userRepository.getUserByPhone(username);
+    public User login(String phoneNumber, String password) {
+        List<User> users = userRepository.getUserByPhone(phoneNumber);
         if (users.size() == 0) {
             return null;
         }
-        User user = users.get(0);
-        if(user.getPassword().equals(password)){
-            return user;
+        User userIn = users.get(0);
+        if(userIn.getPassword().equals(password)){
+            return userIn;
         }
         return null;
     }

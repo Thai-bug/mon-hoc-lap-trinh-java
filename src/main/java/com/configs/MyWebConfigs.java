@@ -5,14 +5,11 @@
  */
 package com.configs;
 
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -47,14 +44,15 @@ public class MyWebConfigs implements WebMvcConfigurer {
         registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
     }
-    
+
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
-        resource.addBasenames("user");
+        resource.addBasenames("messages", "users");
+
         return resource;
     }
-    
+
     @Bean
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
@@ -66,4 +64,5 @@ public class MyWebConfigs implements WebMvcConfigurer {
     public Validator getValidator() {
         return validator();
     }
+
 }
