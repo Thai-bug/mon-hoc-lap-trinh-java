@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
         if(users.isEmpty())
             throw new UsernameNotFoundException("Không tìm thấy người dùng");
         User user = users.get(0);
-        System.out.println(user.getPassword());
 
         Set<GrantedAuthority> auth = new HashSet<>();
         auth.add(new SimpleGrantedAuthority(user.getRole()));

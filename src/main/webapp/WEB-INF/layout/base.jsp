@@ -34,6 +34,9 @@
 <body>
 <%--HEADER--%>
 <div class="h-screen md:container md:mx-auto flex flex-auto box-border min-h-0 flex flex-row">
+    <c:if test="${param.accessDenied !=null}">
+        lỗi truy cập
+    </c:if>
     <c:if test="${pageContext.request.userPrincipal.name !=null}">
     <div class="sider">
         <tiles:insertAttribute name="sider"/>

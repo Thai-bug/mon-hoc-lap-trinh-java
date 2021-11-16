@@ -23,7 +23,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="product" extends="baseLayout">
         <put-attribute name="title" value="Quản lý sản phẩm"/>
         <put-attribute name="content"
-
                        value="/WEB-INF/jsp/product/product.jsp"/>
     </definition>
 
@@ -33,5 +32,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/jsp/login.jsp"/>
         <put-attribute name="header" value=""/>
         <put-attribute name="footer" value=""/>
+        <put-attribute name="sider" value=""/>
+    </definition>
+
+    <definition name="403" extends="baseLayout">
+        <put-attribute name="title" value="Lỗi 403"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/403.jsp"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="footer" value=""/>
+        <put-attribute name="sider" value=""/>
     </definition>
 </tiles-definitions>
