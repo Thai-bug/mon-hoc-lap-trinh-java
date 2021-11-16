@@ -26,20 +26,30 @@
             href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
     />
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <title>
         <tiles:insertAttribute name="title"/>
     </title>
 </head>
 <body>
 <%--HEADER--%>
-<div class="h-screen md:container md:mx-auto">
-    <tiles:insertAttribute name="header"/>
+<div class="h-screen md:container md:mx-auto flex flex-auto box-border min-h-0 flex flex-row">
+    <c:if test="${pageContext.request.userPrincipal.name !=null}">
+    <div class="sider">
+        <tiles:insertAttribute name="sider"/>
+    </div>
+    </c:if>
 
-    <%--CONTENT--%>
-    <tiles:insertAttribute name="content"/>
+    <div class="layout w-full">
+        <tiles:insertAttribute name="header"/>
 
-    <%--FOOTER--%>
-    <tiles:insertAttribute name="footer"/>
+        <%--CONTENT--%>
+        <tiles:insertAttribute name="content"/>
+
+        <%--FOOTER--%>
+        <tiles:insertAttribute name="footer"/>
+    </div>
+
 </div>
 
 <script src="<c:url value="/js/index.js"/>"></script>

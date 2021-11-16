@@ -9,59 +9,39 @@
 <%@ taglib prefix="c"
            uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url var="login" value="/login"/>
-<nav class="bg-gray-100 rounded-md">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex justify-between">
 
-            <div class="flex space-x-4">
-                <!-- logo -->
-                <div>
-                    <a href="#" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
-                        <svg class="h-6 w-6 mr-1 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                        <span class="font-bold">Better Dev</span>
-                    </a>
-                </div>
-
-                <!-- primary nav -->
-                <div class="hidden md:flex items-center space-x-1">
-                    <c:forEach var="cat" items="${categories}">
-                        <a href=""
-                           class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-gray-500 hover:text-white transition duration-300">${cat.title}</a>
-                    </c:forEach>
-                </div>
-            </div>
-
-            <c:if test="${pageContext.request.userPrincipal.name == null}">
-                <div class="hidden md:flex items-center space-x-1">
-                    <a href="${login}" class="py-5 px-3">Login</a>
-                </div>
-            </c:if>
-
-            <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <div class="hidden md:flex items-center space-x-1">
-                    <div class="py-5 px-3">${pageContext.request.userPrincipal.name}</div>
-                </div>
-            </c:if>
-
-            <!-- mobile button goes here -->
-            <div class="md:hidden flex items-center">
-                <button class="mobile-menu-button">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
-
+<div class="flex justify-end mr-8">
+    <c:if test="${pageContext.request.userPrincipal.name == null}">
+        <div class="flex items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-right bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white  md:block   ">
+            <a href="${login}" class="py-5 px-3">Đăng nhập</a>
         </div>
-    </div>
+    </c:if>
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+        <div @click.away="open = false" class="relative" x-data="{ open: false }">
+            <button @click="open = !open"
+                    class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 
-    <!-- mobile menu -->
-    <div class="mobile-menu hidden md:hidden">
-        <c:forEach var="cat" items="${categories}">
-            <a href=""
-               class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-gray-500 hover:text-white transition duration-300">${cat.title}</a>
-        </c:forEach>
-    </div>
-</nav>
+
+                <div class="">${pageContext.request.userPrincipal.name}</div>
+
+            </button>
+            <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                 x-transition:enter-start="transform opacity-0 scale-95"
+                 x-transition:enter-end="transform opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-start="transform opacity-100 scale-100"
+                 x-transition:leave-end="transform opacity-0 scale-95"
+                 class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+                <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                       href="#">Link #1</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                       href="#">Link #2</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                       href="<c:url value="/logout" /> ">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </c:if>
+</div>
+
