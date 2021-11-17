@@ -21,15 +21,14 @@
         <form class="mt-8 space-y-6" action="${action}" method="POST" autocomplete="off">
             <div class="relative  my-5 py-1 ">
                 <div class="form-field">
-                    <input path="phoneNumber" type="text" id="phoneNumber" name="phoneNumber"
+                    <input path="email" type="text" id="email" name="phoneNumber"
                            class="form-input w-full outline-none focus:border-green-300" placeholder="a"
                            cssStyle="box-shadow: none" autocomplete="false"/>
-                    <label for="phoneNumber" class="form-label">
-                        Số điện thoại
+                    <label for="email" class="form-label">
+                        Email
                     </label>
                 </div>
             </div>
-
 
             <div class="relative  my-5 py-1 ">
                 <div class="form-field">

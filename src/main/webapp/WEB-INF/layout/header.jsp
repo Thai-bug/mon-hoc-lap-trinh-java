@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"
            uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <c:url var="login" value="/login"/>
 
 <div class="flex justify-end mr-8">
@@ -44,4 +45,3 @@
         </div>
     </c:if>
 </div>
-

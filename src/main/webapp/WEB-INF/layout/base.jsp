@@ -18,6 +18,8 @@
 <head>
     <meta charset="utf-8"/>
     <link href="<c:url value="/css/style.css"/>" rel="stylesheet"/>
+    <link href="<c:url value="/css/main.css"/>" rel="stylesheet"/>
+    <link href="<c:url value="/css/utils.css"/>" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
           integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -33,7 +35,7 @@
 </head>
 <body>
 <%--HEADER--%>
-<div class="h-screen md:container md:mx-auto flex flex-auto box-border min-h-0 flex flex-row">
+<div class="h-screen md:container mx-auto flex flex-auto box-border min-h-0 flex flex-row">
     <c:if test="${param.accessDenied !=null}">
         lỗi truy cập
     </c:if>

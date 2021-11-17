@@ -11,8 +11,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "employee")
+public class Employee implements Serializable {
     public static final String ADMIN = "ADMIN";
     public static final String MANAGER = "MANAGER";
     public static final String USER = "USER";
@@ -117,7 +117,16 @@ public class User implements Serializable {
         return this.role;
     }
 
-    public User(){
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean getStatus(){
+        return this.status;
+    }
+
+
+    public Employee(){
         this.password = null;
         this.phoneNumber = null;
     }

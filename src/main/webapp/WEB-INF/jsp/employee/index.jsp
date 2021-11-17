@@ -1,16 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: thai-bug
-  Date: 04/11/2021
-  Time: 00:32
+  Date: 17/11/2021
+  Time: 22:27
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Create new category</title>
-</head>
-<body>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-</body>
-</html>
+
+<tiles:insertAttribute name="findEmployee" />
