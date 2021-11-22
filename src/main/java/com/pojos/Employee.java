@@ -49,6 +49,18 @@ public class Employee implements Serializable {
             columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Employee parent;
+
+    public Employee getParent() {
+        return parent;
+    }
+
+    public void setParent(Employee parent) {
+        this.parent = parent;
+    }
+
     public int getId() {
         return id;
     }

@@ -41,14 +41,14 @@ html, body{
 
 }
 
-::-webkit-input-placeholder { /* Edge */
+.no-placeholder::-webkit-input-placeholder { /* Edge */
     visibility: hidden;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.no-placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
     visibility: hidden;
 }
 
-::placeholder {
+.no-placeholder::placeholder {
     visibility: hidden;
 }

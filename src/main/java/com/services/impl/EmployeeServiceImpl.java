@@ -47,8 +47,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployees(int page) {
-        return employeeRepository.getEmployees(page);
+    public List<Employee> getEmployees(int page, String kw) {
+        return employeeRepository.getEmployees(page, kw);
+    }
+
+    @Override
+    public long getCountAllEmployee(String kw) {
+        return employeeRepository.getCountAllEmployees(kw);
     }
 
     @Override

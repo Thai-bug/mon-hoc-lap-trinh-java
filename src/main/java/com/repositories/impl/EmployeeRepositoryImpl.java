@@ -50,16 +50,31 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getEmployees(int page) {
+    public List<Employee> getEmployees(int page, String kw) {
         Session session = sessionFactory.getObject().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
         Root root = query.from(Employee.class);
         query = query.select(root);
 
+        query.where(
+                builder.or(
+                        builder.like(root.get("firstName").as(String.class), String.format("%%%s%%", kw)),
+                        builder.like(root.get("lastName").as(String.class), String.format("%%%s%%", kw))
+                ));
+
         Query q = session.createQuery(query);
         q.setMaxResults(5);
         q.setFirstResult((page - 1) * 5);
         return q.getResultList();
+    }
+
+    @Override
+    public long getCountAllEmployees(String kw) {
+        Session session = sessionFactory.getObject().openSession();
+
+        Query q = session.createSQLQuery("Select Count(*) From Employee Where firstName like :kw or lastName like :kw");
+        q.setParameter("kw", kw);
+        return Long.parseLong(q.getSingleResult().toString());
     }
 }

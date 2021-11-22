@@ -12,5 +12,7 @@ public interface EmployeeService extends UserDetailsService {
 
     List<Employee> getEmployeeIn(String phoneNumber);
 
-    List<Employee> getEmployees(int page);
+    List<Employee> getEmployees(int page, String kw);
+
+    long getCountAllEmployee(String kw);
 }

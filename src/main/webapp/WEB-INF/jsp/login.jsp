@@ -21,8 +21,8 @@
         <form class="mt-8 space-y-6" action="${action}" method="POST" autocomplete="off">
             <div class="relative  my-5 py-1 ">
                 <div class="form-field">
-                    <input path="email" type="text" id="email" name="phoneNumber"
-                           class="form-input w-full outline-none focus:border-green-300" placeholder="a"
+                    <input  path="email" type="text" id="email" name="phoneNumber"
+                           class="form-input w-full outline-none focus:border-green-300 no-placeholder" placeholder="a"
                            cssStyle="box-shadow: none" autocomplete="false"/>
                     <label for="email" class="form-label">
                         Email
@@ -33,7 +33,7 @@
             <div class="relative  my-5 py-1 ">
                 <div class="form-field">
                     <input id="password" type="password" name="password"
-                           class="form-input w-full outline-none focus:border-green-300" placeholder="a"
+                           class="form-input w-full outline-none focus:border-green-300 no-placeholder" placeholder="a"
                            cssStyle="box-shadow: none" autocomplete="false"/>
                     <label for="password" class="form-label">
                         Mật khẩu

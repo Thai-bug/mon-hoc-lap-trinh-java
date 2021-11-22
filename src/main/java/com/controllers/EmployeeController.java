@@ -35,10 +35,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/admin/employees")
-    public String returnPage(Model model, @RequestParam(required = false)Map<String, String> params) {
+    public String returnPage(Model model,
+                             @RequestParam(required = false)Map<String, String> params
+    ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        List<Employee> employees = employeeService.getEmployees(page);
+        String kw = params.get("kw") == null ? "" : params.get("kw");
+        List<Employee> employees = employeeService.getEmployees(page, kw);
+        long total = employeeService.getCountAllEmployee(kw);
         model.addAttribute("employees", employees);
+        model.addAttribute("total", total);
 
         return "employee";
     }
