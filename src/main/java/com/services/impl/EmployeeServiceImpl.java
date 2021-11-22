@@ -57,6 +57,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee getEmployeeDetail(int id) {
+        return employeeRepository.getEmployeeById(id);
+    }
+
+    @Override
+    public boolean updateEmployeeAvatar(Employee employee) {
+        return employeeRepository.updateEmployeeAvatar(employee);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<Employee> employees = getEmployeeIn(email);
         if(employees.isEmpty())

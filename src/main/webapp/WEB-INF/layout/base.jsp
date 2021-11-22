@@ -14,21 +14,22 @@
            uri="http://www.springframework.org/tags" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 <!DOCTYPE html>
-<html>
+<html data-theme="cupcake">
 <head>
     <meta charset="utf-8"/>
     <link href="<c:url value="/css/style.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/css/main.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/css/utils.css"/>" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
-          integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+
     <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
     />
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <title>
         <tiles:insertAttribute name="title"/>
     </title>

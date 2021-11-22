@@ -29,10 +29,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="sider" value=""/>
     </definition>
 
-    <definition name="employee" extends="baseLayout">
+    <!--    user table page -->
+    <definition name="employees" extends="baseLayout">
         <put-attribute name="title" value="Quản lý nhân viên"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/employee/index.jsp" name="mainTransport" extends="employee">
+            <definition template="/WEB-INF/jsp/employee/index.jsp" name="mainTransport" extends="employees">
                 <put-attribute name="findEmployee"
                                value="/WEB-INF/jsp/components/find-employee.jsp"/>
             </definition>
@@ -49,9 +50,33 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/footer.jsp"/>
         <put-attribute name="sider"
                        value="/WEB-INF/layout/sider.jsp"/>
-
     </definition>
 
+    <!--    user detail page -->
+    <definition name="employeeDetail" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý nhân viên"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/employee/detail.jsp" name="hello" extends="employeeDetail">
+                <put-attribute name="detailInfo"
+                               value="/WEB-INF/jsp/components/detail-info.jsp"/>
+                <put-attribute name="avatar"
+                               value="/WEB-INF/jsp/components/avatar.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>
         <put-attribute name="content"

@@ -6,7 +6,14 @@ import java.util.List;
 
 public interface EmployeeRepository {
     List<Employee> getEmployeesByPhone(String phone);
+
     List<Employee> getEmployeesByEmail(String email);
+
     List<Employee> getEmployees(int page, String kw);
+
     long getCountAllEmployees(String kw);
+
+    Employee getEmployeeById(int id);
+
+    boolean updateEmployeeAvatar(Employee employee);
 }

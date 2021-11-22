@@ -76,4 +76,32 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         q.setParameter("kw", "%" + kw +"%");
         return Long.parseLong(q.getSingleResult().toString());
     }
+
+    @Override
+    public Employee getEmployeeById(int id) {
+        Session session = sessionFactory.getObject().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
+        Root root = query.from(Employee.class);
+        query = query.select(root);
+
+        query.where(
+                builder.equal(root.get("id").as(Integer.class), id)
+                );
+
+        Query q = session.createQuery(query);
+        return (Employee) q.getSingleResult();
+    }
+
+    @Override
+    public boolean updateEmployeeAvatar(Employee employee) {
+        try {
+            Session session = sessionFactory.getObject().openSession();
+            session.update(employee);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
 }

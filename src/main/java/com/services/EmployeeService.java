@@ -1,6 +1,7 @@
 package com.services;
 
 import com.pojos.Employee;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface EmployeeService extends UserDetailsService {
     List<Employee> getEmployees(int page, String kw);
 
     long getCountAllEmployee(String kw);
+
+    Employee getEmployeeDetail(int id);
+
+    boolean updateEmployeeAvatar(Employee employee);
 }

@@ -1,14 +1,15 @@
 package com.controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.pojos.Employee;
 import com.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,9 @@ import java.util.Map;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -45,6 +49,33 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         model.addAttribute("total", total);
 
-        return "employee";
+        return "employees";
+    }
+
+    @RequestMapping("/admin/employee/{id}")
+    public String employeeDetail(Model model,
+                                 @PathVariable(value = "id") int id) {
+        Employee employee = employeeService.getEmployeeDetail(id);
+        model.addAttribute("employee", employee);
+        return "employeeDetail";
+    }
+
+    @PostMapping("/admin/employee/update-avatar")
+    public String updateAvatar(Model model,
+                                 @ModelAttribute(value = "employee") Employee employee) {
+        try {
+            Map r = this.cloudinary.uploader().upload(employee.getAvatar().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+            String avatar = (String) r.get("secure_url");
+            employee.setAvatarLink(avatar);
+        } catch (IOException e) {
+            System.out.println("Loi o day");
+        }
+
+        boolean updateEmployee = employeeService.updateEmployeeAvatar(employee);
+        if(updateEmployee) {
+            model.addAttribute("employee", employee);
+            return "redirect:" + employee.getId();
+        }
+        return "403";
     }
 }

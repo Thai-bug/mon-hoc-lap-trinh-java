@@ -1,17 +1,17 @@
 package com.pojos;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
+@Entity()
 @Table(name = "employee")
+@org.hibernate.annotations.Entity(
+        dynamicUpdate = true
+)
 public class Employee implements Serializable {
     public static final String ADMIN = "ADMIN";
     public static final String MANAGER = "MANAGER";
@@ -22,7 +22,7 @@ public class Employee implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name="first_name")
+    @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
@@ -37,6 +37,9 @@ public class Employee implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "gender")
+    private int gender;
+
     @Column(name = "status")
     @ColumnDefault("true")
     private boolean status;
@@ -45,13 +48,40 @@ public class Employee implements Serializable {
     private String role;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_at",
-            columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+    @Column(name = "created_at",
+            columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Employee parent;
+
+    @Column(name = "avatar")
+    private String avatarLink;
+
+    @Transient
+    private MultipartFile avatar;
+
+    public Employee() {
+        this.password = null;
+        this.phoneNumber = null;
+    }
+
+    public String getAvatarLink() {
+        return avatarLink;
+    }
+
+    public void setAvatarLink(String avatarLink) {
+        this.avatarLink = avatarLink;
+    }
+
+    public MultipartFile getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(MultipartFile avatar) {
+        this.avatar = avatar;
+    }
 
     public Employee getParent() {
         return parent;
@@ -113,10 +143,6 @@ public class Employee implements Serializable {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -133,14 +159,20 @@ public class Employee implements Serializable {
         this.role = role;
     }
 
-    public boolean getStatus(){
+    public boolean getStatus() {
         return this.status;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-    public Employee(){
-        this.password = null;
-        this.phoneNumber = null;
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
 
