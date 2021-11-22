@@ -72,9 +72,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public long getCountAllEmployees(String kw) {
         Session session = sessionFactory.getObject().openSession();
-
-        Query q = session.createSQLQuery("Select Count(*) From Employee Where firstName like :kw or lastName like :kw");
-        q.setParameter("kw", kw);
+        Query q = session.createQuery("Select Count(*) From Employee Where lastName like :kw or firstName like :kw");
+        q.setParameter("kw", "%" + kw +"%");
         return Long.parseLong(q.getSingleResult().toString());
     }
 }
