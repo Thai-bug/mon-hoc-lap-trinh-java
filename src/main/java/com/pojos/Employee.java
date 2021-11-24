@@ -9,9 +9,6 @@ import java.util.Date;
 
 @Entity()
 @Table(name = "employee")
-@org.hibernate.annotations.Entity(
-        dynamicUpdate = true
-)
 public class Employee implements Serializable {
     public static final String ADMIN = "ADMIN";
     public static final String MANAGER = "MANAGER";
@@ -19,7 +16,6 @@ public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     @Column(name = "first_name")

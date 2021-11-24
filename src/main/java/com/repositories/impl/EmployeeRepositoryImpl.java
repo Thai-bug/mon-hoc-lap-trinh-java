@@ -95,12 +95,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public boolean updateEmployeeAvatar(Employee employee) {
+        Session session = sessionFactory.getObject().getCurrentSession();
         try {
-            Session session = sessionFactory.getObject().openSession();
-            session.update(employee);
+            Employee emp = session.get(Employee.class, employee.getId());
+            emp.setAvatarLink(employee.getAvatarLink());
+            session.update(emp);
             return true;
         }
         catch (Exception e) {
+            System.out.print(e.getMessage());
             return false;
         }
     }
