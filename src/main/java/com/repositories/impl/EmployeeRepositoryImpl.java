@@ -80,26 +80,20 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public Employee getEmployeeById(int id) {
         Session session = sessionFactory.getObject().openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
-        Root root = query.from(Employee.class);
-        query = query.select(root);
+        Employee emp = session.get(Employee.class, id);
 
-        query.where(
-                builder.equal(root.get("id").as(Integer.class), id)
-                );
-
-        Query q = session.createQuery(query);
-        return (Employee) q.getSingleResult();
+        return emp;
     }
 
     @Override
     public boolean updateEmployeeAvatar(Employee employee) {
-        Session session = sessionFactory.getObject().getCurrentSession();
+        Session session = sessionFactory.getObject().openSession();
         try {
-            Employee emp = session.get(Employee.class, employee.getId());
-            emp.setAvatarLink(employee.getAvatarLink());
-            session.update(emp);
+//            Employee emp = session.get(Employee.class, employee.getId());
+//            emp.setStatus(employee.getStatus());
+            session.getTransaction().begin();
+            session.update(employee);
+            session.getTransaction().commit();
             return true;
         }
         catch (Exception e) {

@@ -13,12 +13,6 @@
 
 <div class="rounded  bg-transparent " id="avatar-user">
     <img class="w-auto mx-auto h-64 object-cover object-center" src="${employee.avatarLink}"
-<%--            <c:if test="${employee.gender == 1}">--%>
-<%--              <c:url value="/images/man.png"/>--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${employee.gender == 2}">--%>
-<%--              <c:url value="/images/woman.png"/>--%>
-<%--            </c:if>--%>
 " alt="avatar"
     style="border-radius: 50%"
     />

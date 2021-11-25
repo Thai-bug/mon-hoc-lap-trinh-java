@@ -2,6 +2,11 @@
  * GLOBAL REGION
  * */
 
+//document is ready to use
+$( document ).ready(function() {
+    preprocessToggle();
+})
+
 File.prototype.convertToBase64 = function (callback) {
     let reader = new FileReader();
     reader.onloadend = function (e) {
@@ -9,6 +14,19 @@ File.prototype.convertToBase64 = function (callback) {
     };
     reader.readAsDataURL(this);
 };
+
+//preprocess toggle
+function preprocessToggle(){
+    let toggle = $('.status-select')
+    let value = toggle.find(':selected').val()
+    if(value === 'true') {
+        toggle.addClass('select-success');
+        $('.toggle-active-status-title').removeClass('hidden');
+        return
+    }
+    toggle.addClass('select-error ');
+    $('.toggle-disabled-status-title').removeClass('hidden');
+}
 
 /**
  * END REGION
@@ -36,6 +54,31 @@ $('#avatar').on('change', function (e) {
         $('#update-avatar').attr("disabled",false);
     })
 })
+
+/**
+ * PROCESS SELECT STATUS
+ * */
+$('.status-select').on('change', function(e){
+    let toggle = $(this)
+    let value = toggle.find(':selected').val()
+    if(value === 'true') {
+        toggle.attr('value','false')
+        $('.toggle-active-status-title').removeClass('hidden');
+        $('.toggle-disabled-status-title').addClass('hidden');
+
+        toggle.addClass('select-success');
+        toggle.removeClass('select-error');
+        return
+    }
+    $('.toggle-active-status-title').addClass('hidden');
+    $('.toggle-disabled-status-title').removeClass('hidden');
+    toggle.addClass('select-error');
+    toggle.removeClass('select-success');
+})
+
+/**
+ * END REGION
+ * */
 
 /**
  * end region

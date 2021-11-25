@@ -78,4 +78,24 @@ public class EmployeeController {
         }
         return "403";
     }
+
+    @RequestMapping("/admin/employee/update/{id}")
+    public String updateEmployeeInfo(Model model,
+                                 @PathVariable(value = "id") int id) {
+        Employee employee = employeeService.getEmployeeDetail(id);
+        model.addAttribute("employee", employee);
+        return "updateEmployee";
+    }
+
+    @PostMapping("/admin/employee/update/{id}")
+    public String updateEmployee(Model model,
+                                 @ModelAttribute(value = "employee") Employee employee) {
+        model.addAttribute("employee", employee);
+        boolean updateEmployee = employeeService.updateEmployeeAvatar(employee);
+        if(updateEmployee) {
+            model.addAttribute("employee", employee);
+            return "redirect:" + employee.getId();
+        }
+        return "updateEmployee";
+    }
 }
