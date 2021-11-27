@@ -11,7 +11,7 @@ public interface EmployeeService extends UserDetailsService {
 
     boolean addUser(Employee employee);
 
-    List<Employee> getEmployeeIn(String phoneNumber);
+    Employee getEmployeeIn(String email);
 
     List<Employee> getEmployees(int page, String kw);
 
@@ -20,4 +20,10 @@ public interface EmployeeService extends UserDetailsService {
     Employee getEmployeeDetail(int id);
 
     boolean updateEmployeeAvatar(Employee employee);
+
+    boolean updateEmployee(Employee employee);
+
+    List<Employee> getParentList();
+
+    boolean checkChildInParent(int id);
 }

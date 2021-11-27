@@ -21,17 +21,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee login(String email, String password) {
-        List<Employee> employees = employeeRepository.getEmployeesByEmail(email);
-        if (employees.size() == 0) {
+        Employee employee = employeeRepository.getEmployeeByEmail(email);
+        if (employee == null) {
             return null;
         }
-        Employee employeeIn = employees.get(0);
-
-        if(employeeIn.getStatus() == false)
+        if(employee.getStatus() == false)
             return null;
 
-        if(employeeIn.getPassword().equals(password)){
-            return employeeIn;
+        if(employee.getPassword().equals(password)){
+            return employee;
         }
         return null;
     }
@@ -42,8 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployeeIn(String phoneNumber) {
-        return employeeRepository.getEmployeesByEmail(phoneNumber);
+    public Employee getEmployeeIn(String email) {
+        return employeeRepository.getEmployeeByEmail(email);
     }
 
     @Override
@@ -67,11 +65,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public boolean updateEmployee(Employee employee) {
+        return employeeRepository.updateEmployee(employee);
+    }
+
+    @Override
+    public List<Employee> getParentList() {
+        return employeeRepository.getParentsList();
+    }
+
+    @Override
+    public boolean checkChildInParent(int id) {
+        return employeeRepository.checkChildInParent(id);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        List<Employee> employees = getEmployeeIn(email);
-        if(employees.isEmpty())
+        Employee employee = getEmployeeIn(email);
+        if(employee == null)
             throw new UsernameNotFoundException("Không tìm thấy người dùng");
-        Employee employee = employees.get(0);
 
         Set<GrantedAuthority> auth = new HashSet<>();
         auth.add(new SimpleGrantedAuthority(employee.getRole()));

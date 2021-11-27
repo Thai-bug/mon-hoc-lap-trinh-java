@@ -67,9 +67,11 @@
                  <c:set var="Date" value="${employee.createdAt}"/>
                  <fmt:formatDate value="${Date}" pattern="dd/MM/YYYY"/>
                 </span>
-
             </div>
         </div>
-
+        <div class="text-center mt-3">
+            <a href="<c:url value="/admin/employee/update/${employee.id}"/>" class="btn btn-outline btn-success w-36">Cập nhật</a>
+            <button class="btn btn-outline btn-warning w-36">Đổi mật khẩu</button>
+        </div>
     </div>
 </div>

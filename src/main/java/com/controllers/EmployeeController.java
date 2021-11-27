@@ -5,6 +5,9 @@ import com.cloudinary.utils.ObjectUtils;
 import com.pojos.Employee;
 import com.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,10 +43,11 @@ public class EmployeeController {
 
     @GetMapping("/admin/employees")
     public String returnPage(Model model,
-                             @RequestParam(required = false)Map<String, String> params
-    ) {
+                             @RequestParam(required = false)Map<String, String> params,
+                             @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
+
         List<Employee> employees = employeeService.getEmployees(page, kw);
         long total = employeeService.getCountAllEmployee(kw);
         model.addAttribute("employees", employees);
@@ -55,6 +59,11 @@ public class EmployeeController {
     @RequestMapping("/admin/employee/{id}")
     public String employeeDetail(Model model,
                                  @PathVariable(value = "id") int id) {
+        boolean checkChildInParent = employeeService.checkChildInParent(id);
+        System.out.println(checkChildInParent);
+        if(!checkChildInParent) {
+            return "403";
+        }
         Employee employee = employeeService.getEmployeeDetail(id);
         model.addAttribute("employee", employee);
         return "employeeDetail";
@@ -82,8 +91,15 @@ public class EmployeeController {
     @RequestMapping("/admin/employee/update/{id}")
     public String updateEmployeeInfo(Model model,
                                  @PathVariable(value = "id") int id) {
+        boolean checkChildInParent = employeeService.checkChildInParent(id);
+        System.out.println(checkChildInParent);
+        if(!checkChildInParent) {
+            return "403";
+        }
         Employee employee = employeeService.getEmployeeDetail(id);
+        List<Employee> parents = employeeService.getParentList();
         model.addAttribute("employee", employee);
+        model.addAttribute("parents", parents);
         return "updateEmployee";
     }
 
@@ -91,7 +107,7 @@ public class EmployeeController {
     public String updateEmployee(Model model,
                                  @ModelAttribute(value = "employee") Employee employee) {
         model.addAttribute("employee", employee);
-        boolean updateEmployee = employeeService.updateEmployeeAvatar(employee);
+        boolean updateEmployee = employeeService.updateEmployee(employee);
         if(updateEmployee) {
             model.addAttribute("employee", employee);
             return "redirect:" + employee.getId();

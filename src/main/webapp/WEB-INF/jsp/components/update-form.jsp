@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:url var="action" value="/admin/employee/update/${employee.id}"/>
 
 <div class="relative flex justify-around bg-gray w-full mb-6 shadow-lg rounded p-8">
@@ -23,7 +24,7 @@
             <form:form modelAttribute="employee" method="post" enctype="multipart/form-data" action="${action}">
                 <form:input path="id" type="hidden"/>
                 <form:input path="avatarLink" type="hidden"/>
-<%--                <form:input path="createdAt" type="hidden"/>--%>
+                <%--                <form:input path="createdAt" type="hidden"/>--%>
 
                 <div class="form-control grid grid-cols-2 gap-4">
                     <div>
@@ -31,7 +32,7 @@
                             <span class="label-text">Email</span>
                         </label>
                         <form:input path="email" placeholder="Email" cssClass="input input-bordered w-full"
-                                   readonly="true"/>
+                                    readonly="true"/>
                     </div>
 
                     <div class="">
@@ -83,16 +84,27 @@
                             <span class="label-text">Chức vụ</span>
                         </label>
                         <form:select path="role" cssClass="select select-bordered w-full">
-                            <form:option value="MANAGER">Quản lý tổng</form:option>
-                            <form:option value="EMPLOYEE_MANAGER">Quản lý nhân viên</form:option>
-                            <form:option value="CS_MANAGER">Quản lý khách hàng</form:option>
                             <form:option value="EMPLOYEE">Nhân viên</form:option>
                             <form:option value="CS">Nhân viên CSKH</form:option>
                         </form:select>
                     </div>
+                    <c:if test="${fn:contains(employee.role, 'MANAGER') != true}">
+                        <div class="">
+                            <label class="label">
+                                <span class="label-text">Người quản lý</span>
+                            </label>
+
+                            <form:select path="parent.id" cssClass="select select-bordered w-full">
+                                <c:forEach var="parent" items="${parents}">
+                                    <form:option value="${parent.id}"
+                                                 itemValue="id">${parent.firstName} ${parent.lastName}</form:option>
+                                </c:forEach>
+                            </form:select>
+
+                        </div>
+                    </c:if>
 
                     <div class="">
-                        <form:input path="parent.id" cssClass="select select-bordered w-full" type="hidden"/>
                         <form:input path="password" cssClass="select select-bordered w-full" type="hidden"/>
                     </div>
 

@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity()
 @Table(name = "employee")
@@ -52,6 +54,9 @@ public class Employee implements Serializable {
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Employee parent;
+//
+//    @OneToMany(mappedBy="parent", cascade = CascadeType.ALL)
+//    private Set<Employee> subordinates = new HashSet<Employee>();
 
     @Column(name = "avatar")
     private String avatarLink;
@@ -63,6 +68,14 @@ public class Employee implements Serializable {
         this.password = null;
         this.phoneNumber = null;
     }
+
+//    public Set<Employee> getSubordinates() {
+//        return subordinates;
+//    }
+//
+//    public void setSubordinates(Set<Employee> subordinates) {
+//        this.subordinates = subordinates;
+//    }
 
     public String getAvatarLink() {
         return avatarLink;
