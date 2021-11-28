@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -18,6 +19,9 @@ import java.util.Set;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Employee login(String email, String password) {
@@ -84,6 +88,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean checkChildInParent(int id) {
         return employeeRepository.checkChildInParent(id);
+    }
+
+    @Override
+    public boolean createNewEmployee(Employee employee) {
+        try{
+            String hash = passwordEncoder.encode(employee.getPassword());
+            employee.setPassword(hash);
+            employeeRepository.createEmployee(employee);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     @Override

@@ -24,4 +24,6 @@ public interface EmployeeRepository {
     List<Employee> getParentsList();
 
     boolean checkChildInParent(int childId);
+
+    boolean createEmployee(Employee employee);
 }

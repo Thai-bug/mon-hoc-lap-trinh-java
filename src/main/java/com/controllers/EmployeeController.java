@@ -46,7 +46,7 @@ public class EmployeeController {
 
     @GetMapping("/admin/employees")
     public String returnPage(Model model,
-                             @RequestParam(required = false)Map<String, String> params,
+                             @RequestParam(required = false) Map<String, String> params,
                              @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
@@ -63,7 +63,7 @@ public class EmployeeController {
     public String employeeDetail(Model model,
                                  @PathVariable(value = "id") int id) {
         boolean checkChildInParent = employeeService.checkChildInParent(id);
-        if(!checkChildInParent) {
+        if (!checkChildInParent) {
             return "403";
         }
         Employee employee = employeeService.getEmployeeDetail(id);
@@ -73,7 +73,7 @@ public class EmployeeController {
 
     @PostMapping("/admin/employee/update-avatar")
     public String updateAvatar(Model model,
-                                 @ModelAttribute(value = "employee") Employee employee) {
+                               @ModelAttribute(value = "employee") Employee employee) {
         try {
             Map r = this.cloudinary.uploader().upload(employee.getAvatar().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
             String avatar = (String) r.get("secure_url");
@@ -82,7 +82,7 @@ public class EmployeeController {
         }
 
         boolean updateEmployee = employeeService.updateEmployeeAvatar(employee);
-        if(updateEmployee) {
+        if (updateEmployee) {
             model.addAttribute("employee", employee);
             return "redirect:" + employee.getId();
         }
@@ -91,9 +91,9 @@ public class EmployeeController {
 
     @RequestMapping("/admin/employee/update/{id}")
     public String updateEmployeeInfo(Model model,
-                                 @PathVariable(value = "id") int id) {
+                                     @PathVariable(value = "id") int id) {
         boolean checkChildInParent = employeeService.checkChildInParent(id);
-        if(!checkChildInParent) {
+        if (!checkChildInParent) {
             return "403";
         }
         Employee employee = employeeService.getEmployeeDetail(id);
@@ -108,7 +108,7 @@ public class EmployeeController {
                                  @ModelAttribute(value = "employee") Employee employee) {
         model.addAttribute("employee", employee);
         boolean updateEmployee = employeeService.updateEmployee(employee);
-        if(updateEmployee) {
+        if (updateEmployee) {
             model.addAttribute("employee", employee);
             return "redirect:" + employee.getId();
         }
@@ -125,11 +125,25 @@ public class EmployeeController {
 
     @PostMapping("/admin/employee/create")
     public String createEmployee(
-            @ModelAttribute(value = "employee") @Valid Employee employee,
-            BindingResult result) {
-        if(result.hasErrors()){
+            Model model,
+            @Valid Employee employee,
+            BindingResult result
+    ) {
+        List<Employee> parents = employeeService.getParentList();
+        model.addAttribute("parents", parents);
+        if (result.hasErrors()) {
+
             return "createEmployee";
         }
-        return "redirect:/admin/employees";
+        if (!employee.getPassword().equals(employee.getConfirmPassword())) {
+            model.addAttribute("errMsg", "Xác thực mật khẩu không chính xác");
+            return "createEmployee";
+        }
+
+        boolean createNewEmployee = employeeService.createNewEmployee(employee);
+        if (createNewEmployee) {
+            return "redirect:/admin/employees";
+        }
+        return "createEmployee";
     }
 }

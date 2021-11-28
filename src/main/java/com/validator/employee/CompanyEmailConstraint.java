@@ -20,7 +20,6 @@ public class CompanyEmailConstraint implements ConstraintValidator<CompanyEmail,
     public boolean isValid(String email, ConstraintValidatorContext context) {
         Pattern emailRegex = Pattern.compile("^\\w+([\\.-]?\\w+)*@akay.com+$");
         boolean valid = emailRegex.matcher(email).matches();
-        System.out.println(valid);
         return valid;
     }
 }

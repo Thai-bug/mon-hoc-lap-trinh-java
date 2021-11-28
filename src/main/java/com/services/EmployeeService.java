@@ -26,4 +26,6 @@ public interface EmployeeService extends UserDetailsService {
     List<Employee> getParentList();
 
     boolean checkChildInParent(int id);
+
+    boolean createNewEmployee(Employee employee);
 }

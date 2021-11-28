@@ -84,6 +84,18 @@ $('.status-select').on('change', function(e){
  * end region
  * */
 
+/**
+ * ALERT BUTTON
+ * */
+
+$('.alert-button').on('click', function(){
+    $('.alert').remove();
+})
+
+/**
+ * END REGION
+ * */
+
 const btn = document.querySelector("button.mobile-menu-button");
 const menu = document.querySelector(".mobile-menu");
 

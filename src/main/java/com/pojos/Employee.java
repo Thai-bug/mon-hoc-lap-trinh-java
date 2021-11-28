@@ -1,13 +1,13 @@
 package com.pojos;
 
 import com.validator.employee.CompanyEmail;
+import com.validator.employee.Phone;
 import com.validator.employee.UniqueEmail;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,24 +22,28 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Size(min = 1, message = "Không để trống")
     @Column(name = "first_name")
     private String firstName;
 
+    @Size(min = 1, message = "Không để trống")
     @Column(name = "last_name")
     private String lastName;
 
     @CompanyEmail(message = "Email không hợp lệ")
-    @UniqueEmail(message = "Email tồn tại")
+//    @UniqueEmail(message = "Email tồn tại")
     @Column(name = "email")
     private String email;
 
-    @Max(value = 8, message = "Mật khẩu chưa mạnh")
+    @Size(min = 8, message = "Mật khẩu chưa mạnh")
     @Column(name = "password")
     private String password;
 
+    @Phone(message = "Số điện thoại không hợp lệ")
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Min(value = 1, message = "Vui lòng chọn giới tính")
     @Column(name = "gender")
     private int gender;
 
@@ -47,12 +51,13 @@ public class Employee implements Serializable {
     @ColumnDefault("true")
     private boolean status;
 
+    @NotNull(message = "Không để trống")
     @Column(name = "role")
     private String role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
-            columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+            columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
     @ManyToOne

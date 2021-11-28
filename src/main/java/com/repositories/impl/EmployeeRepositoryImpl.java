@@ -3,6 +3,7 @@ package com.repositories.impl;
 import com.pojos.Employee;
 import com.repositories.EmployeeRepository;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -48,7 +49,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Predicate p = builder.equal(root.get("email").as(String.class), email);
         query = query.where(p);
         Query q = session.createQuery(query);
-        Employee emp =  (Employee) q.getSingleResult();
+        Employee emp = (Employee) q.getSingleResult();
         return emp;
     }
 
@@ -56,10 +57,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public List<Employee> getEmployees(int page, String kw) {
         Employee loginEmployee = loadLoginEmployee();
         Session session = sessionFactory.getObject().openSession();
-        String query = "WITH RECURSIVE child AS ( SELECT employee.*  FROM employee WHERE " +
-                "employee.id = :id " +
+        String query = "" +
+                "WITH RECURSIVE child AS ( SELECT employee.*  FROM employee WHERE employee.id = :id \n" +
                 "and (employee.last_name like :kw or employee.first_name like :kw) " +
-                "UNION\n" +
+                " UNION\n" +
                 "                          SELECT\n" +
                 "                              e.*\n" +
                 "                          FROM\n" +
@@ -68,13 +69,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 ")SELECT\n" +
                 "      *\n" +
                 "FROM\n" +
-                "     child where child.id != :id";
+                "    child where child.id != :id \n" +
+                "order by child.id \n" +
+                "limit 5 offset :offset ;\n";
         NativeQuery q = session.createNativeQuery(
                 query, Employee.class
         );
 
         q.setParameter("kw", "%" + kw + "%");
         q.setParameter("id", loginEmployee.getId());
+        q.setParameter("offset", (page - 1) * 5);
         return q.getResultList();
     }
 
@@ -167,8 +171,26 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         );
         q.setParameter("parentID", employee.getId());
         q.setParameter("id", childId);
-        long result =Long.parseLong(q.getSingleResult().toString());
+        long result = Long.parseLong(q.getSingleResult().toString());
         return result != 0;
+    }
+
+    @Override
+    public boolean createEmployee(Employee employee) {
+        Session session = sessionFactory.getObject().openSession();
+        Transaction tx;
+        try {
+            tx = session.beginTransaction();
+            System.out.println(employee.getParent().getId());
+            session.save(String.valueOf(Employee.class), employee);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
