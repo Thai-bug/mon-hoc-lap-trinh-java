@@ -32,6 +32,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         "com.controllers",
         "com.repositories",
         "com.services",
+        "com.validator"
 })
 public class MyWebConfigs implements WebMvcConfigurer {
 
@@ -50,13 +51,14 @@ public class MyWebConfigs implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
+        resource.setDefaultEncoding("UTF-8");
         resource.addBasenames("messages", "users");
 
         return resource;
     }
 
     @Bean
-    public LocalValidatorFactoryBean validator() {
+    public Validator validatorFactory() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
@@ -64,13 +66,13 @@ public class MyWebConfigs implements WebMvcConfigurer {
 
     @Override
     public Validator getValidator() {
-        return validator();
+        return validatorFactory();
     }
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setDefaultEncoding("UTF-8");
+        resolver.setDefaultEncoding("utf-8");
         return resolver;
     }
 

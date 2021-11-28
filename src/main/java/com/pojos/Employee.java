@@ -1,14 +1,15 @@
 package com.pojos;
 
+import com.validator.employee.CompanyEmail;
+import com.validator.employee.UniqueEmail;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity()
 @Table(name = "employee")
@@ -27,9 +28,12 @@ public class Employee implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @CompanyEmail(message = "Email không hợp lệ")
+    @UniqueEmail(message = "Email tồn tại")
     @Column(name = "email")
     private String email;
 
+    @Max(value = 8, message = "Mật khẩu chưa mạnh")
     @Column(name = "password")
     private String password;
 
@@ -54,9 +58,6 @@ public class Employee implements Serializable {
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Employee parent;
-//
-//    @OneToMany(mappedBy="parent", cascade = CascadeType.ALL)
-//    private Set<Employee> subordinates = new HashSet<Employee>();
 
     @Column(name = "avatar")
     private String avatarLink;
@@ -64,18 +65,23 @@ public class Employee implements Serializable {
     @Transient
     private MultipartFile avatar;
 
+    @Transient
+    private String confirmPassword;
+
     public Employee() {
         this.password = null;
         this.phoneNumber = null;
+        this.status = true;
+        this.confirmPassword = "";
     }
 
-//    public Set<Employee> getSubordinates() {
-//        return subordinates;
-//    }
-//
-//    public void setSubordinates(Set<Employee> subordinates) {
-//        this.subordinates = subordinates;
-//    }
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
     public String getAvatarLink() {
         return avatarLink;

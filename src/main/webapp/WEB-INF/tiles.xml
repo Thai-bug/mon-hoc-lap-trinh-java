@@ -98,6 +98,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+    <!--    create user detail page -->
+    <definition name="createEmployee" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý nhân viên"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/employee/add.jsp" name="update" extends="createEmployee">
+                <put-attribute name="createForm"
+                               value="/WEB-INF/jsp/components/create-form.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
     <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>

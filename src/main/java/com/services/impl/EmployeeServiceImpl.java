@@ -41,7 +41,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeIn(String email) {
-        return employeeRepository.getEmployeeByEmail(email);
+    try{
+        Employee emp = employeeRepository.getEmployeeByEmail(email);
+        return emp;
+    }
+    catch (Exception e){
+        return null;
+    }
+
     }
 
     @Override

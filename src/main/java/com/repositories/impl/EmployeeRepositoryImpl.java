@@ -45,10 +45,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Root root = query.from(Employee.class);
         query = query.select(root);
 
-        Predicate p = builder.like(root.get("email").as(String.class), email);
+        Predicate p = builder.equal(root.get("email").as(String.class), email);
         query = query.where(p);
         Query q = session.createQuery(query);
-        return (Employee) q.getSingleResult();
+        Employee emp =  (Employee) q.getSingleResult();
+        return emp;
     }
 
     @Override
@@ -120,7 +121,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            System.out.print(e.getMessage());
             return false;
         }
     }
@@ -134,7 +134,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            System.out.print(e.getMessage());
             return false;
         }
     }
@@ -169,7 +168,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         q.setParameter("parentID", employee.getId());
         q.setParameter("id", childId);
         long result =Long.parseLong(q.getSingleResult().toString());
-        System.out.println(result);
         return result != 0;
     }
 

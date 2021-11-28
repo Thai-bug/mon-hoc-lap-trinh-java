@@ -10,8 +10,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +63,6 @@ public class EmployeeController {
     public String employeeDetail(Model model,
                                  @PathVariable(value = "id") int id) {
         boolean checkChildInParent = employeeService.checkChildInParent(id);
-        System.out.println(checkChildInParent);
         if(!checkChildInParent) {
             return "403";
         }
@@ -77,7 +79,6 @@ public class EmployeeController {
             String avatar = (String) r.get("secure_url");
             employee.setAvatarLink(avatar);
         } catch (IOException e) {
-            System.out.println("Loi o day");
         }
 
         boolean updateEmployee = employeeService.updateEmployeeAvatar(employee);
@@ -92,7 +93,6 @@ public class EmployeeController {
     public String updateEmployeeInfo(Model model,
                                  @PathVariable(value = "id") int id) {
         boolean checkChildInParent = employeeService.checkChildInParent(id);
-        System.out.println(checkChildInParent);
         if(!checkChildInParent) {
             return "403";
         }
@@ -113,5 +113,23 @@ public class EmployeeController {
             return "redirect:" + employee.getId();
         }
         return "updateEmployee";
+    }
+
+    @RequestMapping("/admin/employee/create")
+    public String createEmployeePage(Model model) {
+        List<Employee> parents = employeeService.getParentList();
+        model.addAttribute("employee", new Employee());
+        model.addAttribute("parents", parents);
+        return "createEmployee";
+    }
+
+    @PostMapping("/admin/employee/create")
+    public String createEmployee(
+            @ModelAttribute(value = "employee") @Valid Employee employee,
+            BindingResult result) {
+        if(result.hasErrors()){
+            return "createEmployee";
+        }
+        return "redirect:/admin/employees";
     }
 }
