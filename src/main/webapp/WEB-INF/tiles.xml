@@ -120,6 +120,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+    <!--    lobbies -->
+    <definition name="lobbies" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý sảnh"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/lobby/index.jsp" name="list" extends="lobbies">
+                <put-attribute name="find-lobby"
+                               value="/WEB-INF/jsp/components/find-lobby.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
     <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>

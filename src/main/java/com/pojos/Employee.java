@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity()
 @Table(name = "employee")
@@ -67,6 +68,9 @@ public class Employee implements Serializable {
     @Column(name = "avatar")
     private String avatarLink;
 
+    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
+    private List<Lobby> lobbyList;
+
     @Transient
     private MultipartFile avatar;
 
@@ -78,6 +82,14 @@ public class Employee implements Serializable {
         this.phoneNumber = null;
         this.status = true;
         this.confirmPassword = "";
+    }
+
+    public List<Lobby> getLobbyList() {
+        return lobbyList;
+    }
+
+    public void setLobbyList(List<Lobby> lobbyList) {
+        this.lobbyList = lobbyList;
     }
 
     public String getConfirmPassword() {
