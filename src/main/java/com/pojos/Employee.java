@@ -20,7 +20,7 @@ public class Employee implements Serializable {
     public static final String USER = "USER";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Size(min = 1, message = "Không để trống")
@@ -68,9 +68,6 @@ public class Employee implements Serializable {
     @Column(name = "avatar")
     private String avatarLink;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
-    private List<Lobby> lobbyList;
-
     @Transient
     private MultipartFile avatar;
 
@@ -82,14 +79,6 @@ public class Employee implements Serializable {
         this.phoneNumber = null;
         this.status = true;
         this.confirmPassword = "";
-    }
-
-    public List<Lobby> getLobbyList() {
-        return lobbyList;
-    }
-
-    public void setLobbyList(List<Lobby> lobbyList) {
-        this.lobbyList = lobbyList;
     }
 
     public String getConfirmPassword() {

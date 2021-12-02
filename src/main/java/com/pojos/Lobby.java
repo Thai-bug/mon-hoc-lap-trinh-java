@@ -12,8 +12,8 @@ import java.util.Date;
 @Table(name = "lobby")
 public class Lobby implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "name")
     String name;
@@ -36,10 +36,6 @@ public class Lobby implements Serializable {
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
-
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "sale")
-    private Employee employee;
 
     public int getId() {
         return id;
@@ -79,14 +75,6 @@ public class Lobby implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
     }
 
     public long getMoney() {
