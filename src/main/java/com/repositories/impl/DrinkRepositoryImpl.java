@@ -58,4 +58,18 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
         return session.createQuery(query).getSingleResult();
     }
+
+    @Override
+    public boolean updateDrink(Drink drink) {
+        Session session = sessionFactory.getObject().openSession();
+        try{
+            session.getTransaction().begin();
+            session.update(drink);
+            session.getTransaction().commit();
+        }
+        catch (Exception err){
+            return false;
+        }
+        return false;
+    }
 }

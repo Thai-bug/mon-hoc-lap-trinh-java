@@ -51,7 +51,6 @@ public class LobbyController {
         boolean updateLobby = lobbyService.updateLobby(lobby);
         model.addAttribute("lobby", lobby);
         if (updateLobby) {
-            model.addAttribute("lobby", lobby);
             return "lobbyDetail";
         }
         return "redirect:" + lobby.getId();

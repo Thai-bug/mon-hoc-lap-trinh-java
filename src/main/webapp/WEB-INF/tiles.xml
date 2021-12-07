@@ -252,6 +252,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+    <!--    drink update -->
+    <definition name="drinkUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý đồ uồng"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/drink/update.jsp" name="detail" extends="drinkUpdate">
+                <put-attribute name="update-page"
+                               value="/WEB-INF/jsp/components/drink-update.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
     <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>

@@ -10,4 +10,6 @@ public interface DrinkRepository {
     public int getCountDrinks(String kw);
 
     public Drink getDrinkById(int id);
+
+    public boolean updateDrink(Drink drink);
 }

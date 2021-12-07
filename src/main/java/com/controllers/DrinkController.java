@@ -8,9 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +40,22 @@ public class DrinkController {
 
         model.addAttribute("drink", drink);
         return "drinkDetail";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String getUpdateDrink(Model model, @PathVariable(value = "id") int id) {
+        Drink drink = drinkService.getDrinkById(id);
+
+        model.addAttribute("drink", drink);
+        return "drinkUpdate";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateDrink(
+            Model model,
+            @ModelAttribute(value = "drink") Drink drink) {
+        model.addAttribute("drink", drink);
+        return "";
     }
 
 }
