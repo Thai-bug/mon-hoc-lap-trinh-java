@@ -6,11 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+
+<div class="text-sm text-gray-400 mb-8">Quản lý sảnh tiệc</div>
+
+<tiles:insertAttribute name="update-page" />

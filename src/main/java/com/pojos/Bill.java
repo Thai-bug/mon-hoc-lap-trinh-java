@@ -5,10 +5,11 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "order")
-public class Order implements Serializable {
+@Table(name = "bill")
+public class Bill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -37,13 +38,24 @@ public class Order implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sale_id")
     private Employee employee;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lobby_id")
     private Lobby lobby;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
+    private List<BillDetail> detailList;
+
     public Lobby getLobby() {
         return lobby;
+    }
+
+    public List<BillDetail> getBillDetailList() {
+        return detailList;
+    }
+
+    public void setBillDetailList(List<BillDetail> detailList) {
+        this.detailList = detailList;
     }
 
     public void setLobby(Lobby lobby) {

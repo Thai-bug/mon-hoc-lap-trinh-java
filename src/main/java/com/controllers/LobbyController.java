@@ -8,10 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -32,24 +29,59 @@ public class LobbyController {
         String kw = params.get("kw") == null ? "" : params.get("kw");
 
         List<Lobby> lobbies = lobbyService.getLobbies(kw, page);
-        System.out.println(lobbies.size());
         int total = lobbyService.countLobby(kw);
+
         model.addAttribute("lobbies", lobbies);
         model.addAttribute("total", total);
         return "lobbies";
     }
 
-    @RequestMapping("/lobby/${id}")
-    public String detailLobby(Model model, @PathVariable(value = "id") int id){
+    @RequestMapping("/lobby/{id}")
+    public String detailLobby(Model model, @PathVariable(value = "id") int id) {
         Lobby lobby = lobbyService.getLobbyById(id);
+
         model.addAttribute("lobby", lobby);
-        return "";
+        return "lobbyDetail";
     }
 
-    @PostMapping("/lobby/update")
-    public String updateLobby(Model model, @PathVariable(value = "id") int id){
+    @PostMapping("/lobby/update/{id}")
+    public String updateEmployee(Model model,
+                                 @ModelAttribute(value = "lobby") Lobby lobby) {
+
+        boolean updateLobby = lobbyService.updateLobby(lobby);
+        model.addAttribute("lobby", lobby);
+        if (updateLobby) {
+            model.addAttribute("lobby", lobby);
+            return "lobbyDetail";
+        }
+        return "redirect:" + lobby.getId();
+    }
+
+    @RequestMapping("/lobby/update/{id}")
+    public String updatePage(Model model,
+                                 @PathVariable(value = "id") int id) {
         Lobby lobby = lobbyService.getLobbyById(id);
         model.addAttribute("lobby", lobby);
-        return "";
+        return "lobbyUpdate";
+    }
+
+    @RequestMapping("/lobby/create")
+    public String create(Model model) {
+        model.addAttribute("lobby", new Lobby());
+        return "lobbyCreate";
+    }
+
+    @PostMapping("/lobby/create")
+    public String createLobby(
+            Model model,
+            @ModelAttribute(value = "lobby") Lobby lobby
+    ) {
+        boolean updateLobby = lobbyService.createLobby(lobby);
+        model.addAttribute("lobby", lobby);
+        if (updateLobby) {
+            model.addAttribute("lobby", lobby);
+            return "redirect:/admin/lobbies";
+        }
+        return "redirect:";
     }
 }

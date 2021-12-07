@@ -181,7 +181,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Transaction tx;
         try {
             tx = session.beginTransaction();
-            System.out.println(employee.getParent().getId());
             session.save(String.valueOf(Employee.class), employee);
             tx.commit();
             return true;

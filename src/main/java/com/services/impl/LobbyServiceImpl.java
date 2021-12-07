@@ -27,4 +27,14 @@ public class LobbyServiceImpl implements LobbyService {
     public Lobby getLobbyById(int id) {
         return lobbyRepository.getLobbyById(id);
     }
+
+    @Override
+    public boolean updateLobby(Lobby lobby) {
+        return lobbyRepository.updateLobby(lobby);
+    }
+
+    @Override
+    public boolean createLobby(Lobby lobby) {
+        return lobbyRepository.createLobby(lobby);
+    }
 }

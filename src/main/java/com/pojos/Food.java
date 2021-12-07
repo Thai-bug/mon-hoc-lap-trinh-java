@@ -3,54 +3,47 @@ package com.pojos;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity()
-@Table(name = "lobby")
-public class Lobby implements Serializable {
+@Table(name = "food")
+public class Food implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
-    @Column(name = "capacity")
-    @Min(value = 30)
-    @Max(value = 1000)
-    int capacity;
+    @Column(name = "price")
+    private double price;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "unit")
+    private String unit;
 
     @Column(name = "status")
     @ColumnDefault("true")
-    boolean status;
-
-    @Column(name = "money")
-    @Min(value = 5000000)
-    @Max(value = 1000000000)
-    long money;
+    private boolean status;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @OneToMany(mappedBy = "lobby")
-    private List<Bill> bills;
+    @OneToMany(mappedBy = "food")
+    private List<BillDetail> billDetailList;
 
-    public Lobby() {
-        this.status = true;
+    public List<BillDetail> getBillDetailList() {
+        return billDetailList;
     }
 
-    public List<Bill> getBills() {
-        return bills;
-    }
-
-    public void setBills(List<Bill> bills) {
-        this.bills = bills;
+    public void setBillDetailList(List<BillDetail> billDetailList) {
+        this.billDetailList = billDetailList;
     }
 
     public int getId() {
@@ -69,12 +62,28 @@ public class Lobby implements Serializable {
         this.name = name;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public boolean isStatus() {
@@ -92,13 +101,4 @@ public class Lobby implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-    public long getMoney() {
-        return money;
-    }
-
-    public void setMoney(long money) {
-        this.money = money;
-    }
-
 }

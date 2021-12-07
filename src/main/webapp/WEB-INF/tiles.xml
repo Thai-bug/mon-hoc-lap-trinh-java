@@ -142,6 +142,116 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+<!--    Detail lobby -->
+    <definition name="lobbyDetail" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý sảnh"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/lobby/detail.jsp" name="detail" extends="lobbyDetail">
+                <put-attribute name="detail-page"
+                               value="/WEB-INF/jsp/components/lobby-detail.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--    Update lobby -->
+    <definition name="lobbyUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý sảnh"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/lobby/update.jsp" name="update" extends="lobbyUpdate">
+                <put-attribute name="update-page"
+                               value="/WEB-INF/jsp/components/lobby-update.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--    Create lobby -->
+    <definition name="lobbyCreate" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý sảnh"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/lobby/create.jsp" name="create" extends="lobbyCreate">
+                <put-attribute name="createForm"
+                               value="/WEB-INF/jsp/components/lobby-create.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--  find drink  -->
+    <definition name="drinks" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý đồ uống"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/drink/index.jsp" name="find" extends="drinks">
+                <put-attribute name="findForm"
+                               value="/WEB-INF/jsp/components/drink-find.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--    drink detail -->
+    <definition name="drinkDetail" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý đồ uồng"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/drink/detail.jsp" name="detail" extends="drinkDetail">
+                <put-attribute name="detail-page"
+                               value="/WEB-INF/jsp/components/drink-detail.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
     <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>

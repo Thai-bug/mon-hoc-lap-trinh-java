@@ -10,4 +10,8 @@ public interface LobbyService {
     int countLobby(String kw);
 
     Lobby getLobbyById(int id);
+
+    boolean updateLobby(Lobby lobby);
+
+    boolean createLobby(Lobby lobby);
 }

@@ -2,7 +2,6 @@ package com.pojos;
 
 import com.validator.employee.CompanyEmail;
 import com.validator.employee.Phone;
-import com.validator.employee.UniqueEmail;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,6 +64,9 @@ public class Employee implements Serializable {
     @JoinColumn(name = "parent_id")
     private Employee parent;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<Bill> bills;
+
     @Column(name = "avatar")
     private String avatarLink;
 
@@ -79,6 +81,14 @@ public class Employee implements Serializable {
         this.phoneNumber = null;
         this.status = true;
         this.confirmPassword = "";
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
     }
 
     public String getConfirmPassword() {
