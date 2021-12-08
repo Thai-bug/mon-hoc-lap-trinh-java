@@ -70,6 +70,6 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         catch (Exception err){
             return false;
         }
-        return false;
+        return true;
     }
 }

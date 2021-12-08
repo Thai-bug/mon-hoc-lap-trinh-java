@@ -256,7 +256,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="drinkUpdate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đồ uồng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/drink/update.jsp" name="detail" extends="drinkUpdate">
+            <definition template="/WEB-INF/jsp/drink/update.jsp" name="update-drink" extends="drinkUpdate">
                 <put-attribute name="update-page"
                                value="/WEB-INF/jsp/components/drink-update.jsp"/>
             </definition>

@@ -27,4 +27,9 @@ public class DrinkServiceImpl implements DrinkService {
     public Drink getDrinkById(int id) {
         return drinkRepository.getDrinkById(id);
     }
+
+    @Override
+    public boolean updateDrink(Drink drink) {
+        return drinkRepository.updateDrink(drink);
+    }
 }

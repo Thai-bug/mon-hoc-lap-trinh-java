@@ -10,4 +10,6 @@ public interface DrinkService {
     int getCountDrinks(String kw);
 
     Drink getDrinkById(int id);
+
+    boolean updateDrink(Drink drink);
 }

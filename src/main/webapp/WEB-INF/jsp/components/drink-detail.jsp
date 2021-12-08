@@ -30,7 +30,7 @@
 
                 <div>
                     <span>Trạng thái: </span>
-                    <c:if test="${lobby.status == true}">
+                    <c:if test="${drink.status == true}">
                         <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-green-600 rounded-full">Hoạt động</span>
                     </c:if>
                     <c:if test="${drink.status == false}">

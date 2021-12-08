@@ -55,7 +55,11 @@ public class DrinkController {
             Model model,
             @ModelAttribute(value = "drink") Drink drink) {
         model.addAttribute("drink", drink);
-        return "";
+        boolean updateDrink = drinkService.updateDrink(drink);
+        if(updateDrink)
+            return "redirect:/admin/drinks/detail/" + drink.getId();
+
+        return "drinkUpdate" ;
     }
 
 }
