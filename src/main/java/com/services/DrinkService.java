@@ -12,4 +12,6 @@ public interface DrinkService {
     Drink getDrinkById(int id);
 
     boolean updateDrink(Drink drink);
+
+    boolean add(Drink drink);
 }

@@ -12,4 +12,6 @@ public interface FoodRepository {
     Food getFoodById(int id);
 
     boolean update(Food food);
+
+    boolean add(Food food);
 }

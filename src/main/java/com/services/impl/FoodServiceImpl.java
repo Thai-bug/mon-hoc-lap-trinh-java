@@ -32,4 +32,9 @@ public class FoodServiceImpl implements FoodService {
     public boolean update(Food food) {
         return foodRepository.update(food);
     }
+
+    @Override
+    public boolean add(Food food) {
+        return foodRepository.add(food);
+    }
 }

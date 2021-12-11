@@ -72,4 +72,18 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         }
         return true;
     }
+
+    @Override
+    public boolean add(Drink drink) {
+        Session session = sessionFactory.getObject().openSession();
+        try{
+            session.getTransaction().begin();
+            session.save(drink);
+            session.getTransaction().commit();
+        }
+        catch (Exception err){
+            return false;
+        }
+        return true;
+    }
 }

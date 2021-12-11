@@ -274,6 +274,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+    <!--    drink add -->
+    <definition name="drinkAdd" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý đồ uồng"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/drink/add.jsp" name="add-drink" extends="drinkAdd">
+                <put-attribute name="drink-add"
+                               value="/WEB-INF/jsp/components/drink-add.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
 <!--    food list-->
     <definition name="food" extends="baseLayout">
         <put-attribute name="title" value="Quản lý thức ăn"/>
@@ -325,6 +347,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
             <definition template="/WEB-INF/jsp/food/update.jsp" name="update" extends="foodUpdate">
                 <put-attribute name="food-update"
                                value="/WEB-INF/jsp/components/food-update.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--    food add -->
+    <definition name="foodAdd" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý thức ăn"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/food/add.jsp" name="add" extends="foodAdd">
+                <put-attribute name="food-add"
+                               value="/WEB-INF/jsp/components/food-add.jsp"/>
             </definition>
         </put-attribute>
 

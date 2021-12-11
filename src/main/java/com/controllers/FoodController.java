@@ -56,9 +56,29 @@ public class FoodController {
             @ModelAttribute(value = "food") Food food) {
         model.addAttribute("food", food);
         boolean updateFood = foodService.update(food);
-        if(updateFood)
+        if (updateFood)
             return "redirect:/admin/food/detail/" + food.getId();
 
-        return "foodUpdate" ;
+        return "foodUpdate";
+    }
+
+    @RequestMapping("/add")
+    public String addFood(
+            Model model
+    ) {
+        model.addAttribute("food", new Food());
+        return "foodAdd";
+    }
+
+    @PostMapping("/add")
+    public String add(
+            Model model,
+            @ModelAttribute(value = "food") Food food
+    ) {
+        model.addAttribute("food", food);
+        boolean add = foodService.add(food);
+        if (add)
+            return "redirect:/admin/food";
+        return "foodAdd";
     }
 }

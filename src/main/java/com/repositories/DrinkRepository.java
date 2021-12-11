@@ -12,4 +12,6 @@ public interface DrinkRepository {
     public Drink getDrinkById(int id);
 
     public boolean updateDrink(Drink drink);
+
+    public boolean add(Drink drink);
 }

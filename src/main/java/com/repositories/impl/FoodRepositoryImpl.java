@@ -70,4 +70,17 @@ public class FoodRepositoryImpl implements FoodRepository {
             return false;
         }
     }
+
+    @Override
+    public boolean add(Food food) {
+        Session session = sessionFactory.getObject().openSession();
+        try {
+            session.getTransaction().begin();
+            session.save(food);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

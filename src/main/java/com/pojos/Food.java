@@ -38,6 +38,10 @@ public class Food implements Serializable {
     @OneToMany(mappedBy = "food")
     private List<BillDetail> billDetailList;
 
+    public Food(){
+        this.status = true;
+    }
+
     public List<BillDetail> getBillDetailList() {
         return billDetailList;
     }

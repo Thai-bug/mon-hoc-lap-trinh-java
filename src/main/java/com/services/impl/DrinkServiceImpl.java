@@ -32,4 +32,9 @@ public class DrinkServiceImpl implements DrinkService {
     public boolean updateDrink(Drink drink) {
         return drinkRepository.updateDrink(drink);
     }
+
+    @Override
+    public boolean add(Drink drink) {
+        return drinkRepository.add(drink);
+    }
 }
