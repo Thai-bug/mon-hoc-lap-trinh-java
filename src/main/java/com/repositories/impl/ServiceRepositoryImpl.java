@@ -1,7 +1,8 @@
 package com.repositories.impl;
 
 import com.pojos.Food;
-import com.repositories.FoodRepository;
+import com.pojos.Service;
+import com.repositories.ServiceRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -17,16 +18,16 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class FoodRepositoryImpl implements FoodRepository {
+public class ServiceRepositoryImpl implements ServiceRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Food> getFoods(String kw, int page) {
+    public List<Service> getServices(String kw, int pgae) {
         Session session = sessionFactory.getObject().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Food> query = builder.createQuery(Food.class);
-        Root root = query.from(Food.class);
+        CriteriaQuery<Service> query = builder.createQuery(Service.class);
+        Root root = query.from(Service.class);
         query = query.select(root);
 
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw +"%");
@@ -36,38 +37,25 @@ public class FoodRepositoryImpl implements FoodRepository {
     }
 
     @Override
-    public int getFoodCount(String kw) {
+    public int getServicesCount(String kw) {
         Session session = sessionFactory.getObject().openSession();
-        Query q = session.createQuery("select count(*) from Food where name like :kw");
+        Query q = session.createQuery("select count(*) from Service where name like :kw");
 
         q.setParameter("kw", "%" + kw + "%");
         return Integer.parseInt(q.getSingleResult().toString());
     }
 
     @Override
-    public Food getFoodById(int id) {
+    public Service getServiceById(int id) {
         Session session = sessionFactory.getObject().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Food> query = builder.createQuery(Food.class);
-        Root root = query.from(Food.class);
+        CriteriaQuery<Service> query = builder.createQuery(Service.class);
+        Root root = query.from(Service.class);
         query = query.select(root);
 
         Predicate p = builder.equal(root.get("id").as(Integer.class), id);
         query = query.where(p);
 
         return session.createQuery(query).getSingleResult();
-    }
-
-    @Override
-    public boolean update(Food food) {
-        Session session = sessionFactory.getObject().openSession();
-        try {
-            session.getTransaction().begin();
-            session.update(food);
-            session.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 }

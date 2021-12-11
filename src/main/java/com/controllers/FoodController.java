@@ -6,9 +6,7 @@ import com.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,7 @@ public class FoodController {
 
     @RequestMapping("")
     public String getFoods(
-            Model  model,
+            Model model,
             @RequestParam(required = false) Map<String, String> params
     ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
@@ -31,14 +29,36 @@ public class FoodController {
         model.addAttribute("foods", foods);
         model.addAttribute("total", total);
 
-        return "foods";
+        return "food";
     }
 
     @RequestMapping("/detail/{id}")
-    public String foodDetail(Model model, @PathVariable(value = "id") int id) {
+    public String foodDetail(
+            Model model,
+            @PathVariable(value = "id") int id) {
         Food food = foodService.getFoodById(id);
-
         model.addAttribute("food", food);
+
         return "foodDetail";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String getUpdateDrink(Model model, @PathVariable(value = "id") int id) {
+        Food food = foodService.getFoodById(id);
+        model.addAttribute("food", food);
+
+        return "foodUpdate";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateDrink(
+            Model model,
+            @ModelAttribute(value = "food") Food food) {
+        model.addAttribute("food", food);
+        boolean updateFood = foodService.update(food);
+        if(updateFood)
+            return "redirect:/admin/food/detail/" + food.getId();
+
+        return "foodUpdate" ;
     }
 }

@@ -27,4 +27,9 @@ public class FoodServiceImpl implements FoodService {
     public Food getFoodById(int id) {
         return foodRepository.getFoodById(id);
     }
+
+    @Override
+    public boolean update(Food food) {
+        return foodRepository.update(food);
+    }
 }

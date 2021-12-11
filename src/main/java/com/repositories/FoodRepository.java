@@ -10,4 +10,6 @@ public interface FoodRepository {
     int getFoodCount(String kw);
 
     Food getFoodById(int id);
+
+    boolean update(Food food);
 }
