@@ -1,5 +1,10 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,9 +14,10 @@ import java.util.Date;
 public class BillDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id =1;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+@JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bill_id")
     private Bill bill;
 
@@ -20,15 +26,18 @@ public class BillDetail implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+@JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "drink_id")
     private Drink drink;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+@JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
     private Food food;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+@JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
     private Service service;
 
@@ -37,6 +46,8 @@ public class BillDetail implements Serializable {
 
     @Column(name = "type")
     private String type;
+
+    BillDetail(){}
 
     public BillDetail(Drink drink, int quantity) {
         this.drink = drink;

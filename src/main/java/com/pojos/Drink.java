@@ -1,5 +1,8 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -35,8 +38,24 @@ public class Drink implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
+//    @JsonIgnore
     @OneToMany(mappedBy = "drink")
     private List<BillDetail> billDetailList;
+
+    @ManyToMany(mappedBy = "drinkList")
+    private List<Bill> billList;
+
+    public List<Bill> getBillList() {
+        return billList;
+    }
+
+    public void setBillList(List<Bill> billList) {
+        this.billList = billList;
+    }
+
+    public Drink() {
+
+    }
 
     public List<BillDetail> getBillDetailList() {
         return billDetailList;

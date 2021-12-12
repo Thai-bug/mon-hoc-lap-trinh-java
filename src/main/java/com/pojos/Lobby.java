@@ -1,5 +1,7 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Entity()
 @Table(name = "lobby")
+
 public class Lobby implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

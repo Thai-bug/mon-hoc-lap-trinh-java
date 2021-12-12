@@ -1,5 +1,8 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -9,6 +12,7 @@ import java.util.List;
 
 @Entity()
 @Table(name = "food")
+
 public class Food implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,19 +39,19 @@ public class Food implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @OneToMany(mappedBy = "food")
-    private List<BillDetail> billDetailList;
+    @ManyToMany(mappedBy = "foodList")
+    private List<Bill> billList;
 
     public Food(){
         this.status = true;
     }
 
-    public List<BillDetail> getBillDetailList() {
-        return billDetailList;
+    public List<Bill> getBillList() {
+        return billList;
     }
 
-    public void setBillDetailList(List<BillDetail> billDetailList) {
-        this.billDetailList = billDetailList;
+    public void setBillList(List<Bill> billList) {
+        this.billList = billList;
     }
 
     public int getId() {

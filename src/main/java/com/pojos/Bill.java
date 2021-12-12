@@ -1,6 +1,10 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,52 +34,66 @@ public class Bill implements Serializable {
     @ColumnDefault("true")
     private boolean status;
 
-    @Column(name = "customer_full_name")
-    private String customerFullName;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sale_id")
     private Employee employee;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lobby_id")
     private Lobby lobby;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
-    private List<BillDetail> detailList;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "bill_drink",
+            joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "drink_id", referencedColumnName = "id"))
+    private List<Drink> drinkList;
 
-    public String getCustomerFullName() {
-        return customerFullName;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "bill_food",
+            joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"))
+    private List<Food> foodList;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "bill_service",
+            joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
+    private List<Service> serviceList;
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
+//    private List<BillDetail> detailList;
+
+    public Bill() {
     }
-
-    public void setCustomerFullName(String customerFullName) {
-        this.customerFullName = customerFullName;
-    }
-
-    public List<BillDetail> getDetailList() {
-        return detailList;
-    }
-
-    public void setDetailList(List<BillDetail> detailList) {
-        this.detailList = detailList;
-    }
-
     public Lobby getLobby() {
         return lobby;
     }
 
-    public List<BillDetail> getBillDetailList() {
-        return detailList;
-    }
-
-    public void setBillDetailList(List<BillDetail> detailList) {
-        this.detailList = detailList;
-    }
+//    public List<BillDetail> getDetailList() {
+//        return detailList;
+//    }
+//
+//    public void setDetailList(List<BillDetail> detailList) {
+//        this.detailList = detailList;
+//    }
+//
+//
+//    public List<BillDetail> getBillDetailList() {
+//        return detailList;
+//    }
+//
+//    public void setBillDetailList(List<BillDetail> detailList) {
+//        this.detailList = detailList;
+//    }
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;

@@ -32,3 +32,9 @@ ${_csrf.token}${_csrf.parameterName}
         </nav>
     </div>
 </div>
+
+<script>
+    fetch("/restaurant_war_exploded/admin/bills/api")
+    .then(response => response.json())
+    .then(data=>console.log(data))
+</script>
