@@ -11,5 +11,7 @@ public interface ServiceRepository {
 
     Service getServiceById(int id);
 
+    boolean update(Service service);
 
+    boolean add(Service service);
 }

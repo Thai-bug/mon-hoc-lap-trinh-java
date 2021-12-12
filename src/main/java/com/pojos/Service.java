@@ -32,6 +32,10 @@ public class Service implements Serializable {
     @OneToMany(mappedBy = "service")
     private List<BillDetail> billDetailList;
 
+    public Service() {
+        this.status = true;
+    }
+
     public List<BillDetail> getBillDetailList() {
         return billDetailList;
     }

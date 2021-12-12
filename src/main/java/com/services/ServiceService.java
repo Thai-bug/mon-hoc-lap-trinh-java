@@ -10,4 +10,8 @@ public interface ServiceService {
     int getServicesCount(String kw);
 
     Service getServiceById(int id);
+
+    boolean update(Service service);
+
+    boolean add(Service service);
 }

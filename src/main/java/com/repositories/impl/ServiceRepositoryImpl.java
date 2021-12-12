@@ -58,4 +58,33 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
         return session.createQuery(query).getSingleResult();
     }
+
+    @Override
+    public boolean update(Service service) {
+        Session session = sessionFactory.getObject().openSession();
+        try{
+            session.getTransaction().begin();
+            session.update(service);
+            session.getTransaction().commit();
+        }
+        catch (Exception err){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean add(Service service) {
+        Session session = sessionFactory.getObject().openSession();
+        try{
+            session.getTransaction().begin();
+            session.save(service);
+            session.getTransaction().commit();
+        }
+        catch (Exception err){
+            System.out.println(err.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

@@ -30,6 +30,9 @@ public class Bill implements Serializable {
     @ColumnDefault("true")
     private boolean status;
 
+    @Column(name = "customer_full_name")
+    private String customerFullName;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
@@ -45,6 +48,22 @@ public class Bill implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
     private List<BillDetail> detailList;
+
+    public String getCustomerFullName() {
+        return customerFullName;
+    }
+
+    public void setCustomerFullName(String customerFullName) {
+        this.customerFullName = customerFullName;
+    }
+
+    public List<BillDetail> getDetailList() {
+        return detailList;
+    }
+
+    public void setDetailList(List<BillDetail> detailList) {
+        this.detailList = detailList;
+    }
 
     public Lobby getLobby() {
         return lobby;

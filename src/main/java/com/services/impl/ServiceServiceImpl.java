@@ -26,4 +26,14 @@ public class ServiceServiceImpl implements ServiceService {
     public com.pojos.Service getServiceById(int id) {
         return serviceRepository.getServiceById(id);
     }
+
+    @Override
+    public boolean add(com.pojos.Service service) {
+        return serviceRepository.add(service);
+    }
+
+    @Override
+    public boolean update(com.pojos.Service service) {
+        return serviceRepository.update(service);
+    }
 }
