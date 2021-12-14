@@ -20,8 +20,9 @@ public class DrinkController {
     private DrinkService drinkService;
 
     @RequestMapping("")
-    public String showDrinks(Model model,
-                             @RequestParam(required = false) Map<String, String> params
+    public String showDrinks(
+            Model model,
+            @RequestParam(required = false) Map<String, String> params
     ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
@@ -35,7 +36,8 @@ public class DrinkController {
     }
 
     @RequestMapping("/detail/{id}")
-    public String drinkDetail(Model model, @PathVariable(value = "id") int id) {
+    public String drinkDetail(Model model,
+                              @PathVariable(value = "id") int id) {
         Drink drink = drinkService.getDrinkById(id);
 
         model.addAttribute("drink", drink);
@@ -76,7 +78,7 @@ public class DrinkController {
             @ModelAttribute(value = "drink") Drink drink) {
         model.addAttribute("drink", drink);
         boolean add = drinkService.add(drink);
-        if(add)
+        if (add)
             return "redirect:/admin/drinks";
         return "drinkAdd";
     }

@@ -1,5 +1,6 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
@@ -42,6 +43,7 @@ public class Lobby implements Serializable {
     private Date createdAt = new Date();
 
     @OneToMany(mappedBy = "lobby")
+    @JsonIgnore
     private List<Bill> bills;
 
     public Lobby() {

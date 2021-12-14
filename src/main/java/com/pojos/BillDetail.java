@@ -16,8 +16,8 @@ public class BillDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id =1;
 
-@JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+// @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bill_id")
     private Bill bill;
 
@@ -26,18 +26,18 @@ public class BillDetail implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-@JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+// @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "drink_id")
     private Drink drink;
 
-@JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+// @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "food_id")
     private Food food;
 
-@JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+// @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_id")
     private Service service;
 

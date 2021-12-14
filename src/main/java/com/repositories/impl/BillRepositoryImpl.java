@@ -4,7 +4,9 @@ import com.pojos.Bill;
 import com.pojos.Drink;
 import com.pojos.Employee;
 import com.repositories.BillRepository;
+import com.repositories.EmployeeRepository;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -23,8 +25,33 @@ public class BillRepositoryImpl implements BillRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @Override
-    public List<Bill> getBills() {
+    public List<Bill> getBills(int page) {
+        Employee loginEmployee = employeeRepository.loadLoginEmployee();
+        Session session = sessionFactory.getObject().openSession();
+        String query = "" +
+                "with recursive child as (select\n" +
+                "    employee.* from employee where employee.id = :id union\n" +
+                "    select e.* from employee e join child on child.id = e.parent_id)\n" +
+                "select b.* from child\n" +
+                "inner join bill b on b.sale_id = child.id\n" +
+                "where child.id != :id or child.id = :id \n" +
+                "limit 5 offset :offset ";
+
+        NativeQuery q = session.createNativeQuery(
+                query, Bill.class
+        );
+
+        q.setParameter("id", loginEmployee.getId());
+        q.setParameter("offset", (page - 1) * 5);
+        return q.getResultList();
+    }
+
+    @Override
+    public Bill getBIllById(int id) {
         Session session = sessionFactory.getObject().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
@@ -32,9 +59,9 @@ public class BillRepositoryImpl implements BillRepository {
         root.join("employee");
         query = query.select(root);
 
-        Predicate p = builder.equal(root.get("id").as(Integer.class), 1);
+        Predicate p = builder.equal(root.get("id").as(Integer.class), id);
         query = query.where(p);
         Query q = session.createQuery(query);
-        return q.getResultList();
+        return (Bill) q.getSingleResult();
     }
 }

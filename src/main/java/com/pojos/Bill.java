@@ -13,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "bill")
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Bill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,56 +22,61 @@ public class Bill implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "customer_name")
     private String customerName;
 
     @Column(name = "provisional_momeny")
-    private double provisionalMoney;
+    private long provisionalMoney;
 
     @Column(name = "final_money")
-    private double finalMoney;
+    private long finalMoney;
 
     @Column(name = "status")
     @ColumnDefault("true")
     private boolean status;
-
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    // @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sale_id")
     private Employee employee;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    // @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lobby_id")
     private Lobby lobby;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "bill_drink",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "drink_id", referencedColumnName = "id"))
     private List<Drink> drinkList;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "bill_food",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"))
     private List<Food> foodList;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "bill_service",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
     private List<Service> serviceList;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
-//    private List<BillDetail> detailList;
+    @Column(name = "begin_date")
+    private Date beginDate;
+
+    @Column(name = "end_date")
+    private Date endDate;
 
     public Bill() {
     }
@@ -78,22 +84,53 @@ public class Bill implements Serializable {
         return lobby;
     }
 
-//    public List<BillDetail> getDetailList() {
-//        return detailList;
-//    }
-//
-//    public void setDetailList(List<BillDetail> detailList) {
-//        this.detailList = detailList;
-//    }
-//
-//
-//    public List<BillDetail> getBillDetailList() {
-//        return detailList;
-//    }
-//
-//    public void setBillDetailList(List<BillDetail> detailList) {
-//        this.detailList = detailList;
-//    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Drink> getDrinkList() {
+        return drinkList;
+    }
+
+    public void setDrinkList(List<Drink> drinkList) {
+        this.drinkList = drinkList;
+    }
+
+    public List<Food> getFoodList() {
+        return foodList;
+    }
+
+    public void setFoodList(List<Food> foodList) {
+        this.foodList = foodList;
+    }
+
+    public List<Service> getServiceList() {
+        return serviceList;
+    }
+
+    public void setServiceList(List<Service> serviceList) {
+        this.serviceList = serviceList;
+    }
+
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
@@ -131,19 +168,19 @@ public class Bill implements Serializable {
         this.customerName = customerName;
     }
 
-    public double getProvisionalMoney() {
+    public long getProvisionalMoney() {
         return provisionalMoney;
     }
 
-    public void setProvisionalMoney(double provisionalMoney) {
+    public void setProvisionalMoney(long provisionalMoney) {
         this.provisionalMoney = provisionalMoney;
     }
 
-    public double getFinalMoney() {
+    public long getFinalMoney() {
         return finalMoney;
     }
 
-    public void setFinalMoney(double finalMoney) {
+    public void setFinalMoney(long finalMoney) {
         this.finalMoney = finalMoney;
     }
 

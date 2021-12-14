@@ -14,7 +14,12 @@ public class BillServiceImpl implements BillService {
     private BillRepository billRepository;
 
     @Override
-    public List<Bill> getBills() {
-        return billRepository.getBills();
+    public List<Bill> getBills(int page) {
+        return billRepository.getBills(page);
+    }
+
+    @Override
+    public Bill getBillById(int id) {
+        return billRepository.getBIllById(id);
     }
 }

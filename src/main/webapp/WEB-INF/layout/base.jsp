@@ -20,9 +20,11 @@
     <link href="<c:url value="/css/style.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/css/main.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/css/utils.css"/>" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
-
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
@@ -41,9 +43,9 @@
         lỗi truy cập
     </c:if>
     <c:if test="${pageContext.request.userPrincipal.name !=null}">
-    <div class="sider">
-        <tiles:insertAttribute name="sider"/>
-    </div>
+        <div class="sider">
+            <tiles:insertAttribute name="sider"/>
+        </div>
     </c:if>
 
     <div class="layout w-full">

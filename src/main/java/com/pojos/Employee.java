@@ -1,8 +1,6 @@
 package com.pojos;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.validator.employee.CompanyEmail;
 import com.validator.employee.Phone;
@@ -17,6 +15,7 @@ import java.util.List;
 
 @Entity()
 @Table(name = "employee")
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Employee implements Serializable {
     public static final String ADMIN = "ADMIN";
     public static final String MANAGER = "MANAGER";
@@ -64,13 +63,14 @@ public class Employee implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    // @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     private Employee parent;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    // @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
+    @JsonIgnore
     private List<Bill> bills;
 
     @Column(name = "avatar")

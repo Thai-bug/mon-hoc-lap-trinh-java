@@ -477,9 +477,31 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="bills" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/bill/index.jsp" name="bills" extends="bills">
-                <put-attribute name="find-bill"
-                               value="/WEB-INF/jsp/components/bill -find.jsp"/>
+            <definition template="/WEB-INF/jsp/bill/index.jsp" name="find" extends="bills">
+                <put-attribute name="bill-find"
+                               value="/WEB-INF/jsp/components/bill-find.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <!--    bill detail-->
+    <definition name="billDetail" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý đơn hàng"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/bill/detail.jsp" name="detail" extends="billDetail">
+                <put-attribute name="bill-detail"
+                               value="/WEB-INF/jsp/components/bill-detail.jsp"/>
             </definition>
         </put-attribute>
 
