@@ -36,4 +36,9 @@ public class ServiceServiceImpl implements ServiceService {
     public boolean update(com.pojos.Service service) {
         return serviceRepository.update(service);
     }
+
+    @Override
+    public List<com.pojos.Service> getServicesByName(String name, boolean status, int page) {
+        return serviceRepository.getServicesByName(name, status, page);
+    }
 }

@@ -1,11 +1,13 @@
 package com.services.impl;
 
+import com.pojos.Bill;
 import com.pojos.Lobby;
 import com.repositories.LobbyRepository;
 import com.services.LobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,5 +38,10 @@ public class LobbyServiceImpl implements LobbyService {
     @Override
     public boolean createLobby(Lobby lobby) {
         return lobbyRepository.createLobby(lobby);
+    }
+
+    @Override
+    public List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
+        return lobbyRepository.getByNameWithDate(name, beginDate, endDate, page);
     }
 }

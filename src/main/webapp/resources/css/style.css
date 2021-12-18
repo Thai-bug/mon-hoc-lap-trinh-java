@@ -52,3 +52,7 @@ html, body{
 .no-placeholder::placeholder {
     visibility: hidden;
 }
+
+.select2{
+    width: 100% !important;
+}

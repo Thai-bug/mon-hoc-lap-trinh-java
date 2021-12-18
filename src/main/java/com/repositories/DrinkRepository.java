@@ -14,4 +14,6 @@ public interface DrinkRepository {
     public boolean updateDrink(Drink drink);
 
     public boolean add(Drink drink);
+
+    public List<Drink> getDrinksByName(String name, boolean status, int page);
 }

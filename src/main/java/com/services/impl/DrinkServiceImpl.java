@@ -37,4 +37,9 @@ public class DrinkServiceImpl implements DrinkService {
     public boolean add(Drink drink) {
         return drinkRepository.add(drink);
     }
+
+    @Override
+    public List<Drink> getDrinkByName(String name, boolean status, int page) {
+        return drinkRepository.getDrinksByName(name, status, page);
+    }
 }

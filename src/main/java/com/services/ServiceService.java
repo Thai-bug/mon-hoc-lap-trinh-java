@@ -14,4 +14,6 @@ public interface ServiceService {
     boolean update(Service service);
 
     boolean add(Service service);
+
+    List<Service> getServicesByName(String name, boolean status, int page);
 }

@@ -87,4 +87,30 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         }
         return true;
     }
+
+    @Override
+    public List<Service> getServicesByName(String name, boolean status, int page) {
+        Session session = sessionFactory.getObject().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Service> query = builder.createQuery(Service.class);
+        Root root = query.from(Service.class);
+        query = query.select(root);
+
+        Predicate p =
+                builder.and(
+                        builder.like(
+                                builder.lower(root.get("name").as(String.class)
+                                ), "%" + name + "%"),
+                        status ?
+                                builder.isTrue(root.<Boolean> get("status")) :
+                                builder.isFalse(root.<Boolean> get("status"))
+                );
+        query = query.where(p);
+        Query q = session
+                .createQuery(query)
+                .setFirstResult((page - 1) * 5)
+                .setMaxResults(5);
+
+        return q.getResultList();
+    }
 }

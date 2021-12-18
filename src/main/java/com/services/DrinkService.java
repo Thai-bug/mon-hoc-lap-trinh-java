@@ -14,4 +14,6 @@ public interface DrinkService {
     boolean updateDrink(Drink drink);
 
     boolean add(Drink drink);
+
+    List<Drink> getDrinkByName(String name, boolean status, int page);
 }

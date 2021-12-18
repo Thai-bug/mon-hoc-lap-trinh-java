@@ -37,4 +37,9 @@ public class FoodServiceImpl implements FoodService {
     public boolean add(Food food) {
         return foodRepository.add(food);
     }
+
+    @Override
+    public List<Food> getFoodsByName(String name, boolean status, int page) {
+        return foodRepository.getFoodsByName(name, status, page);
+    }
 }

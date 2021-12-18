@@ -96,12 +96,130 @@ $('.alert-button').on('click', function(){
  * END REGION
  * */
 
-const btn = document.querySelector("button.mobile-menu-button");
-const menu = document.querySelector(".mobile-menu");
 
-// add event listeners
-btn.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
+/**
+ * FORMAT MONEY
+ */
+function dottedMoney(moneyString){
+    return moneyString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+}
+
+/**
+ * END REGION
+ */
+
+let timeOut;
+
+$(document).ready(function() {
+    $('#food-list').select2({
+        placeholder: "Chọn món ăn để thêm",
+        ajax: {
+            url: '/restaurant_war_exploded/api/v1/admin/foods/select2/food-by-name',
+            dataType: 'json',
+            delay: 100,
+            data: function (params) {
+                console.log(params);
+                let query = {
+                    name: params.term,
+                    status: true
+                }
+
+                // Query parameters will be ?search=[term]&type=public
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(item=> {
+                        return {id: item.id, text: item.name, price: item.price}
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#drink-list').select2({
+        placeholder: "Chọn đồ uống để thêm",
+        ajax: {
+            url: '/restaurant_war_exploded/api/v1/admin/drinks/select2/drink-by-name',
+            dataType: 'json',
+            delay: 100,
+            data: function (params) {
+                console.log(params);
+                let query = {
+                    name: params.term,
+                    status: true
+                }
+
+                // Query parameters will be ?search=[term]&type=public
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(item=> {
+                        return {id: item.id, text: item.name}
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#service-list').select2({
+        placeholder: "Chọn dịch vụ để thêm",
+        ajax: {
+            url: '/restaurant_war_exploded/api/v1/admin/services/select2/service-by-name',
+            dataType: 'json',
+            delay: 100,
+            data: function (params) {
+                console.log(params);
+                let query = {
+                    name: params.term,
+                    status: true
+                }
+
+                // Query parameters will be ?search=[term]&type=public
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(item=> {
+                        return {id: item.id, text: item.name}
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#lobby-select').select2({
+        placeholder: "Chọn sảnh để đổi",
+        ajax: {
+            url: '/restaurant_war_exploded/api/v1/admin/lobby/select2/lobby-by-name',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                let query = {
+                    name: params.term,
+                    status: true,
+                    endDate: !$('#endDate') || $('#endDate')==='' ? null : moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
+                    beginDate: !$('#beginDate') || $('#beginDate')==='' ? null : moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf()
+                }
+
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(item=> {
+                        return {id: item.id, text: item.name}
+                    })
+                };
+            },
+            cache: true
+        }
+    });
 });
 
+
+$('#tables').on('change', tablesChange);
 

@@ -1,7 +1,9 @@
 package com.services;
 
+import com.pojos.Bill;
 import com.pojos.Lobby;
 
+import java.util.Date;
 import java.util.List;
 
 public interface LobbyService {
@@ -14,4 +16,6 @@ public interface LobbyService {
     boolean updateLobby(Lobby lobby);
 
     boolean createLobby(Lobby lobby);
+
+    List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page);
 }

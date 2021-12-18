@@ -1,7 +1,9 @@
 package com.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -12,7 +14,6 @@ import java.util.List;
 
 @Entity()
 @Table(name = "food")
-
 public class Food implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +41,7 @@ public class Food implements Serializable {
     private Date createdAt = new Date();
 
     @ManyToMany(mappedBy = "foodList")
+    @JsonIgnore
     private List<Bill> billList;
 
     public Food(){

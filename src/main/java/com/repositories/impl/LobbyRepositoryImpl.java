@@ -1,5 +1,6 @@
 package com.repositories.impl;
 
+        import com.pojos.Bill;
         import com.pojos.Employee;
         import com.pojos.Lobby;
         import com.repositories.LobbyRepository;
@@ -16,6 +17,7 @@ package com.repositories.impl;
         import javax.persistence.criteria.CriteriaQuery;
         import javax.persistence.criteria.Predicate;
         import javax.persistence.criteria.Root;
+        import java.util.Date;
         import java.util.List;
 
 @Repository
@@ -89,5 +91,27 @@ public class LobbyRepositoryImpl implements LobbyRepository {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
+        Session session = sessionFactory.getObject().openSession();
+
+        Query q = session.createNativeQuery("select l.* from lobby l\n" +
+                "left join bill b on b.lobby_id = l.id\n" +
+                "where lower(l.name) like :name and l.status = true\n" +
+                "and( b.begin_date is null\n" +
+                "or (b.begin_date > :endDate or b.end_date < :beginDate)\n" +
+                "or(b.begin_date <= :beginDate and b.end_date >= :beginDate and b.status_id = 4)\n" +
+                "or (b.begin_date <= :endDate and b.end_date >= :endDate and b.status_id = 4)\n" +
+                "or (b.begin_date >= :beginDate and b.end_date <= :endDate and b.status_id = 4)\n"+
+                ")\n" +
+                "group by l.id\n" +
+                "limit 5 offset :page", Lobby.class);
+        q.setParameter("name", "%" + name + "%");
+        q.setParameter("beginDate", beginDate);
+        q.setParameter("endDate", endDate);
+        q.setParameter("page", (page - 1) * 5);
+        return q.getResultList();
     }
 }

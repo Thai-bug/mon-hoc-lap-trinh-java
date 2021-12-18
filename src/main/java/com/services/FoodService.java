@@ -14,4 +14,6 @@ public interface FoodService {
     boolean update(Food food);
 
     boolean add(Food food);
+
+    List<Food> getFoodsByName(String name, boolean status, int page);
 }

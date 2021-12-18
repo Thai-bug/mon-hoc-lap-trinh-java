@@ -19,19 +19,27 @@
     <meta charset="utf-8"/>
     <link href="<c:url value="/css/style.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/css/main.css"/>" rel="stylesheet"/>
-    <link href="<c:url value="/css/utils.css"/>" rel="stylesheet"/>
+    <link href="<c:url value="/css/utils.css"/>" rel="stylesheet"
+    /
+    >
     <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
     />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <title>
         <tiles:insertAttribute name="title"/>
     </title>
