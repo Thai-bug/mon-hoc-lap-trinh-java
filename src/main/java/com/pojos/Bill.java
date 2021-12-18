@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "bill")
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Bill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +34,14 @@ public class Bill implements Serializable {
     @Column(name = "final_money")
     private long finalMoney;
 
-    @Column(name = "status")
-    @ColumnDefault("true")
-    private boolean status;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     // @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
@@ -78,10 +78,26 @@ public class Bill implements Serializable {
     @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "total_table")
+    private int totalTable;
+
     public Bill() {
     }
+
+    public int getTotalTable() {
+        return totalTable;
+    }
+
+    public void setTotalTable(int totalTable) {
+        this.totalTable = totalTable;
+    }
+
     public Lobby getLobby() {
         return lobby;
+    }
+
+    public void setLobby(Lobby lobby) {
+        this.lobby = lobby;
     }
 
     public String getName() {
@@ -132,10 +148,6 @@ public class Bill implements Serializable {
         this.endDate = endDate;
     }
 
-    public void setLobby(Lobby lobby) {
-        this.lobby = lobby;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
@@ -184,19 +196,19 @@ public class Bill implements Serializable {
         this.finalMoney = finalMoney;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

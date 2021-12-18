@@ -31,9 +31,17 @@ public class BillController {
     @RequestMapping("/detail")
     public String detail(
             Model model,
-            @RequestParam(required = false) Map<String, String> params
+            @RequestParam(required = true) Map<String, String> params
     ) {
         return "billDetail";
+    }
+
+    @RequestMapping("/update")
+    public String updateBill(
+            Model model,
+            @RequestParam(required = true) Map<String, String> params
+    ) {
+        return "billUpdate";
     }
 
 }
