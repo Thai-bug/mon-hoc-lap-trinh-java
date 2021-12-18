@@ -50,6 +50,7 @@ const passData = (orderInfo) => {
     $('#total').val(dottedMoney(orderInfo.finalMoney));
 
     $('#tables').val(orderInfo.totalTable);
+    localStorage.setItem('tables', orderInfo.totalTable);
 
     orderedFood = orderedFood.concat(orderInfo.foodList);
     orderedDrink = orderedDrink.concat(orderInfo.drinkList);
@@ -116,6 +117,7 @@ const showDrinks = () => {
 }
 
 const showService = () => {
+    $("#service").empty();
     const html = JSON.parse( localStorage.getItem('orderedService'))
         .map((item, index) => {
         if (index % 2 === 0)
@@ -206,7 +208,8 @@ $(document.body).on("change","#drink-list",function(){
 
         orderedDrink.push({
             id: +this.value,
-            name: text
+            name: text,
+            price: +$(this).select2('data')[0].price
         });
     }
 
@@ -244,25 +247,53 @@ const deleteDrink = (id) => {
     showDrinks();
 }
 
+//add service
+$(document.body).on("change","#service-list",function(){
+    let addedService = !localStorage.getItem('addedService') ? [] : JSON.parse(localStorage.getItem('addedService'));
+    let deletedService = !localStorage.getItem('deletedService') ? [] : JSON.parse(localStorage.getItem('deletedService'));
+    let orderedService = !localStorage.getItem('orderedService') ? [] : JSON.parse(localStorage.getItem('orderedService'));
 
-//reload window
-$(window).on('load', function(){
-    //food
-   localStorage.removeItem('deletedFood');
-    localStorage.removeItem('addedFood');
-    localStorage.removeItem('orderedFood');
+    const text = $(this).find("option:selected").text();
+    if(
+        !orderedService.filter(item => +item.id === +this.value)[0]){
 
-    //drink
-    localStorage.removeItem('deletedDrink');
-    localStorage.removeItem('orderedDrink');
-    localStorage.removeItem('addedDrink');
+        orderedService.push({
+            id: +this.value,
+            name: text,
+            price: +$(this).select2('data')[0].price
+        });
+    }
 
-    //service
-    localStorage.removeItem('deletedService');
-    localStorage.removeItem('orderedService');
-    localStorage.removeItem('addedService');
+    if(!addedService.filter(item => +item === +this.value)[0]){
+        addedService.push(+this.value);
+    }
 
-    //date
-    localStorage.removeItem('beginDate');
-    localStorage.removeItem('endDate');
-});
+    deletedService = deletedService.filter(item => +item.id !== +this.value);
+
+    localStorage.setItem('deletedService', JSON.stringify(deletedService));
+    localStorage.setItem('addedService', JSON.stringify(addedService));
+    localStorage.setItem('orderedService', JSON.stringify(orderedService));
+
+    showService();
+})
+
+//delete drink
+const deleteService = (id) => {
+    let addedService = !localStorage.getItem('addedService') ? [] : JSON.parse(localStorage.getItem('addedService'));
+    let deletedService = !localStorage.getItem('deletedService') ? [] : JSON.parse(localStorage.getItem('deletedService'));
+    let orderedService = !localStorage.getItem('orderedService') ? [] : JSON.parse(localStorage.getItem('orderedService'));
+
+    if(
+        !deletedService.filter(item => +item === +id)[0] && data.deletedService.filter(item => item.id === +id).length > 0){
+        deletedService.push(+id);
+    }
+
+    addedService = addedService.filter(item => +item.id !== +id);
+    orderedService = orderedService.filter(item => +item.id !== +id);
+
+    localStorage.setItem('deletedService', JSON.stringify(deletedService));
+    localStorage.setItem('addedService', JSON.stringify(addedService));
+    localStorage.setItem('orderedService', JSON.stringify(orderedService));
+
+    showDrinks();
+}

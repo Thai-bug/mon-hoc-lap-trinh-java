@@ -3,7 +3,7 @@
  * */
 
 //document is ready to use
-$( document ).ready(function() {
+$(document).ready(function () {
     preprocessToggle();
 })
 
@@ -16,10 +16,10 @@ File.prototype.convertToBase64 = function (callback) {
 };
 
 //preprocess toggle
-function preprocessToggle(){
+function preprocessToggle() {
     let toggle = $('.status-select')
     let value = toggle.find(':selected').val()
-    if(value === 'true') {
+    if (value === 'true') {
         toggle.addClass('select-success');
         $('.toggle-active-status-title').removeClass('hidden');
         return
@@ -50,19 +50,19 @@ $('#cancel-avatar').on("click", function () {
 $('#avatar').on('change', function (e) {
     let selectedFile = this.files[0];
     selectedFile.convertToBase64(function (base64) {
-        $('#show-avatar').attr("src",base64);
-        $('#update-avatar').attr("disabled",false);
+        $('#show-avatar').attr("src", base64);
+        $('#update-avatar').attr("disabled", false);
     })
 })
 
 /**
  * PROCESS SELECT STATUS
  * */
-$('.status-select').on('change', function(e){
+$('.status-select').on('change', function (e) {
     let toggle = $(this)
     let value = toggle.find(':selected').val()
-    if(value === 'true') {
-        toggle.attr('value','false')
+    if (value === 'true') {
+        toggle.attr('value', 'false')
         $('.toggle-active-status-title').removeClass('hidden');
         $('.toggle-disabled-status-title').addClass('hidden');
 
@@ -88,7 +88,7 @@ $('.status-select').on('change', function(e){
  * ALERT BUTTON
  * */
 
-$('.alert-button').on('click', function(){
+$('.alert-button').on('click', function () {
     $('.alert').remove();
 })
 
@@ -100,7 +100,7 @@ $('.alert-button').on('click', function(){
 /**
  * FORMAT MONEY
  */
-function dottedMoney(moneyString){
+function dottedMoney(moneyString) {
     return moneyString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
 
@@ -108,9 +108,9 @@ function dottedMoney(moneyString){
  * END REGION
  */
 
-let timeOut;
+let timeOut = 0;
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#food-list').select2({
         placeholder: "Chọn món ăn để thêm",
         ajax: {
@@ -129,7 +129,7 @@ $(document).ready(function() {
             },
             processResults: function (data) {
                 return {
-                    results: data.map(item=> {
+                    results: data.map(item => {
                         return {id: item.id, text: item.name, price: item.price}
                     })
                 };
@@ -156,7 +156,7 @@ $(document).ready(function() {
             },
             processResults: function (data) {
                 return {
-                    results: data.map(item=> {
+                    results: data.map(item => {
                         return {id: item.id, text: item.name}
                     })
                 };
@@ -183,7 +183,7 @@ $(document).ready(function() {
             },
             processResults: function (data) {
                 return {
-                    results: data.map(item=> {
+                    results: data.map(item => {
                         return {id: item.id, text: item.name}
                     })
                 };
@@ -202,15 +202,15 @@ $(document).ready(function() {
                 let query = {
                     name: params.term,
                     status: true,
-                    endDate: !$('#endDate') || $('#endDate')==='' ? null : moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
-                    beginDate: !$('#beginDate') || $('#beginDate')==='' ? null : moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf()
+                    endDate: !$('#endDate') || $('#endDate') === '' ? null : moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
+                    beginDate: !$('#beginDate') || $('#beginDate') === '' ? null : moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf()
                 }
 
                 return query;
             },
             processResults: function (data) {
                 return {
-                    results: data.map(item=> {
+                    results: data.map(item => {
                         return {id: item.id, text: item.name}
                     })
                 };
@@ -221,5 +221,73 @@ $(document).ready(function() {
 });
 
 
-$('#tables').on('change', tablesChange);
+$('#tables').on('input', function () {
+    clearTimeout(timeOut);
 
+    timeOut = setTimeout(function () {
+        let oldMoney = +$('#total').val().replace(/\./g, '');
+
+        let foodMoney = 0;
+        JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {
+            foodMoney += +item.price * +localStorage.getItem('tables');
+        })
+
+        let drinkMoney = 0;
+        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+            drinkMoney += +item.price * +localStorage.getItem('tables');
+        })
+
+        let serviceMoney = 0;
+        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+            serviceMoney += +item.price;
+        })
+
+        let temp = +$('#total').val().replace(/\./g, '')  - (foodMoney + drinkMoney + serviceMoney);
+
+        foodMoney = 0;
+        JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {
+            foodMoney += +item.price * +$('#tables').val();
+        })
+
+        drinkMoney = 0;
+        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+            drinkMoney += +item.price * +$('#tables').val();
+        })
+
+        serviceMoney = 0;
+        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+            serviceMoney += +item.price;
+        })
+
+
+        console.log({
+            drinkMoney, foodMoney, serviceMoney, temp
+        })
+
+        $('#total').val(dottedMoney(temp + foodMoney + drinkMoney + serviceMoney));
+        localStorage.setItem('tables', $('#tables').val());
+
+    }, 250);
+});
+
+//reload window
+$(window).on('load', function () {
+    //food
+    localStorage.removeItem('deletedFood');
+    localStorage.removeItem('addedFood');
+    localStorage.removeItem('orderedFood');
+
+    //drink
+    localStorage.removeItem('deletedDrink');
+    localStorage.removeItem('orderedDrink');
+    localStorage.removeItem('addedDrink');
+
+    //service
+    localStorage.removeItem('deletedService');
+    localStorage.removeItem('orderedService');
+    localStorage.removeItem('addedService');
+
+    //date
+    localStorage.removeItem('beginDate');
+    localStorage.removeItem('endDate');
+});
