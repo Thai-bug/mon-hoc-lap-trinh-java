@@ -1,25 +1,40 @@
 package com.request;
 
+import com.pojos.Drink;
+import com.pojos.Food;
+import com.pojos.Service;
+import com.pojos.Status;
+
+import java.util.Date;
 import java.util.List;
 
 public class BillRequest {
-    int id;
+    String code;
     String customerName;
-    List<Integer> addFoods;
-    List<Integer> deleteFoods;
+    List<Food> addFoods;
+    List<Food> deleteFoods;
 
-    List<Integer> addDrinks;
-    List<Integer> deletedDrink;
+    List<Drink> addDrinks;
+    List<Drink> deletedDrink;
 
-    List<Integer> addedServices;
-    List<Integer> deletedServices;
+    List<Service> addedServices;
+    List<Service> deletedServices;
 
-    public int getId() {
-        return id;
+    String name;
+
+    Status status;
+
+    Date beginDate;
+    Date endDate;
+
+    int lobbyId;
+
+    public String getId() {
+        return code;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String code) {
+        this.code = code;
     }
 
     public String getCustomerName() {
@@ -30,51 +45,5 @@ public class BillRequest {
         this.customerName = customerName;
     }
 
-    public List<Integer> getAddFoods() {
-        return addFoods;
-    }
 
-    public void setAddFoods(List<Integer> addFoods) {
-        this.addFoods = addFoods;
-    }
-
-    public List<Integer> getDeleteFoods() {
-        return deleteFoods;
-    }
-
-    public void setDeleteFoods(List<Integer> deleteFoods) {
-        this.deleteFoods = deleteFoods;
-    }
-
-    public List<Integer> getAddDrinks() {
-        return addDrinks;
-    }
-
-    public void setAddDrinks(List<Integer> addDrinks) {
-        this.addDrinks = addDrinks;
-    }
-
-    public List<Integer> getDeletedDrink() {
-        return deletedDrink;
-    }
-
-    public void setDeletedDrink(List<Integer> deletedDrink) {
-        this.deletedDrink = deletedDrink;
-    }
-
-    public List<Integer> getAddedServices() {
-        return addedServices;
-    }
-
-    public void setAddedServices(List<Integer> addedServices) {
-        this.addedServices = addedServices;
-    }
-
-    public List<Integer> getDeletedServices() {
-        return deletedServices;
-    }
-
-    public void setDeletedServices(List<Integer> deletedServices) {
-        this.deletedServices = deletedServices;
-    }
 }

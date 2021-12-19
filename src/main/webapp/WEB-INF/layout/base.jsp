@@ -40,12 +40,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://raw.githubusercontent.com/msroot/Notify.js/master/Notify.js" defer></script>
+
     <title>
         <tiles:insertAttribute name="title"/>
     </title>
 </head>
 <body>
 <%--HEADER--%>
+<div id="notifications"></div>
 <div class="h-screen md:container mx-auto flex flex-auto box-border min-h-0 flex flex-row">
     <c:if test="${param.accessDenied !=null}">
         lỗi truy cập

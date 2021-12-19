@@ -115,8 +115,8 @@
     </div>
 
     <div>
-        <a href="<c:url value="/admin/bills/update?id=${pageContext.request.getParameter('id')}" />">Cập nhật đơn
-            hàng</a>
+        <button type="button" onclick="update()"/>">Cập nhật đơn
+            hàng</button>
     </div>
 </div>
 
@@ -135,3 +135,4 @@
         max-height: 200px !important;
     }
 </style>
+

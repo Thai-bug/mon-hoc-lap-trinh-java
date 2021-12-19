@@ -45,7 +45,7 @@ public class ApiBillController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody ResponseEntity<Object> updateBill(@RequestBody BillRequest billRequest) {
         try{
-            System.out.println(billRequest.getAddFoods().get(0));
+//            System.out.println(billRequest.getAddFoods().get(0));
 
             return new ResponseEntity<Object>(billRequest, HttpStatus.OK);
         }catch (Exception e){

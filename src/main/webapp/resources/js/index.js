@@ -220,6 +220,11 @@ $(document).ready(function () {
     });
 });
 
+$('#lobby-select').on('change', function(){
+    $('#lobby').val($(this).text());
+    console.log($(this).val());
+})
+
 
 $('#tables').on('input', function () {
     clearTimeout(timeOut);
