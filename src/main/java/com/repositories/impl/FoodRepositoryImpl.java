@@ -23,7 +23,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public List<Food> getFoods(String kw, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
         Root root = query.from(Food.class);
@@ -37,7 +37,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public int getFoodCount(String kw) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("select count(*) from Food where name like :kw");
 
         q.setParameter("kw", "%" + kw + "%");
@@ -46,7 +46,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public Food getFoodById(int id) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
         Root root = query.from(Food.class);
@@ -60,7 +60,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public boolean update(Food food) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.getTransaction().begin();
             session.update(food);
@@ -73,7 +73,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public boolean add(Food food) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.getTransaction().begin();
             session.save(food);
@@ -86,7 +86,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public List<Food> getFoodsByName(String name, boolean status, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
         Root root = query.from(Food.class);

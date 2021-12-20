@@ -32,7 +32,7 @@ public class BillRepositoryImpl implements BillRepository {
     @Override
     public List<Bill> getBills(int page) {
         Employee loginEmployee = employeeRepository.loadLoginEmployee();
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         String query = "" +
                 "with recursive child as (select\n" +
                 "    employee.* from employee where employee.id = :id union\n" +
@@ -53,7 +53,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     public Bill getBill(int id) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
         Root root = query.from(Bill.class);
@@ -69,7 +69,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     public Bill getBill(String code) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
         Root root = query.from(Bill.class);
@@ -84,12 +84,10 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     public boolean update(Bill bill) {
-        Session session = sessionFactory.getObject().openSession();
-        Transaction tx = session.beginTransaction();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try{
 
             session.update(bill);
-            tx.commit();
 //            session.beginTransaction();
 //            session.merge(bill);
 //            session.getTransaction().commit();

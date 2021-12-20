@@ -24,7 +24,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public List<Service> getServices(String kw, int pgae) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
         Root root = query.from(Service.class);
@@ -38,7 +38,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public int getServicesCount(String kw) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("select count(*) from Service where name like :kw");
 
         q.setParameter("kw", "%" + kw + "%");
@@ -47,7 +47,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public Service getServiceById(int id) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
         Root root = query.from(Service.class);
@@ -61,7 +61,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public boolean update(Service service) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try{
             session.getTransaction().begin();
             session.update(service);
@@ -75,7 +75,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public boolean add(Service service) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try{
             session.getTransaction().begin();
             session.save(service);
@@ -90,7 +90,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public List<Service> getServicesByName(String name, boolean status, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
         Root root = query.from(Service.class);

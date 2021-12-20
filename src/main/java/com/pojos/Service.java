@@ -32,7 +32,8 @@ public class Service implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @ManyToMany(mappedBy = "serviceList")
+    @ManyToMany(mappedBy = "serviceList", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Bill> billList;
 
     @Override

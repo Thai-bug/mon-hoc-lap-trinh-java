@@ -25,7 +25,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public List<Drink> getDrinks(String kw, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
         Root root = query.from(Drink.class);
@@ -39,7 +39,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public int getCountDrinks(String kw) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("select count(*) from Drink where name like :kw");
 
         q.setParameter("kw", "%" + kw + "%");
@@ -48,7 +48,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public Drink getDrinkById(int id) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
         Root root = query.from(Drink.class);
@@ -62,7 +62,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public boolean updateDrink(Drink drink) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try{
             session.getTransaction().begin();
             session.update(drink);
@@ -76,7 +76,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public boolean add(Drink drink) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try{
             session.getTransaction().begin();
             session.save(drink);
@@ -90,7 +90,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
     @Override
     public List<Drink> getDrinksByName(String name, boolean status, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
         Root root = query.from(Drink.class);

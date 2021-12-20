@@ -29,7 +29,7 @@ public class Status implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "status")
     private List<Bill> bills;
 
     public Status() {}

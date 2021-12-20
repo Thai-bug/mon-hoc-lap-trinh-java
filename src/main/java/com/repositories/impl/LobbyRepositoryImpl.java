@@ -28,7 +28,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
 
     @Override
     public List<Lobby> getLobbies(String kw, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
 
@@ -43,7 +43,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
 
     @Override
     public int countLobby(String kw) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("select count(*) from Lobby where name like :kw");
 
         q.setParameter("kw", "%" + kw + "%");
@@ -52,7 +52,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
 
     @Override
     public Lobby getLobbyById(int id) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
         Root root = query.from(Lobby.class);
@@ -66,7 +66,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
 
     @Override
     public boolean updateLobby(Lobby lobby) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.getTransaction().begin();
             session.update(lobby);
@@ -80,7 +80,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
 
     @Override
     public boolean createLobby(Lobby lobby) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Transaction tx;
         try {
             tx = session.beginTransaction();
@@ -95,7 +95,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
 
     @Override
     public List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
 
         Query q = session.createNativeQuery("select l.* from lobby l\n" +
                 "left join bill b on b.lobby_id = l.id\n" +

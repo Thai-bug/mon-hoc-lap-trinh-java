@@ -26,7 +26,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public List<Employee> getEmployeesByPhone(String phone) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
         Root root = query.from(Employee.class);
@@ -40,7 +40,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Employee getEmployeeByEmail(String email) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
         Root root = query.from(Employee.class);
@@ -56,7 +56,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public List<Employee> getEmployees(int page, String kw) {
         Employee loginEmployee = loadLoginEmployee();
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         String query = "" +
                 "WITH RECURSIVE child AS ( SELECT employee.*  FROM employee WHERE employee.id = :id \n" +
                 "and (employee.last_name like :kw or employee.first_name like :kw) " +
@@ -85,7 +85,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public long getCountAllEmployees(String kw) {
         Employee loginEmployee = loadLoginEmployee();
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         String query = "WITH RECURSIVE child AS ( SELECT employee.*  FROM employee WHERE " +
                 "employee.id = :id " +
                 "and (employee.last_name like :kw or employee.first_name like :kw) " +
@@ -109,14 +109,14 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Employee getEmployeeById(int id) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Employee emp = session.get(Employee.class, id);
         return emp;
     }
 
     @Override
     public boolean updateEmployeeAvatar(Employee employee) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try {
             Employee emp = session.get(Employee.class, employee.getId());
             emp.setAvatarLink(employee.getAvatarLink());
@@ -131,7 +131,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public boolean updateEmployee(Employee employee) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.getTransaction().begin();
             session.update(employee);
@@ -144,7 +144,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public List<Employee> getParentsList() {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         String query = "select * from employee where role like '%_MANAGER';";
         NativeQuery q = session.createNativeQuery(query, Employee.class);
         return q.getResultList();
@@ -153,7 +153,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public boolean checkChildInParent(int childId) {
         Employee employee = loadLoginEmployee();
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         String query = "WITH RECURSIVE child AS ( SELECT employee.*  FROM employee WHERE " +
                 "employee.id = :parentID " +
                 "UNION\n" +
@@ -177,7 +177,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public boolean createEmployee(Employee employee) {
-        Session session = sessionFactory.getObject().openSession();
+        Session session = sessionFactory.getObject().getCurrentSession();
         Transaction tx;
         try {
             tx = session.beginTransaction();
