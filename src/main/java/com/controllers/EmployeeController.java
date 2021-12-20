@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @Controller
@@ -51,7 +51,7 @@ public class EmployeeController {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
 
-        List<Employee> employees = employeeService.getEmployees(page, kw);
+        Set<Employee> employees = employeeService.getEmployees(page, kw);
         long total = employeeService.getCountAllEmployee(kw);
         model.addAttribute("employees", employees);
         model.addAttribute("total", total);
@@ -97,7 +97,7 @@ public class EmployeeController {
             return "403";
         }
         Employee employee = employeeService.getEmployeeDetail(id);
-        List<Employee> parents = employeeService.getParentList();
+        Set<Employee> parents = employeeService.getParentList();
         model.addAttribute("employee", employee);
         model.addAttribute("parents", parents);
         return "updateEmployee";
@@ -117,7 +117,7 @@ public class EmployeeController {
 
     @RequestMapping("/admin/employee/create")
     public String createEmployeePage(Model model) {
-        List<Employee> parents = employeeService.getParentList();
+        Set<Employee> parents = employeeService.getParentList();
         model.addAttribute("employee", new Employee());
         model.addAttribute("parents", parents);
         return "createEmployee";
@@ -129,7 +129,7 @@ public class EmployeeController {
             @Valid Employee employee,
             BindingResult result
     ) {
-        List<Employee> parents = employeeService.getParentList();
+        Set<Employee> parents = employeeService.getParentList();
         model.addAttribute("parents", parents);
         if (result.hasErrors()) {
 

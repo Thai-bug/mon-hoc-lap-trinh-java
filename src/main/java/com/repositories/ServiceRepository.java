@@ -2,10 +2,10 @@ package com.repositories;
 
 import com.pojos.Service;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ServiceRepository {
-    List<Service> getServices(String kw, int pgae);
+    Set<Service> getServices(String kw, int pgae);
 
     int getServicesCount(String kw);
 
@@ -15,5 +15,5 @@ public interface ServiceRepository {
 
     boolean add(Service service);
 
-    List<Service> getServicesByName(String name, boolean status, int page);
+    Set<Service> getServicesByName(String name, boolean status, int page);
 }

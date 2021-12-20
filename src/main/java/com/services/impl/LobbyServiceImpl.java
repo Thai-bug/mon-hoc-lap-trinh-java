@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class LobbyServiceImpl implements LobbyService {
@@ -16,7 +16,7 @@ public class LobbyServiceImpl implements LobbyService {
     private LobbyRepository lobbyRepository;
 
     @Override
-    public List<Lobby> getLobbies(String kw, int page) {
+    public Set<Lobby> getLobbies(String kw, int page) {
         return lobbyRepository.getLobbies(kw, page);
     }
 
@@ -41,7 +41,7 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
+    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
         return lobbyRepository.getByNameWithDate(name, beginDate, endDate, page);
     }
 }

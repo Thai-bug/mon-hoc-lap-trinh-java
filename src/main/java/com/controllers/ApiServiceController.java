@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @RestController
@@ -17,14 +17,14 @@ public class ApiServiceController {
     private ServiceService serviceService;
 
     @GetMapping("/select2/service-by-name")
-    public ResponseEntity<List<Service>> getFoodsByName(
+    public ResponseEntity<Set<Service>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
         String name = params.get("name") == null ? "" : params.get("name");
         boolean status = params.get("status") == null ? true : Boolean.parseBoolean(params.get("status"));
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        List<Service> services = serviceService.getServicesByName(name, status, page);
-        return new ResponseEntity<List<Service>>(
+        Set<Service> services = serviceService.getServicesByName(name, status, page);
+        return new ResponseEntity<Set<Service>>(
                 services,
                 HttpStatus.OK);
     }

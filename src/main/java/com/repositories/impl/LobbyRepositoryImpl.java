@@ -18,7 +18,7 @@ package com.repositories.impl;
         import javax.persistence.criteria.Predicate;
         import javax.persistence.criteria.Root;
         import java.util.Date;
-        import java.util.List;
+        import java.util.Set;
 
 @Repository
 @Transactional
@@ -27,7 +27,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Lobby> getLobbies(String kw, int page) {
+    public Set<Lobby> getLobbies(String kw, int page) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
@@ -38,7 +38,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
 
-        return session.createQuery(query).getResultList();
+        return (Set<Lobby>) session.createQuery(query).getResultList();
     }
 
     @Override
@@ -94,7 +94,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     }
 
     @Override
-    public List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
+    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
         Session session = sessionFactory.getObject().getCurrentSession();
 
         Query q = session.createNativeQuery("select l.* from lobby l\n" +
@@ -112,6 +112,6 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         q.setParameter("beginDate", beginDate);
         q.setParameter("endDate", endDate);
         q.setParameter("page", (page - 1) * 5);
-        return q.getResultList();
+        return (Set<Lobby>) q.getResultList();
     }
 }

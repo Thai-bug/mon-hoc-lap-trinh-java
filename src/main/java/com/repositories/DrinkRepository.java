@@ -2,10 +2,10 @@ package com.repositories;
 
 import com.pojos.Drink;
 
-import java.util.List;
+import java.util.Set;
 
 public interface DrinkRepository {
-    public List<Drink> getDrinks(String kw, int page);
+    public Set<Drink> getDrinks(String kw, int page);
 
     public int getCountDrinks(String kw);
 
@@ -15,5 +15,5 @@ public interface DrinkRepository {
 
     public boolean add(Drink drink);
 
-    public List<Drink> getDrinksByName(String name, boolean status, int page);
+    public Set<Drink> getDrinksByName(String name, boolean status, int page);
 }

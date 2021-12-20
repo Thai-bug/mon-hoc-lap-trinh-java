@@ -4,7 +4,7 @@ import com.pojos.Employee;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.List;
+import java.util.Set;
 
 public interface EmployeeService extends UserDetailsService {
     Employee login(String phoneNumber, String password);
@@ -13,7 +13,7 @@ public interface EmployeeService extends UserDetailsService {
 
     Employee getEmployeeIn(String email);
 
-    List<Employee> getEmployees(int page, String kw);
+    Set<Employee> getEmployees(int page, String kw);
 
     long getCountAllEmployee(String kw);
 
@@ -23,7 +23,7 @@ public interface EmployeeService extends UserDetailsService {
 
     boolean updateEmployee(Employee employee);
 
-    List<Employee> getParentList();
+    Set<Employee> getParentList();
 
     boolean checkChildInParent(int id);
 

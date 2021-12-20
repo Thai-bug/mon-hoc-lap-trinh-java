@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @RestController
@@ -20,14 +20,14 @@ public class ApiDrinkController {
     private DrinkService drinkService;
 
     @GetMapping("/select2/drink-by-name")
-    public ResponseEntity<List<Drink>> getFoodsByName(
+    public ResponseEntity<Set<Drink>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
         String name = params.get("name") == null ? "" : params.get("name");
         boolean status = params.get("status") == null ? true : Boolean.parseBoolean(params.get("status"));
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        List<Drink> drinks = drinkService.getDrinkByName(name, status, page);
-        return new ResponseEntity<List<Drink>>(
+        Set<Drink> drinks = drinkService.getDrinkByName(name, status, page);
+        return new ResponseEntity<Set<Drink>>(
                 drinks,
                 HttpStatus.OK);
     }

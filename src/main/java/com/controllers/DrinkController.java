@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @Controller
@@ -27,7 +27,7 @@ public class DrinkController {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
 
-        List<Drink> drinks = drinkService.getDrinks(kw, page);
+        Set<Drink> drinks = drinkService.getDrinks(kw, page);
         int total = drinkService.getCountDrinks(kw);
 
         model.addAttribute("drinks", drinks);

@@ -2,10 +2,10 @@ package com.repositories;
 
 import com.pojos.Food;
 
-import java.util.List;
+import java.util.Set;
 
 public interface FoodRepository {
-    List<Food> getFoods(String kw, int page);
+    Set<Food> getFoods(String kw, int page);
 
     int getFoodCount(String kw);
 
@@ -15,5 +15,5 @@ public interface FoodRepository {
 
     boolean add(Food food);
 
-    List<Food> getFoodsByName(String name, boolean status, int page);
+    Set<Food> getFoodsByName(String name, boolean status, int page);
 }

@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @RestController
@@ -21,15 +21,15 @@ public class ApiLobbyController {
     private LobbyService lobbyService;
 
     @GetMapping("/select2/lobby-by-name")
-    public ResponseEntity<List<Lobby>> getFoodsByName(
+    public ResponseEntity<Set<Lobby>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
         String name = params.get("name") == null ? "" : params.get("name");
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         Date beginDate = params.get("beginDate") == null ? new Date() : new Date(Long.parseLong(params.get("beginDate")));
         Date endDate = params.get("endDate") == null ? new Date() : new Date(Long.parseLong(params.get("endDate")));
-        List<Lobby> lobbies = lobbyService.getByNameWithDate(name, beginDate, endDate, page);
-        return new ResponseEntity<List<Lobby>>(
+        Set<Lobby> lobbies = lobbyService.getByNameWithDate(name, beginDate, endDate, page);
+        return new ResponseEntity<Set<Lobby>>(
                 lobbies,
                 HttpStatus.OK);
     }

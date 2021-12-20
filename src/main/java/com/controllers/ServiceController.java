@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @Controller
@@ -25,7 +25,7 @@ public class ServiceController {
     ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
-        List<Service> services = service.getServices(kw, page);
+        Set<Service> services = service.getServices(kw, page);
         int total = service.getServicesCount(kw);
         model.addAttribute("services", services);
         model.addAttribute("total", total);

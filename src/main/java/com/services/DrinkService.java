@@ -2,10 +2,10 @@ package com.services;
 
 import com.pojos.Drink;
 
-import java.util.List;
+import java.util.Set;
 
 public interface DrinkService {
-    List<Drink> getDrinks(String kw, int page);
+    Set<Drink> getDrinks(String kw, int page);
 
     int getCountDrinks(String kw);
 
@@ -15,5 +15,5 @@ public interface DrinkService {
 
     boolean add(Drink drink);
 
-    List<Drink> getDrinkByName(String name, boolean status, int page);
+    Set<Drink> getDrinkByName(String name, boolean status, int page);
 }

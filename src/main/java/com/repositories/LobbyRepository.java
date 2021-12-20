@@ -3,10 +3,10 @@ package com.repositories;
 import com.pojos.Lobby;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public interface LobbyRepository {
-    List<Lobby> getLobbies(String kw, int page);
+    Set<Lobby> getLobbies(String kw, int page);
 
     int countLobby(String kw);
 
@@ -16,5 +16,5 @@ public interface LobbyRepository {
 
     boolean createLobby(Lobby lobby);
 
-    List<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page);
+    Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page);
 }

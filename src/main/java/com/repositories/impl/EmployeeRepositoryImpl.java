@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 import java.util.Set;
 
 @Repository
@@ -25,7 +25,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Employee> getEmployeesByPhone(String phone) {
+    public Set<Employee> getEmployeesByPhone(String phone) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
@@ -35,7 +35,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Predicate p = builder.like(root.get("phoneNumber").as(String.class), phone);
         query = query.where(p);
         Query q = session.createQuery(query);
-        return q.getResultList();
+        return (Set<Employee>) q.getResultList();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getEmployees(int page, String kw) {
+    public Set<Employee> getEmployees(int page, String kw) {
         Employee loginEmployee = loadLoginEmployee();
         Session session = sessionFactory.getObject().getCurrentSession();
         String query = "" +
@@ -79,7 +79,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         q.setParameter("kw", "%" + kw + "%");
         q.setParameter("id", loginEmployee.getId());
         q.setParameter("offset", (page - 1) * 5);
-        return q.getResultList();
+        return (Set<Employee>) q.getResultList();
     }
 
     @Override
@@ -143,11 +143,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getParentsList() {
+    public Set<Employee> getParentsList() {
         Session session = sessionFactory.getObject().getCurrentSession();
         String query = "select * from employee where role like '%_MANAGER';";
         NativeQuery q = session.createNativeQuery(query, Employee.class);
-        return q.getResultList();
+        return (Set<Employee>) q.getResultList();
     }
 
     @Override

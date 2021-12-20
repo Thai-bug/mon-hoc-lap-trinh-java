@@ -18,7 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -30,7 +30,7 @@ public class BillRepositoryImpl implements BillRepository {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public List<Bill> getBills(int page) {
+    public Set<Bill> getBills(int page) {
         Employee loginEmployee = employeeRepository.loadLoginEmployee();
         Session session = sessionFactory.getObject().getCurrentSession();
         String query = "" +
@@ -48,7 +48,7 @@ public class BillRepositoryImpl implements BillRepository {
 
         q.setParameter("id", loginEmployee.getId());
         q.setParameter("offset", (page - 1) * 5);
-        return q.getResultList();
+        return (Set<Bill>) q.getResultList();
     }
 
     @Override

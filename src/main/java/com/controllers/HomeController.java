@@ -18,13 +18,13 @@ public class HomeController {
     @ModelAttribute
     public void commonAttr(Model model){
 
-//        List<Category> categories = this.categoryService.getAllCategories();
+//        Set<Category> categories = this.categoryService.getAllCategories();
 //        model.addAttribute("categories", categories);s
     }
 
     @RequestMapping("/")
     public String index(Model model, @RequestParam(value = "kw", required = false, defaultValue = "") String kw){
-//        List<Product> products = this.productService.getProductsByName(kw);
+//        Set<Product> products = this.productService.getProductsByName(kw);
 //        model.addAttribute("products", products);
         return "index";
     }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity()
 @Table(name = "employee")
@@ -71,7 +71,7 @@ public class Employee implements Serializable {
     // @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
     @JsonIgnore
-    private List<Bill> bills;
+    private Set<Bill> bills;
 
     @Column(name = "avatar")
     private String avatarLink;
@@ -89,11 +89,11 @@ public class Employee implements Serializable {
         this.confirmPassword = "";
     }
 
-    public List<Bill> getBills() {
+    public Set<Bill> getBills() {
         return bills;
     }
 
-    public void setBills(List<Bill> bills) {
+    public void setBills(Set<Bill> bills) {
         this.bills = bills;
     }
 

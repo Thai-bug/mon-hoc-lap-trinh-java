@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 import java.util.Set;
 
 @Service("userDetailsService")
@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployees(int page, String kw) {
+    public Set<Employee> getEmployees(int page, String kw) {
         return employeeRepository.getEmployees(page, kw);
     }
 
@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getParentList() {
+    public Set<Employee> getParentList() {
         return employeeRepository.getParentsList();
     }
 

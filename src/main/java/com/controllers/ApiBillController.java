@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @RestController
@@ -40,9 +40,9 @@ public class ApiBillController {
     ResponseEntity<Bill> updateBill(@RequestBody BillRequest billRequest) {
         try {
             Bill bill = billService.getBill(billRequest.getCode());
-            List<Food> orderedFood = bill.getFoodList();
-            List<Drink> orderedDrinks = bill.getDrinkList();
-            List<Service> orderedServices = bill.getServiceList();
+            Set<Food> orderedFood = bill.getFoodList();
+            Set<Drink> orderedDrinks = bill.getDrinkList();
+            Set<Service> orderedServices = bill.getServiceList();
 
             if (billRequest.getDeletedFoods() != null)
                 orderedFood.removeAll(billRequest.getDeletedFoods());

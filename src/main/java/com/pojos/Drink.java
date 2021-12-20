@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity()
 @Table(name = "drink")
@@ -40,10 +40,10 @@ public class Drink implements Serializable {
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "drink")
-//    private List<BillDetail> billDetailList;
+//    private Set<BillDetail> billDetailList;
 
     @ManyToMany(mappedBy = "drinkList", fetch = FetchType.LAZY)
-    private List<Bill> billList;
+    private Set<Bill> billList;
 
     @Override
     public boolean equals(Object o) {
@@ -60,11 +60,11 @@ public class Drink implements Serializable {
         return id;
     }
 
-    public List<Bill> getBillList() {
+    public Set<Bill> getBillList() {
         return billList;
     }
 
-    public void setBillList(List<Bill> billList) {
+    public void setBillList(Set<Bill> billList) {
         this.billList = billList;
     }
 

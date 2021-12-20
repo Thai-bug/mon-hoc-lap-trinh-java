@@ -2,16 +2,16 @@ package com.repositories;
 
 import com.pojos.Employee;
 
-import java.util.List;
+import java.util.Set;
 
 public interface EmployeeRepository {
-    List<Employee> getEmployeesByPhone(String phone);
+    Set<Employee> getEmployeesByPhone(String phone);
 
     Employee getEmployeeByEmail(String email);
 
     Employee loadLoginEmployee();
 
-    List<Employee> getEmployees(int page, String kw);
+    Set<Employee> getEmployees(int page, String kw);
 
     long getCountAllEmployees(String kw);
 
@@ -21,7 +21,7 @@ public interface EmployeeRepository {
 
     boolean updateEmployee(Employee employee);
 
-    List<Employee> getParentsList();
+    Set<Employee> getParentsList();
 
     boolean checkChildInParent(int childId);
 

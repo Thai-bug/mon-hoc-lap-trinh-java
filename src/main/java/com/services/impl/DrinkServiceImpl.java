@@ -6,7 +6,7 @@ import com.services.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class DrinkServiceImpl implements DrinkService {
@@ -14,7 +14,7 @@ public class DrinkServiceImpl implements DrinkService {
     private DrinkRepository drinkRepository;
 
     @Override
-    public List<Drink> getDrinks(String kw, int page) {
+    public Set<Drink> getDrinks(String kw, int page) {
         return drinkRepository.getDrinks(kw, page);
     }
 
@@ -39,7 +39,7 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public List<Drink> getDrinkByName(String name, boolean status, int page) {
+    public Set<Drink> getDrinkByName(String name, boolean status, int page) {
         return drinkRepository.getDrinksByName(name, status, page);
     }
 }

@@ -3,19 +3,19 @@ package com.request;
 import com.pojos.*;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class BillRequest {
     String code;
     String customerName;
-    List<Food> addedFoods;
-    List<Food> deletedFoods;
+    Set<Food> addedFoods;
+    Set<Food> deletedFoods;
 
-    List<Drink> addedDrinks;
-    List<Drink> deletedDrinks;
+    Set<Drink> addedDrinks;
+    Set<Drink> deletedDrinks;
 
-    List<Service> addedServices;
-    List<Service> deletedServices;
+    Set<Service> addedServices;
+    Set<Service> deletedServices;
 
     String name;
 
@@ -42,51 +42,51 @@ public class BillRequest {
         this.customerName = customerName;
     }
 
-    public List<Food> getAddedFoods() {
+    public Set<Food> getAddedFoods() {
         return addedFoods;
     }
 
-    public void setAddedFoods(List<Food> addedFoods) {
+    public void setAddedFoods(Set<Food> addedFoods) {
         this.addedFoods = addedFoods;
     }
 
-    public List<Food> getDeletedFoods() {
+    public Set<Food> getDeletedFoods() {
         return deletedFoods;
     }
 
-    public void setDeletedFoods(List<Food> deletedFoods) {
+    public void setDeletedFoods(Set<Food> deletedFoods) {
         this.deletedFoods = deletedFoods;
     }
 
-    public List<Drink> getAddedDrinks() {
+    public Set<Drink> getAddedDrinks() {
         return addedDrinks;
     }
 
-    public void setAddedDrinks(List<Drink> addedDrinks) {
+    public void setAddedDrinks(Set<Drink> addedDrinks) {
         this.addedDrinks = addedDrinks;
     }
 
-    public List<Drink> getDeletedDrinks() {
+    public Set<Drink> getDeletedDrinks() {
         return deletedDrinks;
     }
 
-    public void setDeletedDrinks(List<Drink> deletedDrinks) {
+    public void setDeletedDrinks(Set<Drink> deletedDrinks) {
         this.deletedDrinks = deletedDrinks;
     }
 
-    public List<Service> getAddedServices() {
+    public Set<Service> getAddedServices() {
         return addedServices;
     }
 
-    public void setAddedServices(List<Service> addedServices) {
+    public void setAddedServices(Set<Service> addedServices) {
         this.addedServices = addedServices;
     }
 
-    public List<Service> getDeletedServices() {
+    public Set<Service> getDeletedServices() {
         return deletedServices;
     }
 
-    public void setDeletedServices(List<Service> deletedServices) {
+    public void setDeletedServices(Set<Service> deletedServices) {
         this.deletedServices = deletedServices;
     }
 

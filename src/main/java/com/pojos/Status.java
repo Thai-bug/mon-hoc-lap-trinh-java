@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "status")
@@ -30,15 +30,15 @@ public class Status implements Serializable {
     private Date createdAt = new Date();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "status")
-    private List<Bill> bills;
+    private Set<Bill> bills;
 
     public Status() {}
 
-    public List<Bill> getBills() {
+    public Set<Bill> getBills() {
         return bills;
     }
 
-    public void setBills(List<Bill> bills) {
+    public void setBills(Set<Bill> bills) {
         this.bills = bills;
     }
 

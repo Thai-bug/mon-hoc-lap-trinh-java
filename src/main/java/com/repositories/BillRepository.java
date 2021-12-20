@@ -2,10 +2,10 @@ package com.repositories;
 
 import com.pojos.Bill;
 
-import java.util.List;
+import java.util.Set;
 
 public interface BillRepository {
-    List<Bill> getBills(int page);
+    Set<Bill> getBills(int page);
 
     Bill getBill(int id);
 

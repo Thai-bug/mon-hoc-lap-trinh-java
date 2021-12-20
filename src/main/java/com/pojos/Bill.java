@@ -9,7 +9,8 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
+import java.util.Set;
 
 @Entity
 @Table(name = "bill")
@@ -57,21 +58,21 @@ public class Bill implements Serializable {
     @JoinTable(name = "bill_drink",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "drink_id", referencedColumnName = "id"))
-    private List<Drink> drinkList;
+    private Set<Drink> drinkList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "bill_food",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"))
-    private List<Food> foodList;
+    private Set<Food> foodList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "bill_service",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
-    private List<Service> serviceList;
+    private Set<Service> serviceList;
 
     @Column(name = "begin_date")
     private Date beginDate;
@@ -109,27 +110,27 @@ public class Bill implements Serializable {
         this.name = name;
     }
 
-    public List<Drink> getDrinkList() {
+    public Set<Drink> getDrinkList() {
         return drinkList;
     }
 
-    public void setDrinkList(List<Drink> drinkList) {
+    public void setDrinkList(Set<Drink> drinkList) {
         this.drinkList = drinkList;
     }
 
-    public List<Food> getFoodList() {
+    public Set<Food> getFoodList() {
         return foodList;
     }
 
-    public void setFoodList(List<Food> foodList) {
+    public void setFoodList(Set<Food> foodList) {
         this.foodList = foodList;
     }
 
-    public List<Service> getServiceList() {
+    public Set<Service> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(List<Service> serviceList) {
+    public void setServiceList(Set<Service> serviceList) {
         this.serviceList = serviceList;
     }
 

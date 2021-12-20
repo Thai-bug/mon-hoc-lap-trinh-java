@@ -14,7 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -23,7 +23,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Service> getServices(String kw, int pgae) {
+    public Set<Service> getServices(String kw, int pgae) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
@@ -33,7 +33,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw +"%");
         query = query.where(p);
         Query q = session.createQuery(query);
-        return q.getResultList();
+        return (Set<Service>) q.getResultList();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     }
 
     @Override
-    public List<Service> getServicesByName(String name, boolean status, int page) {
+    public Set<Service> getServicesByName(String name, boolean status, int page) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
@@ -111,6 +111,6 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 .setFirstResult((page - 1) * 5)
                 .setMaxResults(5);
 
-        return q.getResultList();
+        return (Set<Service>) q.getResultList();
     }
 }

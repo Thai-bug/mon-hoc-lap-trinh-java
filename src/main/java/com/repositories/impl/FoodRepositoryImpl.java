@@ -1,5 +1,6 @@
 package com.repositories.impl;
 
+import com.pojos.Employee;
 import com.pojos.Food;
 import com.repositories.FoodRepository;
 import org.hibernate.Session;
@@ -13,7 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -22,7 +23,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Food> getFoods(String kw, int page) {
+    public Set<Food> getFoods(String kw, int page) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
@@ -32,7 +33,7 @@ public class FoodRepositoryImpl implements FoodRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
         Query q = session.createQuery(query);
-        return q.getResultList();
+        return (Set<Food>) q.getResultList();
     }
 
     @Override
@@ -85,7 +86,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     }
 
     @Override
-    public List<Food> getFoodsByName(String name, boolean status, int page) {
+    public Set<Food> getFoodsByName(String name, boolean status, int page) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
@@ -107,6 +108,6 @@ public class FoodRepositoryImpl implements FoodRepository {
                 .setFirstResult((page - 1) * 5)
                 .setMaxResults(5);
 
-        return q.getResultList();
+        return (Set<Food>) q.getResultList();
     }
 }

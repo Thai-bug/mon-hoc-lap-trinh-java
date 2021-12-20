@@ -5,7 +5,7 @@ import com.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class ServiceServiceImpl implements ServiceService {
@@ -13,7 +13,7 @@ public class ServiceServiceImpl implements ServiceService {
     private ServiceRepository serviceRepository;
 
     @Override
-    public List<com.pojos.Service> getServices(String kw, int page) {
+    public Set<com.pojos.Service> getServices(String kw, int page) {
         return serviceRepository.getServices(kw, page);
     }
 
@@ -38,7 +38,7 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public List<com.pojos.Service> getServicesByName(String name, boolean status, int page) {
+    public Set<com.pojos.Service> getServicesByName(String name, boolean status, int page) {
         return serviceRepository.getServicesByName(name, status, page);
     }
 }

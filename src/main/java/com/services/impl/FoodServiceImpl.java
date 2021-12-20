@@ -6,7 +6,7 @@ import com.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -14,7 +14,7 @@ public class FoodServiceImpl implements FoodService {
     private FoodRepository foodRepository;
 
     @Override
-    public List<Food> getFoods(String kw, int page) {
+    public Set<Food> getFoods(String kw, int page) {
         return foodRepository.getFoods(kw, page);
     }
 
@@ -39,7 +39,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public List<Food> getFoodsByName(String name, boolean status, int page) {
+    public Set<Food> getFoodsByName(String name, boolean status, int page) {
         return foodRepository.getFoodsByName(name, status, page);
     }
 }

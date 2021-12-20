@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 @RestController
@@ -18,14 +18,14 @@ public class ApiFoodController {
     private FoodService foodService;
 
     @GetMapping("/select2/food-by-name")
-    public ResponseEntity<List<Food>> getFoodsByName(
+    public ResponseEntity<Set<Food>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
         String name = params.get("name") == null ? "" : params.get("name");
         boolean status = params.get("status") == null ? true : Boolean.parseBoolean(params.get("status"));
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        List<Food> foods = foodService.getFoodsByName(name, status, page);
-        return new ResponseEntity<List<Food>>(
+        Set<Food> foods = foodService.getFoodsByName(name, status, page);
+        return new ResponseEntity<Set<Food>>(
                 foods,
                 HttpStatus.OK);
     }

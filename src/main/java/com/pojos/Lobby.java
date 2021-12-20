@@ -10,7 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity()
 @Table(name = "lobby")
@@ -43,17 +43,17 @@ public class Lobby implements Serializable {
 
     @OneToMany(mappedBy = "lobby")
     @JsonIgnore
-    private List<Bill> bills;
+    private Set<Bill> bills;
 
     public Lobby() {
         this.status = true;
     }
 
-    public List<Bill> getBills() {
+    public Set<Bill> getBills() {
         return bills;
     }
 
-    public void setBills(List<Bill> bills) {
+    public void setBills(Set<Bill> bills) {
         this.bills = bills;
     }
 
