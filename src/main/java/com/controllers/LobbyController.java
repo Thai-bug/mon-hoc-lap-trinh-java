@@ -1,6 +1,5 @@
 package com.controllers;
 
-import com.pojos.Employee;
 import com.pojos.Lobby;
 import com.services.LobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class LobbyController {
         Set<Lobby> lobbies = lobbyService.getLobbies(kw, page);
         int total = lobbyService.countLobby(kw);
 
-        model.addAttribute("lobbies", lobbies);
+        model.addAttribute("lobbies", new ArrayList<>(lobbies));
         model.addAttribute("total", total);
         return "lobbies";
     }

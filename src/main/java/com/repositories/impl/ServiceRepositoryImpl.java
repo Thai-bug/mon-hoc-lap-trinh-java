@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.HashSet;
 import java.util.Set;
 
 @Repository
@@ -30,10 +31,10 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         Root root = query.from(Service.class);
         query = query.select(root);
 
-        Predicate p = builder.like(root.get("name").as(String.class), "%" + kw +"%");
+        Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
         Query q = session.createQuery(query);
-        return (Set<Service>) q.getResultList();
+        return (Set<Service>) new HashSet<>(q.getResultList());
     }
 
     @Override
@@ -62,12 +63,11 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     @Override
     public boolean update(Service service) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        try{
+        try {
             session.getTransaction().begin();
             session.update(service);
             session.getTransaction().commit();
-        }
-        catch (Exception err){
+        } catch (Exception err) {
             return false;
         }
         return true;
@@ -76,12 +76,11 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     @Override
     public boolean add(Service service) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        try{
+        try {
             session.getTransaction().begin();
             session.save(service);
             session.getTransaction().commit();
-        }
-        catch (Exception err){
+        } catch (Exception err) {
             System.out.println(err.getMessage());
             return false;
         }
@@ -102,8 +101,8 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                                 builder.lower(root.get("name").as(String.class)
                                 ), "%" + name + "%"),
                         status ?
-                                builder.isTrue(root.<Boolean> get("status")) :
-                                builder.isFalse(root.<Boolean> get("status"))
+                                builder.isTrue(root.<Boolean>get("status")) :
+                                builder.isFalse(root.<Boolean>get("status"))
                 );
         query = query.where(p);
         Query q = session
@@ -111,6 +110,6 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 .setFirstResult((page - 1) * 5)
                 .setMaxResults(5);
 
-        return (Set<Service>) q.getResultList();
+        return (Set<Service>) new HashSet<>(q.getResultList());
     }
 }

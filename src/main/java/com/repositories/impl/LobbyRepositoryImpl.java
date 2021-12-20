@@ -18,6 +18,7 @@ package com.repositories.impl;
         import javax.persistence.criteria.Predicate;
         import javax.persistence.criteria.Root;
         import java.util.Date;
+        import java.util.HashSet;
         import java.util.Set;
 
 @Repository
@@ -38,7 +39,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
 
-        return (Set<Lobby>) session.createQuery(query).getResultList();
+        return (Set<Lobby>) new HashSet<>(session.createQuery(query).getResultList());
     }
 
     @Override

@@ -4,13 +4,12 @@ import com.pojos.Drink;
 import com.pojos.Lobby;
 import com.services.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,7 +26,7 @@ public class DrinkController {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
 
-        Set<Drink> drinks = drinkService.getDrinks(kw, page);
+        List<Drink> drinks = new ArrayList<>(drinkService.getDrinks(kw, page));
         int total = drinkService.getCountDrinks(kw);
 
         model.addAttribute("drinks", drinks);

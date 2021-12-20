@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class FoodController {
     ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
-        Set<Food> foods = foodService.getFoods(kw, page);
+        List<Food> foods = new ArrayList<>(foodService.getFoods(kw, page));
         int total = foodService.getFoodCount(kw);
         model.addAttribute("foods", foods);
         model.addAttribute("total", total);

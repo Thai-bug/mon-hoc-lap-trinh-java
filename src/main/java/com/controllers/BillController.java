@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class BillController {
             @RequestParam(required = false) Map<String, String> params
     ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        Set<Bill> bills = billService.getBills(page);
+        List<Bill> bills = new ArrayList<>(billService.getBills(page));
         model.addAttribute("bills", bills);
         return "bills";
     }

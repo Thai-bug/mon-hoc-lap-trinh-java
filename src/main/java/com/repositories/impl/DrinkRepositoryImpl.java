@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.HashSet;
 import java.util.Set;
 
 @Repository
@@ -34,7 +35,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw +"%");
         query = query.where(p);
         Query q = session.createQuery(query);
-        return (Set<Drink>) q.getResultList();
+        return (Set<Drink>) new HashSet<>(q.getResultList());
     }
 
     @Override
@@ -111,6 +112,6 @@ public class DrinkRepositoryImpl implements DrinkRepository {
                 .setFirstResult((page - 1) * 5)
                 .setMaxResults(5);
 
-        return (Set<Drink>) q.getResultList();
+        return (Set<Drink>) new HashSet<>( q.getResultList());
     }
 }

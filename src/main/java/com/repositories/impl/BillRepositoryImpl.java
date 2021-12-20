@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.HashSet;
 import java.util.Set;
 
 @Repository
@@ -48,7 +49,7 @@ public class BillRepositoryImpl implements BillRepository {
 
         q.setParameter("id", loginEmployee.getId());
         q.setParameter("offset", (page - 1) * 5);
-        return (Set<Bill>) q.getResultList();
+        return (Set<Bill>) new HashSet<>(q.getResultList());
     }
 
     @Override

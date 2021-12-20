@@ -35,7 +35,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Predicate p = builder.like(root.get("phoneNumber").as(String.class), phone);
         query = query.where(p);
         Query q = session.createQuery(query);
-        return (Set<Employee>) q.getResultList();
+        return (Set<Employee>) new HashSet<>(q.getResultList());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         q.setParameter("kw", "%" + kw + "%");
         q.setParameter("id", loginEmployee.getId());
         q.setParameter("offset", (page - 1) * 5);
-        return (Set<Employee>) q.getResultList();
+        return (Set<Employee>) new HashSet<>(q.getResultList());
     }
 
     @Override
@@ -147,7 +147,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Session session = sessionFactory.getObject().getCurrentSession();
         String query = "select * from employee where role like '%_MANAGER';";
         NativeQuery q = session.createNativeQuery(query, Employee.class);
-        return (Set<Employee>) q.getResultList();
+        return (Set<Employee>) new HashSet<>(q.getResultList());
     }
 
     @Override

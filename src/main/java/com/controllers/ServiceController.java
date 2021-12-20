@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ public class ServiceController {
     ) {
         int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
         String kw = params.get("kw") == null ? "" : params.get("kw");
-        Set<Service> services = service.getServices(kw, page);
+        List<Service> services = new ArrayList<>(service.getServices(kw, page));
         int total = service.getServicesCount(kw);
         model.addAttribute("services", services);
         model.addAttribute("total", total);
@@ -62,7 +64,7 @@ public class ServiceController {
     ) {
         model.addAttribute("service", service);
         boolean update = this.service.update(service);
-        if(update)
+        if (update)
             return "redirect:/admin/services/detail/" + service.getId();
         return "serviceUpdate";
     }
@@ -83,7 +85,7 @@ public class ServiceController {
     ) {
         model.addAttribute("service", service);
         boolean update = this.service.add(service);
-        if(update)
+        if (update)
             return "redirect:/admin/services";
 
         return "serviceAdd";

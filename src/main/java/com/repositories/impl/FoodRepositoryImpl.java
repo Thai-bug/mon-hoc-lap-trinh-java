@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.HashSet;
 import java.util.Set;
 
 @Repository
@@ -33,7 +34,7 @@ public class FoodRepositoryImpl implements FoodRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
         Query q = session.createQuery(query);
-        return (Set<Food>) q.getResultList();
+        return (Set<Food>) new HashSet<>(q.getResultList());
     }
 
     @Override
@@ -95,19 +96,19 @@ public class FoodRepositoryImpl implements FoodRepository {
 
         Predicate p =
                 builder.and(
-                builder.like(
-                        builder.lower(root.get("name").as(String.class)
-                        ), "%" + name + "%"),
-                status ?
-                        builder.isTrue(root.<Boolean> get("status")) :
-                        builder.isFalse(root.<Boolean> get("status"))
-        );
+                        builder.like(
+                                builder.lower(root.get("name").as(String.class)
+                                ), "%" + name + "%"),
+                        status ?
+                                builder.isTrue(root.<Boolean>get("status")) :
+                                builder.isFalse(root.<Boolean>get("status"))
+                );
         query = query.where(p);
         Query q = session
                 .createQuery(query)
                 .setFirstResult((page - 1) * 5)
                 .setMaxResults(5);
 
-        return (Set<Food>) q.getResultList();
+        return (Set<Food>) new HashSet<>(q.getResultList());
     }
 }
