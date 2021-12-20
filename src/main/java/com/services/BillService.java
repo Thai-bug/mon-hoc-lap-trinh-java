@@ -10,4 +10,6 @@ public interface BillService {
     Bill getBill(int id);
 
     Bill getBill(String code);
+
+    boolean update(Bill bill);
 }

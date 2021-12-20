@@ -40,7 +40,7 @@ public class Food implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @ManyToMany(mappedBy = "foodList")
+    @ManyToMany(mappedBy = "foodList", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Bill> billList;
 

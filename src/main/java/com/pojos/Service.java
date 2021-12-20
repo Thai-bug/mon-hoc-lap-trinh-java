@@ -35,6 +35,21 @@ public class Service implements Serializable {
     @ManyToMany(mappedBy = "serviceList")
     private List<Bill> billList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Service service = (Service) o;
+
+        return id == service.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
     public Service() {
         this.status = true;
     }

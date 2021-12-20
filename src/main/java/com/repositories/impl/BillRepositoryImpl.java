@@ -6,6 +6,7 @@ import com.pojos.Employee;
 import com.repositories.BillRepository;
 import com.repositories.EmployeeRepository;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -79,5 +80,24 @@ public class BillRepositoryImpl implements BillRepository {
         query = query.where(p);
         Query q = session.createQuery(query);
         return (Bill) q.getSingleResult();
+    }
+
+    @Override
+    public boolean update(Bill bill) {
+        Session session = sessionFactory.getObject().openSession();
+        Transaction tx = session.beginTransaction();
+        try{
+
+            session.update(bill);
+            tx.commit();
+//            session.beginTransaction();
+//            session.merge(bill);
+//            session.getTransaction().commit();
+        }
+        catch (Exception err){
+            System.out.println(err.getMessage());
+            return false;
+        }
+        return true;
     }
 }

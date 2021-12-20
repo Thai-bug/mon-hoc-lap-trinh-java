@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "bill")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Bill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,19 +53,19 @@ public class Bill implements Serializable {
     @JoinColumn(name = "lobby_id")
     private Lobby lobby;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "bill_drink",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "drink_id", referencedColumnName = "id"))
     private List<Drink> drinkList;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "bill_food",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"))
     private List<Food> foodList;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "bill_service",
             joinColumns = @JoinColumn(name = "bill_id", referencedColumnName = "id"),

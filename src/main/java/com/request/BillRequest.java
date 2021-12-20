@@ -26,20 +26,20 @@ public class BillRequest {
 
     Lobby lobby;
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public List<Food> getAddedFoods() {
@@ -66,12 +66,12 @@ public class BillRequest {
         this.addedDrinks = addedDrinks;
     }
 
-    public List<Drink> getDeletedDrink() {
+    public List<Drink> getDeletedDrinks() {
         return deletedDrinks;
     }
 
-    public void setDeletedDrink(List<Drink> deletedDrink) {
-        this.deletedDrinks = deletedDrink;
+    public void setDeletedDrinks(List<Drink> deletedDrinks) {
+        this.deletedDrinks = deletedDrinks;
     }
 
     public List<Service> getAddedServices() {

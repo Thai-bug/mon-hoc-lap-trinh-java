@@ -10,4 +10,6 @@ public interface BillRepository {
     Bill getBill(int id);
 
     Bill getBill(String code);
+
+    boolean update(Bill bill);
 }

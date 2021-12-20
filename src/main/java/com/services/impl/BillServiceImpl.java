@@ -27,4 +27,9 @@ public class BillServiceImpl implements BillService {
     public Bill getBill(String code) {
         return billRepository.getBill(code);
     }
+
+    @Override
+    public boolean update(Bill bill) {
+        return billRepository.update(bill);
+    }
 }

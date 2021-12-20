@@ -44,12 +44,32 @@ public class ApiBillController {
             List<Drink> orderedDrinks = bill.getDrinkList();
             List<Service> orderedServices = bill.getServiceList();
 
-            orderedFood.removeAll(billRequest.getDeletedFoods());
-//
-//            bill.setDrinkList(orderedDrinks);
+            if (billRequest.getDeletedFoods() != null)
+                orderedFood.removeAll(billRequest.getDeletedFoods());
+            if (billRequest.getAddedFoods() != null)
+                orderedFood.addAll(billRequest.getAddedFoods());
+
+            if(billRequest.getDeletedDrinks() != null)
+                orderedDrinks.removeAll(billRequest.getDeletedDrinks());
+            if(billRequest.getAddedDrinks() != null)
+                orderedDrinks.addAll(billRequest.getAddedDrinks());
+
+            if (billRequest.getDeletedServices() != null)
+                orderedServices.removeAll(billRequest.getDeletedServices());
+            if (billRequest.getAddedServices() != null)
+                orderedServices.addAll(billRequest.getAddedServices());
+
+            bill.setDrinkList(orderedDrinks);
             bill.setFoodList(orderedFood);
+            bill.setServiceList(orderedServices);
+
+            bill.setStatus(billRequest.getStatus());
+
+            billService.update(bill);
+
             return new ResponseEntity<Bill>(bill, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<Bill>((Bill) null, HttpStatus.BAD_REQUEST);
         }
     }

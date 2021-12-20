@@ -14,7 +14,6 @@ import java.util.List;
 
 @Entity()
 @Table(name = "lobby")
-
 public class Lobby implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

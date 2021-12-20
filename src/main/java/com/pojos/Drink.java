@@ -39,11 +39,26 @@ public class Drink implements Serializable {
     private Date createdAt = new Date();
 
 //    @JsonIgnore
-    @OneToMany(mappedBy = "drink")
-    private List<BillDetail> billDetailList;
+//    @OneToMany(mappedBy = "drink")
+//    private List<BillDetail> billDetailList;
 
-    @ManyToMany(mappedBy = "drinkList")
+    @ManyToMany(mappedBy = "drinkList", fetch = FetchType.LAZY)
     private List<Bill> billList;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Drink drink = (Drink) o;
+
+        return id == drink.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 
     public List<Bill> getBillList() {
         return billList;
@@ -53,17 +68,7 @@ public class Drink implements Serializable {
         this.billList = billList;
     }
 
-    public Drink() {
-
-    }
-
-    public List<BillDetail> getBillDetailList() {
-        return billDetailList;
-    }
-
-    public void setBillDetailList(List<BillDetail> billDetailList) {
-        this.billDetailList = billDetailList;
-    }
+    public Drink() {}
 
     public String getDescription() {
         return description;

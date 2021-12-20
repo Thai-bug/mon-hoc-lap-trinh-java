@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "status")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Status implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +32,7 @@ public class Status implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
     private List<Bill> bills;
 
-    public Status() {
-    }
+    public Status() {}
 
     public List<Bill> getBills() {
         return bills;
