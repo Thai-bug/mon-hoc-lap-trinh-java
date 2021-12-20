@@ -51,7 +51,7 @@ public class BillRepositoryImpl implements BillRepository {
     }
 
     @Override
-    public Bill getBIllById(int id) {
+    public Bill getBill(int id) {
         Session session = sessionFactory.getObject().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
@@ -60,6 +60,22 @@ public class BillRepositoryImpl implements BillRepository {
         query = query.select(root);
 
         Predicate p = builder.equal(root.get("id").as(Integer.class), id);
+        query = query.where(p);
+        Query q = session.createQuery(query);
+        return (Bill) q.getSingleResult();
+    }
+
+
+    @Override
+    public Bill getBill(String code) {
+        Session session = sessionFactory.getObject().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
+        Root root = query.from(Bill.class);
+        root.join("employee");
+        query = query.select(root);
+
+        Predicate p = builder.equal(root.get("code").as(String.class), code);
         query = query.where(p);
         Query q = session.createQuery(query);
         return (Bill) q.getSingleResult();

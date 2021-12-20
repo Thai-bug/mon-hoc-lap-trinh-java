@@ -7,5 +7,7 @@ import java.util.List;
 public interface BillService {
     List<Bill> getBills(int page);
 
-    Bill getBillById(int id);
+    Bill getBill(int id);
+
+    Bill getBill(String code);
 }

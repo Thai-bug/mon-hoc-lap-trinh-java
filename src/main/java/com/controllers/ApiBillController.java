@@ -32,24 +32,25 @@ public class ApiBillController {
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<Bill> getDetail(
-            @PathVariable(value = "id")int id
+            @PathVariable(value = "id") int id
     ) {
-        Bill bill = billService.getBillById(id);
+        Bill bill = billService.getBill(id);
         return new ResponseEntity<>(
                 bill,
                 HttpStatus.OK);
     }
 
-    @PostMapping(value = "/rol/add",
+    @PostMapping(value = "/update",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public @ResponseBody ResponseEntity<Object> updateBill(@RequestBody BillRequest billRequest) {
-        try{
-//            System.out.println(billRequest.getAddFoods().get(0));
-
-            return new ResponseEntity<Object>(billRequest, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
+    public @ResponseBody
+    ResponseEntity<Bill> updateBill(@RequestBody BillRequest billRequest) {
+        try {
+            System.out.println(billRequest.getCode());
+            Bill bill = billService.getBill(billRequest.getCode());
+            return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Bill>((Bill) null, HttpStatus.BAD_REQUEST);
         }
     }
 

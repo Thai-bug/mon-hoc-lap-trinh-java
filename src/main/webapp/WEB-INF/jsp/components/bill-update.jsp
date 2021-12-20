@@ -115,7 +115,7 @@
     </div>
 
     <div>
-        <button type="button" onclick="update()"/>">Cập nhật đơn
+        <button type="button" id="update-bill">Cập nhật đơn
             hàng</button>
     </div>
 </div>

@@ -19,7 +19,12 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Bill getBillById(int id) {
-        return billRepository.getBIllById(id);
+    public Bill getBill(int id) {
+        return billRepository.getBill(id);
+    }
+
+    @Override
+    public Bill getBill(String code) {
+        return billRepository.getBill(code);
     }
 }
