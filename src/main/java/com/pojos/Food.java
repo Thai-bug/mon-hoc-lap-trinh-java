@@ -44,6 +44,21 @@ public class Food implements Serializable {
     @JsonIgnore
     private List<Bill> billList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Food food = (Food) o;
+
+        return id == food.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
     public Food(){
         this.status = true;
     }

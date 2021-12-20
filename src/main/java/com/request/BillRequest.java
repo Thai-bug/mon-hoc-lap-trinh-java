@@ -11,8 +11,8 @@ public class BillRequest {
     List<Food> addedFoods;
     List<Food> deletedFoods;
 
-    List<Drink> addDrinks;
-    List<Drink> deletedDrink;
+    List<Drink> addedDrinks;
+    List<Drink> deletedDrinks;
 
     List<Service> addedServices;
     List<Service> deletedServices;
@@ -58,20 +58,20 @@ public class BillRequest {
         this.deletedFoods = deletedFoods;
     }
 
-    public List<Drink> getAddDrinks() {
-        return addDrinks;
+    public List<Drink> getAddedDrinks() {
+        return addedDrinks;
     }
 
-    public void setAddDrinks(List<Drink> addDrinks) {
-        this.addDrinks = addDrinks;
+    public void setAddedDrinks(List<Drink> addedDrinks) {
+        this.addedDrinks = addedDrinks;
     }
 
     public List<Drink> getDeletedDrink() {
-        return deletedDrink;
+        return deletedDrinks;
     }
 
     public void setDeletedDrink(List<Drink> deletedDrink) {
-        this.deletedDrink = deletedDrink;
+        this.deletedDrinks = deletedDrink;
     }
 
     public List<Service> getAddedServices() {

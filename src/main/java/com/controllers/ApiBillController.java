@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.pojos.Bill;
 import com.pojos.Drink;
+import com.pojos.Food;
+import com.pojos.Service;
 import com.request.BillRequest;
 import com.services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +23,6 @@ public class ApiBillController {
     @Autowired
     private BillService billService;
 
-//    @GetMapping("")
-//    public ResponseEntity<List<Bill>> bills() {
-//        List<Bill> bills = billService.getBills();
-//        System.out.println(bills.get(0).getEmployee().getId());
-//        return new ResponseEntity<>(
-//                bills,
-//                HttpStatus.OK);
-//    }
-
     @GetMapping("/detail/{id}")
     public ResponseEntity<Bill> getDetail(
             @PathVariable(value = "id") int id
@@ -46,8 +39,15 @@ public class ApiBillController {
     public @ResponseBody
     ResponseEntity<Bill> updateBill(@RequestBody BillRequest billRequest) {
         try {
-            System.out.println(billRequest.getCode());
             Bill bill = billService.getBill(billRequest.getCode());
+            List<Food> orderedFood = bill.getFoodList();
+            List<Drink> orderedDrinks = bill.getDrinkList();
+            List<Service> orderedServices = bill.getServiceList();
+
+            orderedFood.removeAll(billRequest.getDeletedFoods());
+//
+//            bill.setDrinkList(orderedDrinks);
+            bill.setFoodList(orderedFood);
             return new ResponseEntity<Bill>(bill, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<Bill>((Bill) null, HttpStatus.BAD_REQUEST);
