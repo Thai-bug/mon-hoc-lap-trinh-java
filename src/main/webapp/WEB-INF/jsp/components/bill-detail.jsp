@@ -122,7 +122,7 @@
 
         $('#beginDate').val(moment(orderInfo.beginDate).format('DD/MM/YYYY HH:mm'));
 
-        $('#bill').val(orderInfo.status.title);
+        $('#bill').val(orderInfo.status?.title);
 
         $('#deposit').val(orderInfo.provisionalMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
 

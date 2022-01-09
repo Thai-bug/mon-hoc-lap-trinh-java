@@ -249,7 +249,8 @@ $(document).ready(function () {
                     name: params.term,
                     status: true,
                     endDate: !$('#endDate') || $('#endDate') === '' ? null : moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
-                    beginDate: !$('#beginDate') || $('#beginDate') === '' ? null : moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf()
+                    beginDate: !$('#beginDate') || $('#beginDate') === '' ? null : moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
+                    currentId: $('#lobby-select').val()
                 }
 
                 return query;
@@ -268,7 +269,6 @@ $(document).ready(function () {
 
 $('#lobby-select').on('change', function(){
     $('#lobby').val($(this).text());
-    console.log($(this).val());
 })
 
 

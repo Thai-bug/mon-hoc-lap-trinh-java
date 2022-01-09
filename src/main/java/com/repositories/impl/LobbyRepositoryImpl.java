@@ -95,8 +95,11 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     }
 
     @Override
-    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page) {
+    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id) {
         Session session = sessionFactory.getObject().getCurrentSession();
+
+        String additional = id == 0 ? "" : "or l.id = :id\n";
+        System.out.println(additional);
 
         Query q = session.createNativeQuery("select l.* from lobby l\n" +
                 "left join bill b on b.lobby_id = l.id\n" +
@@ -106,6 +109,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
                 "or(b.begin_date <= :beginDate and b.end_date >= :beginDate and b.status_id = 4)\n" +
                 "or (b.begin_date <= :endDate and b.end_date >= :endDate and b.status_id = 4)\n" +
                 "or (b.begin_date >= :beginDate and b.end_date <= :endDate and b.status_id = 4)\n"+
+                additional +
                 ")\n" +
                 "group by l.id\n" +
                 "limit 5 offset :page", Lobby.class);
@@ -113,6 +117,8 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         q.setParameter("beginDate", beginDate);
         q.setParameter("endDate", endDate);
         q.setParameter("page", (page - 1) * 5);
-        return (Set<Lobby>) q.getResultList();
+        if (id != 0)
+            q.setParameter("id", id);
+        return (Set<Lobby>) new HashSet<>(q.getResultList());
     }
 }

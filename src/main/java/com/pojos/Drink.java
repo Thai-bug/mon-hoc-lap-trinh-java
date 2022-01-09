@@ -43,6 +43,7 @@ public class Drink implements Serializable {
 //    private Set<BillDetail> billDetailList;
 
     @ManyToMany(mappedBy = "drinkList", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Bill> billList;
 
     @Override

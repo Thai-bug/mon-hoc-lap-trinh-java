@@ -1,6 +1,7 @@
 package com.pojos;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Status implements Serializable {
     private Date createdAt = new Date();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "status")
+    @JsonIgnore
     private Set<Bill> bills;
 
     public Status() {}

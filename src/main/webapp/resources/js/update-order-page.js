@@ -65,7 +65,7 @@ const updateAction = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    });
+    }).then(json=>json());
 
     console.log(response);
 }
@@ -92,7 +92,7 @@ const passData = (orderInfo) => {
     $('#endDate').val(moment(orderInfo.endDate).format('DD/MM/YYYY HH:mm'));
     localStorage.setItem('endDate', orderInfo.endDate);
 
-    $('#bill').val(orderInfo.status.title);
+    $('#bill').val(orderInfo.status?.title);
 
     $('#deposit').val(dottedMoney(orderInfo.provisionalMoney));
 
@@ -100,6 +100,11 @@ const passData = (orderInfo) => {
 
     $('#tables').val(orderInfo.totalTable);
     localStorage.setItem('tables', orderInfo.totalTable);
+
+    $('<option>').val(orderInfo?.lobby?.id)
+        .text(orderInfo?.lobby?.name)
+        .attr('selected', true)
+        .appendTo(`#lobby-select`);
 
     orderedFood = orderedFood.concat(orderInfo.foodList);
     orderedDrink = orderedDrink.concat(orderInfo.drinkList);
