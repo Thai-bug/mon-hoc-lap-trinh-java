@@ -25,38 +25,34 @@ const callApi = async (identity) => {
 
 
 const updateAction = async () => {
-    // $( document ).ready(function() {
-    //     Notify("Can't Touch This");
-    //     Notify("Stop! Hammer time", null, null, 'danger');
-    //
-    //     Notify("I told you homeboy (You can't touch this)",
-    //         function () {
-    //             alert("clicked notification")
-    //         },
-    //         function () {
-    //             alert("clicked x")
-    //         },
-    //         'success'
-    //     );
-    // });
-
     const data = {
         code: $('#code').val(),
         customerName: $('#customer-name').val(),
         name: $('#name').val(),
         employee: +$('#employee').attr('employee-id'),
         lobby: +$('#lobby').attr('lobby-id'),
-        addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item=>{return {id: item.id}}),
-        deletedFoods: JSON.parse(localStorage.getItem('deletedFood')).map(item=>{return {id: item.id}}),
 
-        addedDrinks: JSON.parse(localStorage.getItem('addedDrink')).map(item=>{return {id: item.id}}),
-        deletedDrinks: JSON.parse(localStorage.getItem('deletedDrink')).map(item=>{return {id: item.id}}),
+        addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item => {
+            return {id: item.id}
+        }),
+        deletedFoods: JSON.parse(localStorage.getItem('deletedFood')).map(item => {
+            return {id: item.id}
+        }),
 
-        addedServices: JSON.parse(localStorage.getItem('addedService')).map(item=>{return {id: item.id}}),
-        deletedServices: JSON.parse(localStorage.getItem('deletedService')).map(item=>{return {id: item.id}})
+        addedDrinks: JSON.parse(localStorage.getItem('addedDrink')).map(item => {
+            return {id: item.id}
+        }),
+        deletedDrinks: JSON.parse(localStorage.getItem('deletedDrink')).map(item => {
+            return {id: item.id}
+        }),
+
+        addedServices: JSON.parse(localStorage.getItem('addedService')).map(item => {
+            return {id: item.id}
+        }),
+        deletedServices: JSON.parse(localStorage.getItem('deletedService')).map(item => {
+            return {id: item.id}
+        })
     }
-
-    console.log(JSON.parse(localStorage.getItem('addedFood')).map(item=>{return {id: item.id}}))
 
     const response = await fetch('/restaurant_war_exploded/api/v1/admin/bills/update', {
         method: 'post',
@@ -65,9 +61,19 @@ const updateAction = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    }).then(response=>response.json());
-
-    console.log(response);
+    }).then(async response => {
+        if (!response.ok)
+            throw new Error((await response.json())?.message);
+        return await response.json()
+    })
+        .catch(err => err);
+    if (response instanceof Error) {
+        return Notify(response?.message,null, null,'danger'
+        );
+    }
+    return Notify(response?.message,
+        null, null,'success'
+    );
 }
 
 const passData = (orderInfo) => {
@@ -91,8 +97,7 @@ const passData = (orderInfo) => {
 
     $('#endDate').val(moment(orderInfo.endDate).format('DD/MM/YYYY HH:mm'));
     localStorage.setItem('endDate', orderInfo.endDate);
-
-    $('#bill').val(orderInfo.status?.title);
+    $('#status').attr('status-id', orderInfo?.status?.id).val(orderInfo.status?.title);
 
     $('#deposit').val(dottedMoney(orderInfo.provisionalMoney));
 
@@ -222,11 +227,10 @@ $(document.body).on("change", "#food-list", function () {
     }
 
     if (!addedFood.filter(item => +item === +this.value)[0]) {
-        addedFood.push(+this.value);
+        addedFood.push({id: +this.value});
     }
 
     deletedFood = deletedFood.filter(item => +item.id !== +this.value);
-
 
     localStorage.setItem('deletedFood', JSON.stringify(deletedFood));
     localStorage.setItem('addedFood', JSON.stringify(addedFood));
@@ -241,9 +245,10 @@ const deleteFood = (id) => {
     let deletedFood = !localStorage.getItem('deletedFood') ? [] : JSON.parse(localStorage.getItem('deletedFood'));
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
 
-    if (
-        !deletedFood.filter(item => +item === +id)[0] && data.foodList.filter(item => item.id === +id).length > 0) {
-        deletedFood.push(+id);
+    if (!deletedFood.filter(item => +item === +id)[0] && data.foodList.filter(item => item.id === +id).length > 0) {
+        deletedFood.push({
+            id: +id
+        });
     }
 
     addedFood = addedFood.filter(item => +item.id !== +id);
@@ -278,7 +283,9 @@ $(document.body).on("change", "#drink-list", function () {
     }
 
     if (!addedDrink.filter(item => +item === +this.value)[0]) {
-        addedDrink.push(+this.value);
+        addedDrink.push({
+            id: +this.value
+        });
     }
 
     deletedDrink = deletedDrink.filter(item => +item.id !== +this.value);
@@ -298,7 +305,9 @@ const deleteDrink = (id) => {
 
     if (
         !deletedDrink.filter(item => +item === +id)[0] && data.drinkList.filter(item => item.id === +id).length > 0) {
-        deletedDrink.push(+id);
+        deletedDrink.push({
+            id: +this.value
+        });
     }
 
     addedDrink = addedDrink.filter(item => +item.id !== +id);
@@ -334,7 +343,9 @@ $(document.body).on("change", "#service-list", function () {
     }
 
     if (!addedService.filter(item => +item === +this.value)[0]) {
-        addedService.push(+this.value);
+        addedService.push({
+            id: +this.value
+        });
     }
 
     deletedService = deletedService.filter(item => +item.id !== +this.value);
@@ -354,7 +365,9 @@ const deleteService = (id) => {
 
     if (
         !deletedService.filter(item => +item === +id)[0] && data.deletedService.filter(item => item.id === +id).length > 0) {
-        deletedService.push(+id);
+        deletedService.push({
+            id: +this.value
+        });
     }
 
     addedService = addedService.filter(item => +item.id !== +id);
@@ -367,6 +380,8 @@ const deleteService = (id) => {
     showDrinks();
 }
 
-$('#update-bill').on('click', function () {
-    updateAction();
+$('#update-bill').on('click', async function () {
+    $('#update-bill').attr('disabled', true);
+    await updateAction();
+    $('#update-bill').removeAttr('disabled');
 })

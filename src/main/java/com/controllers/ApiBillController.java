@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.Map;
 
@@ -37,7 +38,8 @@ public class ApiBillController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody
-    ResponseEntity<Bill> updateBill(@RequestBody BillRequest billRequest) {
+    ResponseEntity<Object> updateBill(@RequestBody BillRequest billRequest) {
+        Map<String, Object> response = new LinkedHashMap<>();
         try {
             Bill bill = billService.getBill(billRequest.getCode());
             Set<Food> orderedFood = bill.getFoodList();
@@ -59,22 +61,21 @@ public class ApiBillController {
             if (billRequest.getAddedServices() != null)
                 orderedServices.addAll(billRequest.getAddedServices());
 
-            System.out.println(billRequest.getAddedFoods().toArray()[0]);
-
             bill.setDrinkList(orderedDrinks);
             bill.setFoodList(orderedFood);
             bill.setServiceList(orderedServices);
-
-            bill.setStatus(billRequest.getStatus());
 
             System.out.println(bill.getDrinkList().size());
 
             billService.update(bill);
 
-            return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+            response.put("message", "Cập nhật đơn hàng thành công");
+
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<Bill>((Bill) null, HttpStatus.BAD_REQUEST);
+            response.put("message", "Cập nhật đơn hàng thất bại");
+            return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
         }
     }
 

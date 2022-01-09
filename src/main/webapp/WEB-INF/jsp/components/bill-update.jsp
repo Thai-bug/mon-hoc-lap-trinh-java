@@ -39,7 +39,7 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Trạng thái:</div>
-                <input id="bill" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="status" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
             </div>
 
             <div>
