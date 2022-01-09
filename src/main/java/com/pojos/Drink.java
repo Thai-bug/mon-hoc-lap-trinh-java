@@ -38,11 +38,8 @@ public class Drink implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "drink")
-//    private Set<BillDetail> billDetailList;
-
-    @ManyToMany(mappedBy = "drinkList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "drinkList", fetch = FetchType.LAZY,
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonIgnore
     private Set<Bill> billList;
 

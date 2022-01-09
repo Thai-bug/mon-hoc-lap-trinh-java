@@ -87,11 +87,7 @@ public class BillRepositoryImpl implements BillRepository {
     public boolean update(Bill bill) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try{
-
-            session.update(bill);
-//            session.beginTransaction();
-//            session.merge(bill);
-//            session.getTransaction().commit();
+            session.saveOrUpdate(bill);
         }
         catch (Exception err){
             System.out.println(err.getMessage());

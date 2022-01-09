@@ -46,17 +46,17 @@ const updateAction = async () => {
         name: $('#name').val(),
         employee: +$('#employee').attr('employee-id'),
         lobby: +$('#lobby').attr('lobby-id'),
-        addedFood: JSON.parse(localStorage.getItem('addedFood')).map(item=>{return {id: item.id}}),
-        deletedFood: JSON.parse(localStorage.getItem('deletedFood')).map(item=>{return {id: item.id}}),
+        addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item=>{return {id: item.id}}),
+        deletedFoods: JSON.parse(localStorage.getItem('deletedFood')).map(item=>{return {id: item.id}}),
 
-        addedDrink: JSON.parse(localStorage.getItem('addedDrink')).map(item=>{return {id: item.id}}),
-        deletedDrink: JSON.parse(localStorage.getItem('deletedDrink')).map(item=>{return {id: item.id}}),
+        addedDrinks: JSON.parse(localStorage.getItem('addedDrink')).map(item=>{return {id: item.id}}),
+        deletedDrinks: JSON.parse(localStorage.getItem('deletedDrink')).map(item=>{return {id: item.id}}),
 
-        addedService: JSON.parse(localStorage.getItem('addedService')).map(item=>{return {id: item.id}}),
-        deletedService: JSON.parse(localStorage.getItem('deletedService')).map(item=>{return {id: item.id}})
+        addedServices: JSON.parse(localStorage.getItem('addedService')).map(item=>{return {id: item.id}}),
+        deletedServices: JSON.parse(localStorage.getItem('deletedService')).map(item=>{return {id: item.id}})
     }
 
-    console.log(data);
+    console.log(JSON.parse(localStorage.getItem('addedFood')).map(item=>{return {id: item.id}}))
 
     const response = await fetch('/restaurant_war_exploded/api/v1/admin/bills/update', {
         method: 'post',
@@ -65,7 +65,7 @@ const updateAction = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    }).then(json=>json());
+    }).then(response=>response.json());
 
     console.log(response);
 }
@@ -263,14 +263,18 @@ $(document.body).on("change", "#drink-list", function () {
     let orderedDrink = !localStorage.getItem('orderedDrink') ? [] : JSON.parse(localStorage.getItem('orderedDrink'));
 
     const text = $(this).find("option:selected").text();
-    if (
-        !orderedDrink.filter(item => +item.id === +this.value)[0]) {
+    if (!orderedDrink.filter(item => +item.id === +this.value)[0]) {
 
         orderedDrink.push({
             id: +this.value,
             name: text,
             price: +$(this).select2('data')[0].price
         });
+
+        const totalPrice = +$('#total').val().replace(/\./g, '')
+            + +$('#tables').val() * $(this).select2('data')[0].price;
+        console.log($(this).select2('data')[0]);
+        $('#total').val(dottedMoney(totalPrice));
     }
 
     if (!addedDrink.filter(item => +item === +this.value)[0]) {
@@ -322,6 +326,11 @@ $(document.body).on("change", "#service-list", function () {
             name: text,
             price: +$(this).select2('data')[0].price
         });
+
+        const totalPrice = +$('#total').val().replace(/\./g, '')
+            + +$('#tables').val() * $(this).select2('data')[0].price;
+        console.log($(this).select2('data')[0]);
+        $('#total').val(dottedMoney(totalPrice));
     }
 
     if (!addedService.filter(item => +item === +this.value)[0]) {

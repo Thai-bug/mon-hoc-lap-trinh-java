@@ -2,22 +2,22 @@
  * GLOBAL REGION
  * */
 
-Notify = function(text, callback, close_callback, style) {
+Notify = function (text, callback, close_callback, style) {
 
     var time = '2000';
     var $container = $('#notifications');
     var icon = '<i class="fa fa-info-circle "></i>';
 
-    if (typeof style == 'undefined' ) style = 'warning'
+    if (typeof style == 'undefined') style = 'warning'
 
-    var html = $('<div class="alert alert-' + style + '  hide">' + icon +  " " + text + '</div>');
+    var html = $('<div class="alert alert-' + style + '  hide">' + icon + " " + text + '</div>');
 
-    $('<a>',{
+    $('<a>', {
         text: '×',
         class: 'button close',
         style: 'padding-left: 10px;',
         href: '#',
-        click: function(e){
+        click: function (e) {
             e.preventDefault()
             close_callback && close_callback()
             remove_notice()
@@ -31,11 +31,11 @@ Notify = function(text, callback, close_callback, style) {
         html.stop().fadeOut('slow').remove()
     }
 
-    var timer =  setInterval(remove_notice, time);
+    var timer = setInterval(remove_notice, time);
 
-    $(html).hover(function(){
+    $(html).hover(function () {
         clearInterval(timer);
-    }, function(){
+    }, function () {
         timer = setInterval(remove_notice, time);
     });
 
@@ -147,7 +147,7 @@ $('.alert-button').on('click', function () {
  * FORMAT MONEY
  */
 function dottedMoney(moneyString) {
-    return moneyString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return moneyString?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
 
 /**
@@ -164,7 +164,6 @@ $(document).ready(function () {
             dataType: 'json',
             delay: 100,
             data: function (params) {
-                console.log(params);
                 let query = {
                     name: params.term,
                     status: true
@@ -176,11 +175,15 @@ $(document).ready(function () {
             processResults: function (data) {
                 return {
                     results: data.map(item => {
-                        return {id: item.id, text: item.name, price: item.price}
+                        return {
+                            id: item.id,
+                            text: item.name,
+                            price: item.price
+                        }
                     })
                 };
             },
-            cache: true
+            cache: false
         }
     });
 
@@ -191,23 +194,24 @@ $(document).ready(function () {
             dataType: 'json',
             delay: 100,
             data: function (params) {
-                console.log(params);
                 let query = {
                     name: params.term,
                     status: true
                 }
-
-                // Query parameters will be ?search=[term]&type=public
                 return query;
             },
             processResults: function (data) {
                 return {
                     results: data.map(item => {
-                        return {id: item.id, text: item.name}
+                        return {
+                            id: item.id,
+                            text: item.name,
+                            price: item.price
+                        }
                     })
                 };
             },
-            cache: true
+            cache: false
         }
     });
 
@@ -218,7 +222,6 @@ $(document).ready(function () {
             dataType: 'json',
             delay: 100,
             data: function (params) {
-                console.log(params);
                 let query = {
                     name: params.term,
                     status: true
@@ -230,11 +233,15 @@ $(document).ready(function () {
             processResults: function (data) {
                 return {
                     results: data.map(item => {
-                        return {id: item.id, text: item.name}
+                        return {
+                            id: item.id,
+                            text: item.name,
+                            price: item.price
+                        }
                     })
                 };
             },
-            cache: true
+            cache: false
         }
     });
 
@@ -243,7 +250,7 @@ $(document).ready(function () {
         ajax: {
             url: '/restaurant_war_exploded/api/v1/admin/lobby/select2/lobby-by-name',
             dataType: 'json',
-            delay: 250,
+            delay: 0,
             data: function (params) {
                 let query = {
                     name: params.term,
@@ -258,16 +265,33 @@ $(document).ready(function () {
             processResults: function (data) {
                 return {
                     results: data.map(item => {
-                        return {id: item.id, text: item.name}
+                        return {
+                            id: item.id,
+                            text: item.name,
+                            capacity: item.capacity,
+                            money: item?.money
+                        }
                     })
                 };
             },
-            cache: true
-        }
+            cache: false
+        },
+        templateResult: formatSearchBoxLobby
     });
 });
 
-$('#lobby-select').on('change', function(){
+function formatSearchBoxLobby(lobby) {
+    if (lobby.disable === true)
+        return;
+    let ex_prod = $('<b >' + (lobby.text ? lobby.text : lobby.text) + '</b><br/>' +
+        ('<div style="margin-top: 10px">Số lượng khách: ' + dottedMoney(lobby?.capacity) + '<div/>') +
+        ('<div style="margin-top: 10px">Giá thuê: ' + dottedMoney(lobby?.money) + ' <sup>VNĐ</sup><div/>')
+    );
+
+    return ex_prod;
+}
+
+$('#lobby-select').on('change', function () {
     $('#lobby').val($(this).text());
 })
 
@@ -293,7 +317,7 @@ $('#tables').on('input', function () {
             serviceMoney += +item.price;
         })
 
-        let temp = +$('#total').val().replace(/\./g, '')  - (foodMoney + drinkMoney + serviceMoney);
+        let temp = +$('#total').val().replace(/\./g, '') - (foodMoney + drinkMoney + serviceMoney);
 
         foodMoney = 0;
         JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {

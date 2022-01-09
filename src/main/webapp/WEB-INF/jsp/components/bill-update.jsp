@@ -75,10 +75,6 @@
                 <input id="total" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
             </div>
 
-<%--            <div>--%>
-<%--                <div class="text-sm mb-1 mt-2 invisible">Chọn sánh</div>--%>
-<%--                --%>
-<%--            </div>--%>
         </div>
     </div>
 

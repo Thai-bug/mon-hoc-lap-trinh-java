@@ -59,11 +59,15 @@ public class ApiBillController {
             if (billRequest.getAddedServices() != null)
                 orderedServices.addAll(billRequest.getAddedServices());
 
+            System.out.println(billRequest.getAddedFoods().toArray()[0]);
+
             bill.setDrinkList(orderedDrinks);
             bill.setFoodList(orderedFood);
             bill.setServiceList(orderedServices);
 
             bill.setStatus(billRequest.getStatus());
+
+            System.out.println(bill.getDrinkList().size());
 
             billService.update(bill);
 

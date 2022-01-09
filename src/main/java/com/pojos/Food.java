@@ -41,7 +41,8 @@ public class Food implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createdAt = new Date();
 
-    @ManyToMany(mappedBy = "foodList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "foodList", fetch = FetchType.LAZY,
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonIgnore
     private Set<Bill> billList;
 

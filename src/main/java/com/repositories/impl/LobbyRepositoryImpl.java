@@ -99,7 +99,6 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         Session session = sessionFactory.getObject().getCurrentSession();
 
         String additional = id == 0 ? "" : "or l.id = :id\n";
-        System.out.println(additional);
 
         Query q = session.createNativeQuery("select l.* from lobby l\n" +
                 "left join bill b on b.lobby_id = l.id\n" +
