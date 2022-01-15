@@ -45,5 +45,10 @@ public class BillController {
     ) {
         return "billUpdate";
     }
-
+    @RequestMapping("/create")
+    public String createBill(
+            Model model
+    ) {
+        return "billCreate";
+    }
 }

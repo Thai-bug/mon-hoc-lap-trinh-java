@@ -30,7 +30,7 @@ const updateAction = async () => {
         customerName: $('#customer-name').val(),
         name: $('#name').val(),
         employee: +$('#employee').attr('employee-id'),
-        lobby: +$('#lobby').attr('lobby-id'),
+        lobby: {id: +$('#lobby-select').val()} ,
 
         addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item => {
             return {id: item.id}

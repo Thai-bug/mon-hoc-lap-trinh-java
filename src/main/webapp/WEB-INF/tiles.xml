@@ -539,6 +539,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+    <!--  bill create  -->
+    <definition name="billCreate" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý đơn hàng"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/bill/create.jsp" name="update" extends="billCreate">
+                <put-attribute name="bill-create"
+                               value="/WEB-INF/jsp/components/bill-create.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
     <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>

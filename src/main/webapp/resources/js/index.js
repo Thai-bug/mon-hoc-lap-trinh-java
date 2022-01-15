@@ -366,3 +366,9 @@ $(window).on('load', function () {
     localStorage.removeItem('beginDate');
     localStorage.removeItem('endDate');
 });
+
+$('[data-toggle="datepicker"]').datepicker();
+
+$.fn.datepicker.setDefaults({
+    autoHide: true,
+})
