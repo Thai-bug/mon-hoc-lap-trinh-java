@@ -26,6 +26,46 @@ public class BillRequest {
 
     Lobby lobby;
 
+    Employee employee;
+
+    long total;
+
+    int tables;
+
+    long deposit;
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
+    }
+
+    public int getTables() {
+        return tables;
+    }
+
+    public void setTables(int tables) {
+        this.tables = tables;
+    }
+
+    public long getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(long deposit) {
+        this.deposit = deposit;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
     public String getCode() {
         return code;
     }

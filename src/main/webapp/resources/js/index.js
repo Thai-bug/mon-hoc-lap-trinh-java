@@ -322,8 +322,8 @@ $('#lobby-select').on('change', function () {
 
     total += ($("#lobby-select option:selected").data()?.data?.money || +$("#lobby-select option:selected").attr('money') || 0) - lobbyPrice;
     lobbyPrice = $("#lobby-select option:selected").data()?.data?.money || +$("#lobby-select option:selected").attr('money') || 0;
-    preOrder = $('#pre-order').is(':checked') ? total / 100 * 10 : 0;
-    console.log(preOrder);
+    preOrder = $('#pre-order').prop('checked') ? total / 100 * 10 : 0;
+
     $('#deposit').val(dottedMoney(preOrder));
     $("#total").val(dottedMoney(total));
     $('#lobby').val($(this).text());

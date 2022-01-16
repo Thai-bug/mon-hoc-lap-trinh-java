@@ -32,4 +32,9 @@ public class BillServiceImpl implements BillService {
     public boolean update(Bill bill) {
         return billRepository.update(bill);
     }
+
+    @Override
+    public boolean create(Bill bill) {
+        return billRepository.create(bill);
+    }
 }

@@ -95,4 +95,17 @@ public class BillRepositoryImpl implements BillRepository {
         }
         return true;
     }
+
+    @Override
+    public boolean create(Bill bill) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        try{
+            session.save(bill);
+        }
+        catch (Exception err){
+            System.out.println(err.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

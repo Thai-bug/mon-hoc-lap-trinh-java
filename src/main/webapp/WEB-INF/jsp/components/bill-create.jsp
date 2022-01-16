@@ -116,7 +116,7 @@
     </div>
 
     <div>
-        <button type="button" id="create-bill">Tạo đơn
+        <button type="button" id="create-bill" onclick="createOrder()">Tạo đơn
             hàng</button>
     </div>
 </div>

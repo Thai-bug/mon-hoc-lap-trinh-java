@@ -13,7 +13,7 @@ const id = new URLSearchParams(location.search).get("id")
 const callApi = async (identity) => {
     if(window.location.pathname.includes('/bills/update')) {
         const id = identity
-        const urlString = `/restaurant_war_exploded/api/v1/admin/bills/detail/` + id
+        const urlString = `/restaurant_war_exploded/api/v1/bills/detail/` + id
         const response = await fetch(urlString);
         data = await response.json();
         if (response.status === 200) {
@@ -53,19 +53,8 @@ const updateAction = async () => {
         })
     }
 
-    const response = await fetch('/restaurant_war_exploded/api/v1/admin/bills/update', {
-        method: 'post',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(async response => {
-        if (!response.ok)
-            throw new Error((await response.json())?.message);
-        return await response.json()
-    })
-        .catch(err => err);
+    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/update',...data).catch(e=>e)
+
     if (response instanceof Error) {
         return Notify(response?.message,null, null,'danger'
         );

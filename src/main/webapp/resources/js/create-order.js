@@ -10,7 +10,6 @@ const getEmployee = async () => {
         const response = await fetch(urlString);
         employee = await response.json();
         if (response.status === 200) {
-            // passData(data);
             $('#main').removeClass('hidden')
         }
     }
@@ -25,7 +24,6 @@ function changeTablesAction(type, tables, oldTables){
                 total += orderedFood.reduce((temp, item) => {
                     return temp + +(item.price);
                 }, 0)  * delta;
-                console.log(delta);
             }
             break;
         case 'drink':
@@ -37,10 +35,10 @@ function changeTablesAction(type, tables, oldTables){
             }
             break;
     }
-
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
     $('#total').val(dottedMoney(total));
 }
-
 
 const showFoods = () => {
     $("#food").empty();
@@ -118,8 +116,11 @@ const deleteFood = (id) => {
     let addedFood = !localStorage.getItem('addedFood') ? [] : JSON.parse(localStorage.getItem('addedFood'));
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
     total -= orderedFood.filter(item => +item?.id === +id)[0].price * tables;
-    console.log(total);
     $('#total').val(dottedMoney(total));
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
+
     addedFood = addedFood.filter(item => +item?.id !== +id);
     orderedFood = orderedFood.filter(item => +item?.id !== +id);
 
@@ -127,6 +128,42 @@ const deleteFood = (id) => {
     localStorage.setItem('orderedFood', JSON.stringify(orderedFood));
 
     showFoods();
+}
+
+const deleteDrink = (id) => {
+    let addedDrink = !localStorage.getItem('addedDrink') ? [] : JSON.parse(localStorage.getItem('addedDrink'));
+    let orderedDrink = !localStorage.getItem('orderedDrink') ? [] : JSON.parse(localStorage.getItem('orderedDrink'));
+    total -= orderedDrink.filter(item => +item?.id === +id)[0].price * tables;
+    $('#total').val(dottedMoney(total));
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
+
+    addedDrink = addedDrink.filter(item => +item?.id !== +id);
+    orderedDrink = orderedDrink.filter(item => +item?.id !== +id);
+
+    localStorage.setItem('addedDrink', JSON.stringify(addedDrink));
+    localStorage.setItem('orderedDrink', JSON.stringify(orderedDrink));
+
+    showDrinks();
+}
+
+const deleteService = (id) => {
+    let addedService = !localStorage.getItem('addedService') ? [] : JSON.parse(localStorage.getItem('addedService'));
+    let orderedService = !localStorage.getItem('orderedService') ? [] : JSON.parse(localStorage.getItem('orderedService'));
+    total -= orderedService.filter(item => +item?.id === +id)[0].price;
+    $('#total').val(dottedMoney(total));
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
+
+    addedService = addedService.filter(item => +item?.id !== +id);
+    orderedService = orderedService.filter(item => +item?.id !== +id);
+
+    localStorage.setItem('addedService', JSON.stringify(addedService));
+    localStorage.setItem('orderedService', JSON.stringify(orderedService));
+
+    showService();
 }
 
 $(async function () {
@@ -142,18 +179,19 @@ $('#tables-bill').on('keyup', function () {
     tables = +$(this).val().replace(/\./g, '');
 
     changeTablesAction('food',tables, oldTables);
+    changeTablesAction('drink',tables, oldTables);
     oldTables = tables
     $('#tables-bill').val(dottedMoney(tables));
 })
 
 $('#pre-order').on('change', function(e){
     preOrder = $(this).is(':checked') ? total * 10 / 100 : 0;
-    console.log(preOrder);
     $('#deposit').val(dottedMoney(preOrder));
-
 })
 
 $(document.body).on("change", "#food-list", function () {
+    if(!$("#food-list").val())
+        return;
     let addedFood = !localStorage.getItem('addedFood') ? [] : JSON.parse(localStorage.getItem('addedFood'));
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
 
@@ -170,10 +208,95 @@ $(document.body).on("change", "#food-list", function () {
 
         total = +total
             + tables * $(this).select2('data')[0].price;
+        preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+        $('#deposit').val(dottedMoney(preOrder));
         $('#total').val(dottedMoney(total));
     }
     localStorage.setItem('addedFood', JSON.stringify(addedFood));
     localStorage.setItem('orderedFood', JSON.stringify(orderedFood));
 
     showFoods();
+    $('#food-list').val(null).trigger('change')
 })
+
+$(document.body).on("change", "#drink-list", function () {
+    if(!$("#drink-list").val())
+        return;
+    let addedDrink = !localStorage.getItem('addedDrink') ? [] : JSON.parse(localStorage.getItem('addedDrink'));
+    let orderedDrink = !localStorage.getItem('orderedDrink') ? [] : JSON.parse(localStorage.getItem('orderedDrink'));
+
+    if (!addedDrink.filter(item => +item?.id === +this.value)[0]) {
+        orderedDrink.push({
+            id: +this.value,
+            name: $(this).select2('data')[0].text,
+            price: +$(this).select2('data')[0].price
+        });
+
+        addedDrink.push({
+            id: +this.value
+        })
+
+        total = +total
+            + tables * $(this).select2('data')[0].price;
+        preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+        $('#deposit').val(dottedMoney(preOrder));
+        $('#total').val(dottedMoney(total));
+    }
+    localStorage.setItem('addedDrink', JSON.stringify(addedDrink));
+    localStorage.setItem('orderedDrink', JSON.stringify(orderedDrink));
+
+    showDrinks();
+    $('#drink-list').val(null).trigger('change')
+})
+
+$(document.body).on("change", "#service-list", function () {
+    if(!$("#service-list").val())
+        return;
+    let addedService = !localStorage.getItem('addedService') ? [] : JSON.parse(localStorage.getItem('addedService'));
+    let orderedService = !localStorage.getItem('orderedService') ? [] : JSON.parse(localStorage.getItem('orderedService'));
+
+    if (!orderedService.filter(item => +item?.id === +this.value)[0]) {
+        orderedService.push({
+            id: +this.value,
+            name: $(this).select2('data')[0].text,
+            price: +$(this).select2('data')[0].price
+        });
+
+        addedService.push({
+            id: +this.value
+        })
+
+        total = +total
+            + $(this).select2('data')[0].price;
+        preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+        $('#deposit').val(dottedMoney(preOrder));
+        $('#total').val(dottedMoney(total));
+    }
+    localStorage.setItem('addedService', JSON.stringify(addedService));
+    localStorage.setItem('orderedService', JSON.stringify(orderedService));
+
+    showService();
+    $('#service-list').val(null).trigger('change')
+})
+
+async function createOrder(){
+    const begin = moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
+    const end = moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
+    console.log({beginDate, endDate})
+    const response = await axios.post('/restaurant_war_exploded/api/v1/bills/create', {
+        tables: tables,
+        total: total,
+        deposit: +$('#deposit').val() || 0,
+        addedFoods: JSON.parse(localStorage.getItem('orderedFood')) || [],
+        addedDrinks: JSON.parse(localStorage.getItem('orderedDrink')) || [],
+        addedServices: JSON.parse(localStorage.getItem('orderedService')) || [],
+        beginDate: begin,
+        endDate: end,
+        lobby: {id: +$('#lobby-select').val()},
+        employee: {id: employee.id},
+        status: {id: $('#pre-order').prop('checked') ? 2 : 1},
+        customerName: $('#customer-name').val(),
+        name: $('#name').val(),
+    })
+    // console.log(response);
+}

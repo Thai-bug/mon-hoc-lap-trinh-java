@@ -12,4 +12,6 @@ public interface BillService {
     Bill getBill(String code);
 
     boolean update(Bill bill);
+
+    boolean create(Bill bill);
 }

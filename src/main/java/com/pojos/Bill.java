@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Set;
 
@@ -84,6 +85,9 @@ public class Bill implements Serializable {
     private int totalTable;
 
     public Bill() {
+        this.foodList = new HashSet<>(0);
+        this.drinkList = new HashSet<>(0);
+        this.serviceList = new HashSet<>(0);
     }
 
     public int getTotalTable() {
