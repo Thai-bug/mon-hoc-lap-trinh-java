@@ -29,7 +29,8 @@ public class ApiLobbyController {
         Date beginDate = params.get("beginDate") == null ? new Date() : new Date(Long.parseLong(params.get("beginDate")));
         Date endDate = params.get("endDate") == null ? new Date() : new Date(Long.parseLong(params.get("endDate")));
         int id = params.get("currentId") == null ? 0 : Integer.parseInt(params.get("currentId"));
-        Set<Lobby> lobbies = lobbyService.getByNameWithDate(name, beginDate, endDate, page, id);
+        int seats = params.get("seats") == null ? 0 : Integer.parseInt(params.get("seats"));
+        Set<Lobby> lobbies = lobbyService.getByNameWithDate(name, beginDate, endDate, page, id, seats);
         return new ResponseEntity<Set<Lobby>>(
                 lobbies,
                 HttpStatus.OK);

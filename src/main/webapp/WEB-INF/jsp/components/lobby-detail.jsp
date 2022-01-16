@@ -24,7 +24,7 @@
 
             <div>
                 <span>Số lượng tối đa: </span><span
-                    class="capitalize font-semibold">${lobby.capacity}</span>
+                    class="capitalize font-semibold">${lobby.seats}</span>
          </span>
             </div>
 

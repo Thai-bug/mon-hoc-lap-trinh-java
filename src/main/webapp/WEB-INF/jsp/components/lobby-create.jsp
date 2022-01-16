@@ -40,7 +40,7 @@
                     <label class="label">
                         <span class="label-text">Số lượng tối đa </span>
                     </label>
-                    <form:input path="capacity" placeholder="Số lượng"
+                    <form:input path="seats" placeholder="Số lượng"
                                 cssClass="input input-bordered w-full capitalize"/>
                 </div>
 

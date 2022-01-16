@@ -22,10 +22,10 @@ public class Lobby implements Serializable {
     @Column(name = "name")
     String name;
 
-    @Column(name = "capacity")
+    @Column(name = "seats")
     @Min(value = 30)
     @Max(value = 1000)
-    int capacity;
+    int seats;
 
     @Column(name = "status")
     @ColumnDefault("true")
@@ -73,12 +73,12 @@ public class Lobby implements Serializable {
         this.name = name;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getseats() {
+        return seats;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setseats(int seats) {
+        this.seats = seats;
     }
 
     public boolean isStatus() {

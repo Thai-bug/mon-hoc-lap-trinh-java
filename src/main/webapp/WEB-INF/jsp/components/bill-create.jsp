@@ -32,7 +32,7 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng bàn:</div>
-                <input id="tables" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="tables-bill" class="border-gray-400 border rounded-xl w-full capitalize"/>
             </div>
         </div>
         <div>
@@ -44,13 +44,12 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian bắt đầu:</div>
-<%--                <input  disabled/>--%>
-                <input data-toggle="datepicker" id="beginDate" class="border-gray-400 border rounded-xl w-full capitalize">
+                <input id="beginDate" class="datetimepicker border-gray-400 border rounded-xl w-full capitalize" autocomplete="off"  placeholder="Chọn ngày">
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian kết thúc:</div>
-                <input id="endDate" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="endDate" class="datetimepicker border-gray-400 border rounded-xl w-full capitalize" autocomplete="off" placeholder="Chọn ngày" disabled/>
             </div>
 
             <div>
@@ -68,12 +67,17 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Đặt cọc:</div>
-                <input id="deposit" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="deposit" class="border-gray-400 border rounded-xl w-full capitalize" value="0" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng tiền:</div>
                 <input id="total" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+            </div>
+
+            <div>
+                <div class="text-sm mb-1 mt-2">Đặt cọc trước:</div>
+                <input type="checkbox" id="pre-order" class=""/>
             </div>
 
         </div>
@@ -112,12 +116,12 @@
     </div>
 
     <div>
-        <button type="button" id="update-bill">Cập nhật đơn
+        <button type="button" id="create-bill">Tạo đơn
             hàng</button>
     </div>
 </div>
 
-<%--<script src="<c:url value="/js/update-order-page.js"/>"></script>--%>
+<script src="<c:url value="/js/create-order.js"/>"></script>
 
 <style>
     input {

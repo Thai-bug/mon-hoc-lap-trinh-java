@@ -1,9 +1,15 @@
 /**
  * GLOBAL REGION
  * */
+$('.datetimepicker').datetimepicker({
+    // format: 'YYYY-MM-DD HH:mm:ss',
+    format: 'd/m/Y h:i',
+    locale: 'vi',
+    step: 30,
+    minDate: moment()
+})
 
 Notify = function (text, callback, close_callback, style) {
-
     var time = '2000';
     var $container = $('#notifications');
     var icon = '<i class="fa fa-info-circle "></i>';
@@ -169,15 +175,14 @@ $(document).ready(function () {
                     status: true
                 }
 
-                // Query parameters will be ?search=[term]&type=public
                 return query;
             },
             processResults: function (data) {
                 return {
                     results: data.map(item => {
                         return {
-                            id: item.id,
-                            text: item.name,
+                            id: item?.id,
+                            text: item?.name,
                             price: item.price
                         }
                     })
@@ -204,8 +209,8 @@ $(document).ready(function () {
                 return {
                     results: data.map(item => {
                         return {
-                            id: item.id,
-                            text: item.name,
+                            id: item?.id,
+                            text: item?.name,
                             price: item.price
                         }
                     })
@@ -234,8 +239,8 @@ $(document).ready(function () {
                 return {
                     results: data.map(item => {
                         return {
-                            id: item.id,
-                            text: item.name,
+                            id: item?.id,
+                            text: item?.name,
                             price: item.price
                         }
                     })
@@ -246,6 +251,18 @@ $(document).ready(function () {
     });
 
     $('#lobby-select').select2({
+        "language": {
+            "noResults": function () {
+                return "Không có sảnh phù hợp.";
+            },
+            searching: function () {
+                return "Đang tìm kiếm..."
+            },
+            errorLoading: function () {
+                return "Vui lòng chọn thời gian";
+            }
+        },
+        allowClear: window.location.pathname.includes('/bills/create') ? true : false,
         placeholder: "Chọn sảnh để đổi",
         ajax: {
             url: '/restaurant_war_exploded/api/v1/admin/lobby/select2/lobby-by-name',
@@ -257,8 +274,9 @@ $(document).ready(function () {
                     status: true,
                     endDate: !$('#endDate') || $('#endDate') === '' ? null : moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
                     beginDate: !$('#beginDate') || $('#beginDate') === '' ? null : moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf(),
-                    currentId: $('#lobby-select').val()
+                    seats: tables * 10
                 }
+                data?.lobby?.id ? query.currentId = data?.lobby?.id : null;
 
                 return query;
             },
@@ -266,9 +284,9 @@ $(document).ready(function () {
                 return {
                     results: data.map(item => {
                         return {
-                            id: item.id,
-                            text: item.name,
-                            capacity: item.capacity,
+                            id: item?.id,
+                            text: item?.name,
+                            seats: item.seats,
                             money: item?.money
                         }
                     })
@@ -284,15 +302,35 @@ function formatSearchBoxLobby(lobby) {
     if (lobby.disable === true)
         return;
     let ex_prod = $('<b >' + (lobby.text ? lobby.text : lobby.text) + '</b><br/>' +
-        ('<div style="margin-top: 10px">Số lượng khách: ' + dottedMoney(lobby?.capacity) + '<div/>') +
+        ('<div style="margin-top: 10px">Số lượng khách: ' + dottedMoney(lobby?.seats) + '<div/>') +
         ('<div style="margin-top: 10px">Giá thuê: ' + dottedMoney(lobby?.money) + ' <sup>VNĐ</sup><div/>')
     );
 
     return ex_prod;
 }
 
+let lobbyPrice = 0
+
 $('#lobby-select').on('change', function () {
+    if ($('#lobby-select').val()) {
+        $('#endDate').attr('disabled', true);
+    }
+
+    if (!$('#lobby-select').val() && window.location.pathname.includes('bills/create')) {
+        $('#endDate').attr('disabled', false);
+    }
+
+    total += ($("#lobby-select option:selected").data()?.data?.money || +$("#lobby-select option:selected").attr('money') || 0) - lobbyPrice;
+    lobbyPrice = $("#lobby-select option:selected").data()?.data?.money || +$("#lobby-select option:selected").attr('money') || 0;
+    preOrder = $('#pre-order').is(':checked') ? total / 100 * 10 : 0;
+    console.log(preOrder);
+    $('#deposit').val(dottedMoney(preOrder));
+    $("#total").val(dottedMoney(total));
     $('#lobby').val($(this).text());
+})
+
+$('#beginDate').on('change', function (e) {
+    $('#endDate').val(moment($(this).val(), 'DD/MM/YYYY HH:mm').add(4, 'hour').format('DD/MM/YYYY HH:mm'))
 })
 
 
@@ -334,11 +372,6 @@ $('#tables').on('input', function () {
             serviceMoney += +item.price;
         })
 
-
-        console.log({
-            drinkMoney, foodMoney, serviceMoney, temp
-        })
-
         $('#total').val(dottedMoney(temp + foodMoney + drinkMoney + serviceMoney));
         localStorage.setItem('tables', $('#tables').val());
 
@@ -366,9 +399,3 @@ $(window).on('load', function () {
     localStorage.removeItem('beginDate');
     localStorage.removeItem('endDate');
 });
-
-$('[data-toggle="datepicker"]').datepicker();
-
-$.fn.datepicker.setDefaults({
-    autoHide: true,
-})

@@ -7,22 +7,21 @@ let orderedDrink = [];
 let orderedService = [];
 
 $(document).ready(function () {
-    // $('.js-example-basic-single').select2();
-    // $('#food-select').select2();
 })
 
 const id = new URLSearchParams(location.search).get("id")
 const callApi = async (identity) => {
-    const id = identity
-    const urlString = `/restaurant_war_exploded/api/v1/admin/bills/detail/` + id
-    const response = await fetch(urlString);
-    data = await response.json();
-    if (response.status === 200) {
-        passData(data);
-        $('#main').removeClass('hidden')
+    if(window.location.pathname.includes('/bills/update')) {
+        const id = identity
+        const urlString = `/restaurant_war_exploded/api/v1/admin/bills/detail/` + id
+        const response = await fetch(urlString);
+        data = await response.json();
+        if (response.status === 200) {
+            passData(data);
+            $('#main').removeClass('hidden')
+        }
     }
 }
-
 
 const updateAction = async () => {
     const data = {
@@ -33,24 +32,24 @@ const updateAction = async () => {
         lobby: {id: +$('#lobby-select').val()} ,
 
         addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item => {
-            return {id: item.id}
+            return {id: item?.id}
         }),
         deletedFoods: JSON.parse(localStorage.getItem('deletedFood')).map(item => {
-            return {id: item.id}
+            return {id: item?.id}
         }),
 
         addedDrinks: JSON.parse(localStorage.getItem('addedDrink')).map(item => {
-            return {id: item.id}
+            return {id: item?.id}
         }),
         deletedDrinks: JSON.parse(localStorage.getItem('deletedDrink')).map(item => {
-            return {id: item.id}
+            return {id: item?.id}
         }),
 
         addedServices: JSON.parse(localStorage.getItem('addedService')).map(item => {
-            return {id: item.id}
+            return {id: item?.id}
         }),
         deletedServices: JSON.parse(localStorage.getItem('deletedService')).map(item => {
-            return {id: item.id}
+            return {id: item?.id}
         })
     }
 
@@ -85,12 +84,15 @@ const passData = (orderInfo) => {
 
     $('#name').val(orderInfo.name);
 
-    const employeeName = orderInfo.employee.firstName + ' ' + orderInfo.employee.lastName
+    const employeeName = orderInfo.employee?.firstName + ' ' + orderInfo.employee?.lastName
     $('#employee').val(employeeName);
-    $('#employee').attr('employee-id', orderInfo.employee.id)
+    $('#employee').attr('employee-id', orderInfo.employee?.id)
 
-    $('#lobby').val(orderInfo.lobby.name);
-    $('#employee').attr('lobby-id', orderInfo.lobby.id)
+    lobbyPrice = orderInfo.lobby?.money;
+    total = orderInfo?.finalMoney;
+
+    $('#lobby').val(orderInfo.lobby?.name);
+    $('#employee').attr('lobby-id', orderInfo.lobby?.id)
 
     $('#beginDate').val(moment(orderInfo.beginDate).format('DD/MM/YYYY HH:mm'));
     localStorage.setItem('beginDate', orderInfo.beginDate);
@@ -109,6 +111,7 @@ const passData = (orderInfo) => {
     $('<option>').val(orderInfo?.lobby?.id)
         .text(orderInfo?.lobby?.name)
         .attr('selected', true)
+        .attr('money', orderInfo?.lobby?.money)
         .appendTo(`#lobby-select`);
 
     orderedFood = orderedFood.concat(orderInfo.foodList);
@@ -137,20 +140,20 @@ const showFoods = () => {
         .map((item, index) => {
             if (index % 2 === 0)
                 return $("#food").append(
-                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="food-${item.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item.id})">--%>
+                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="food-${item?.id}"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item?.id})">--%>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        ${item.name}
+                        ${item?.name}
                     </div>`
                 )
 
             return $("#food").append(
-                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item.id})">--%>
+                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item?.id}"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item?.id})">--%>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        ${item.name}
+                        ${item?.name}
                     </div>`
             )
         })
@@ -162,20 +165,20 @@ const showDrinks = () => {
         .map((item, index) => {
             if (index % 2 === 0)
                 return $("#drink").append(
-                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="drink-${item.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item.id})">--%>
+                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="drink-${item?.id}"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item?.id})">--%>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        ${item.name}
+                        ${item?.name}
                     </div>`
                 )
 
             return $("#drink").append(
-                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item.id})">--%>
+                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item?.id}"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item?.id})">--%>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        ${item.name}
+                        ${item?.name}
                     </div>`
             )
         })
@@ -186,17 +189,17 @@ const showService = () => {
     const html = JSON.parse(localStorage.getItem('orderedService'))
         .map((item, index) => {
             if (index % 2 === 0)
-                return `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="service-${item.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item.id})">--%>
+                return `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="service-${item?.id}"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item?.id})">--%>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        ${item.name}
+                        ${item?.name}
                     </div>`
-            return `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="service-${item.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item.id})">--%>
+            return `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="service-${item?.id}"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item?.id})">--%>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        ${item.name}
+                        ${item?.name}
                     </div>`
         }).join("");
 
@@ -209,12 +212,14 @@ $(document).ready(function () {
 
 //add food
 $(document.body).on("change", "#food-list", function () {
+    if(window.location.pathname.includes('/bills/create'))
+        return
     let addedFood = !localStorage.getItem('addedFood') ? [] : JSON.parse(localStorage.getItem('addedFood'));
     let deletedFood = !localStorage.getItem('deletedFood') ? [] : JSON.parse(localStorage.getItem('deletedFood'));
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
 
     const text = $(this).find("option:selected").text();
-    if (!orderedFood.filter(item => +item.id === +this.value)[0]) {
+    if (!orderedFood.filter(item => +item?.id === +this.value)[0]) {
         orderedFood.push({
             id: +this.value,
             name: text,
@@ -230,7 +235,7 @@ $(document.body).on("change", "#food-list", function () {
         addedFood.push({id: +this.value});
     }
 
-    deletedFood = deletedFood.filter(item => +item.id !== +this.value);
+    deletedFood = deletedFood.filter(item => +item?.id !== +this.value);
 
     localStorage.setItem('deletedFood', JSON.stringify(deletedFood));
     localStorage.setItem('addedFood', JSON.stringify(addedFood));
@@ -245,14 +250,14 @@ const deleteFood = (id) => {
     let deletedFood = !localStorage.getItem('deletedFood') ? [] : JSON.parse(localStorage.getItem('deletedFood'));
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
 
-    if (!deletedFood.filter(item => +item === +id)[0] && data.foodList.filter(item => item.id === +id).length > 0) {
+    if (!deletedFood.filter(item => +item === +id)[0] && data.foodList.filter(item => item?.id === +id).length > 0) {
         deletedFood.push({
             id: +id
         });
     }
 
-    addedFood = addedFood.filter(item => +item.id !== +id);
-    orderedFood = orderedFood.filter(item => +item.id !== +id);
+    addedFood = addedFood.filter(item => +item?.id !== +id);
+    orderedFood = orderedFood.filter(item => +item?.id !== +id);
 
     localStorage.setItem('deletedFood', JSON.stringify(deletedFood));
     localStorage.setItem('addedFood', JSON.stringify(addedFood));
@@ -268,7 +273,7 @@ $(document.body).on("change", "#drink-list", function () {
     let orderedDrink = !localStorage.getItem('orderedDrink') ? [] : JSON.parse(localStorage.getItem('orderedDrink'));
 
     const text = $(this).find("option:selected").text();
-    if (!orderedDrink.filter(item => +item.id === +this.value)[0]) {
+    if (!orderedDrink.filter(item => +item?.id === +this.value)[0]) {
 
         orderedDrink.push({
             id: +this.value,
@@ -278,7 +283,6 @@ $(document.body).on("change", "#drink-list", function () {
 
         const totalPrice = +$('#total').val().replace(/\./g, '')
             + +$('#tables').val() * $(this).select2('data')[0].price;
-        console.log($(this).select2('data')[0]);
         $('#total').val(dottedMoney(totalPrice));
     }
 
@@ -288,7 +292,7 @@ $(document.body).on("change", "#drink-list", function () {
         });
     }
 
-    deletedDrink = deletedDrink.filter(item => +item.id !== +this.value);
+    deletedDrink = deletedDrink.filter(item => +item?.id !== +this.value);
 
     localStorage.setItem('deletedDrink', JSON.stringify(deletedDrink));
     localStorage.setItem('addedDrink', JSON.stringify(addedDrink));
@@ -304,14 +308,14 @@ const deleteDrink = (id) => {
     let orderedDrink = !localStorage.getItem('orderedDrink') ? [] : JSON.parse(localStorage.getItem('orderedDrink'));
 
     if (
-        !deletedDrink.filter(item => +item === +id)[0] && data.drinkList.filter(item => item.id === +id).length > 0) {
+        !deletedDrink.filter(item => +item === +id)[0] && data.drinkList.filter(item => item?.id === +id).length > 0) {
         deletedDrink.push({
             id: +this.value
         });
     }
 
-    addedDrink = addedDrink.filter(item => +item.id !== +id);
-    orderedDrink = orderedDrink.filter(item => +item.id !== +id);
+    addedDrink = addedDrink.filter(item => +item?.id !== +id);
+    orderedDrink = orderedDrink.filter(item => +item?.id !== +id);
 
     localStorage.setItem('deletedDrink', JSON.stringify(deletedDrink));
     localStorage.setItem('addedFood', JSON.stringify(addedDrink));
@@ -328,7 +332,7 @@ $(document.body).on("change", "#service-list", function () {
 
     const text = $(this).find("option:selected").text();
     if (
-        !orderedService.filter(item => +item.id === +this.value)[0]) {
+        !orderedService.filter(item => +item?.id === +this.value)[0]) {
 
         orderedService.push({
             id: +this.value,
@@ -338,7 +342,6 @@ $(document.body).on("change", "#service-list", function () {
 
         const totalPrice = +$('#total').val().replace(/\./g, '')
             + +$('#tables').val() * $(this).select2('data')[0].price;
-        console.log($(this).select2('data')[0]);
         $('#total').val(dottedMoney(totalPrice));
     }
 
@@ -348,7 +351,7 @@ $(document.body).on("change", "#service-list", function () {
         });
     }
 
-    deletedService = deletedService.filter(item => +item.id !== +this.value);
+    deletedService = deletedService.filter(item => +item?.id !== +this.value);
 
     localStorage.setItem('deletedService', JSON.stringify(deletedService));
     localStorage.setItem('addedService', JSON.stringify(addedService));
@@ -364,14 +367,14 @@ const deleteService = (id) => {
     let orderedService = !localStorage.getItem('orderedService') ? [] : JSON.parse(localStorage.getItem('orderedService'));
 
     if (
-        !deletedService.filter(item => +item === +id)[0] && data.deletedService.filter(item => item.id === +id).length > 0) {
+        !deletedService.filter(item => +item === +id)[0] && data.deletedService.filter(item => item?.id === +id).length > 0) {
         deletedService.push({
             id: +this.value
         });
     }
 
-    addedService = addedService.filter(item => +item.id !== +id);
-    orderedService = orderedService.filter(item => +item.id !== +id);
+    addedService = addedService.filter(item => +item?.id !== +id);
+    orderedService = orderedService.filter(item => +item?.id !== +id);
 
     localStorage.setItem('deletedService', JSON.stringify(deletedService));
     localStorage.setItem('addedService', JSON.stringify(addedService));

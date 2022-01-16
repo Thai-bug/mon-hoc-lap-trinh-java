@@ -543,7 +543,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="billCreate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/bill/create.jsp" name="update" extends="billCreate">
+            <definition template="/WEB-INF/jsp/bill/create.jsp" name="create" extends="billCreate">
                 <put-attribute name="bill-create"
                                value="/WEB-INF/jsp/components/bill-create.jsp"/>
             </definition>

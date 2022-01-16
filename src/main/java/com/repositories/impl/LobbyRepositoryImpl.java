@@ -95,7 +95,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     }
 
     @Override
-    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id) {
+    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id, int seats) {
         Session session = sessionFactory.getObject().getCurrentSession();
 
         String additional = id == 0 ? "" : "or l.id = :id\n";
@@ -103,6 +103,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         Query q = session.createNativeQuery("select l.* from lobby l\n" +
                 "left join bill b on b.lobby_id = l.id\n" +
                 "where lower(l.name) like :name and l.status = true\n" +
+                "and l.seats >= :seats \n" +
                 "and( b.begin_date is null\n" +
                 "or (b.begin_date > :endDate or b.end_date < :beginDate)\n" +
                 "or(b.begin_date <= :beginDate and b.end_date >= :beginDate and b.status_id = 4)\n" +
@@ -116,6 +117,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         q.setParameter("beginDate", beginDate);
         q.setParameter("endDate", endDate);
         q.setParameter("page", (page - 1) * 5);
+        q.setParameter("seats", seats);
         if (id != 0)
             q.setParameter("id", id);
         return (Set<Lobby>) new HashSet<>(q.getResultList());

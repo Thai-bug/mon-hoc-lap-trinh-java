@@ -16,5 +16,5 @@ public interface LobbyRepository {
 
     boolean createLobby(Lobby lobby);
 
-    Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id);
+    Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id, int seats);
 }

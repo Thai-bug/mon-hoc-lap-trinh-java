@@ -41,7 +41,7 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id) {
-        return lobbyRepository.getByNameWithDate(name, beginDate, endDate, page, id);
+    public Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id, int seats) {
+        return lobbyRepository.getByNameWithDate(name, beginDate, endDate, page, id, seats);
     }
 }

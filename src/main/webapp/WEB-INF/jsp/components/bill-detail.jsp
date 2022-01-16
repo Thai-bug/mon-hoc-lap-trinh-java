@@ -108,7 +108,6 @@
     }
 
     const passData = (orderInfo) => {
-        console.log({orderInfo})
         $('#code').val(orderInfo.code);
 
         $('#customer-name').val(orderInfo.customerName);
@@ -118,15 +117,15 @@
         const employeeName = orderInfo.employee.firstName + ' ' + orderInfo.employee.lastName
         $('#employee').val(employeeName);
 
-        $('#lobby').val(orderInfo.lobby.name);
+        $('#lobby').val(orderInfo.lobby?.name);
 
         $('#beginDate').val(moment(orderInfo.beginDate).format('DD/MM/YYYY HH:mm'));
 
         $('#bill').val(orderInfo.status?.title);
 
-        $('#deposit').val(orderInfo.provisionalMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+        $('#deposit').val(orderInfo.provisionalMoney?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
 
-        $('#total').val(orderInfo.finalMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+        $('#total').val(orderInfo.finalMoney?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
 
         showFoods(orderInfo.foodList)
 
@@ -143,7 +142,7 @@
                     //  '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
                     // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
                     //  '</svg>'+
-                    item.name +
+                    item?.name +
                     '</div>'
                 )
 
@@ -152,7 +151,7 @@
                 // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
                 // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
                 // '</svg>'+
-                item.name +
+                item?.name +
                 '</div>'
             )
         })
@@ -166,7 +165,7 @@
                     // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
                     // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
                     // '</svg>'+
-                    item.name +
+                    item?.name +
                     '</div>'
                 )
 
@@ -175,7 +174,7 @@
                 // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
                 // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
                 // '</svg>'+
-                item.name +
+                item?.name +
                 '</div>'
             )
         })
@@ -189,7 +188,7 @@
                     // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
                     // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
                     // '</svg>'+
-                    item.name +
+                    item?.name +
                     '</div>'
                 )
 
@@ -198,7 +197,7 @@
                 // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
                 // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
                 // '</svg>'+
-                item.name +
+                item?.name +
                 '</div>'
             )
         })
