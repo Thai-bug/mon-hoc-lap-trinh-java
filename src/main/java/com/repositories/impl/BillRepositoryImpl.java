@@ -7,8 +7,10 @@ import com.repositories.BillRepository;
 import com.repositories.EmployeeRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.QueryHints;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -107,5 +110,20 @@ public class BillRepositoryImpl implements BillRepository {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Set<Object> countBillsByTypes() {
+
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String query =  "select count(bill.id) as total, type.* from bill \n" +
+                "\tjoin type on type.id = bill.type_id\n" +
+                "\tGROUP BY type.id";
+
+        NativeQuery q = session.createNativeQuery(
+                query
+        );
+
+        return (Set<Object>) new HashSet<>(q.getResultList());
     }
 }

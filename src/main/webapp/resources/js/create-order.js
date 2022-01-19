@@ -282,7 +282,6 @@ $(document.body).on("change", "#service-list", function () {
 async function createOrder(){
     const begin = moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
     const end = moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
-    console.log({beginDate, endDate})
     const response = await axios.post('/restaurant_war_exploded/api/v1/bills/create', {
         tables: tables,
         total: total,
@@ -297,6 +296,15 @@ async function createOrder(){
         status: {id: $('#pre-order').prop('checked') ? 2 : 1},
         customerName: $('#customer-name').val(),
         name: $('#name').val(),
-    })
-    // console.log(response);
+    }).catch(e=>e);
+
+    if (response instanceof Error) {
+        return Notify(response?.response.data.message,null, null,'danger'
+        );
+    }
+
+    if (response instanceof Error) {
+        return Notify(response?.message,null, null,'danger'
+        );
+    }
 }

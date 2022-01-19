@@ -14,4 +14,6 @@ public interface BillService {
     boolean update(Bill bill);
 
     boolean create(Bill bill);
+
+    Set<Object> countBillsByType();
 }

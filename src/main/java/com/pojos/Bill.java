@@ -75,6 +75,10 @@ public class Bill implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
     private Set<Service> serviceList;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_id")
+    private Type type;
+
     @Column(name = "begin_date")
     private Date beginDate;
 
@@ -88,6 +92,14 @@ public class Bill implements Serializable {
         this.foodList = new HashSet<>(0);
         this.drinkList = new HashSet<>(0);
         this.serviceList = new HashSet<>(0);
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public int getTotalTable() {

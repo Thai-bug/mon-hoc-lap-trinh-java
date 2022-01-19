@@ -8,3 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"
            uri="http://java.sun.com/jsp/jstl/core" %>
+
+<div>
+
+    <div >
+        <div onclick="exportType()">Xuất báo cáo</div>
+        <div>
+
+            <canvas id="myChart" width="10" height="400"></canvas>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script src="<c:url value="/js/general.js"/>"></script>

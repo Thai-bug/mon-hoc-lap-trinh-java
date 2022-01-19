@@ -37,4 +37,9 @@ public class BillServiceImpl implements BillService {
     public boolean create(Bill bill) {
         return billRepository.create(bill);
     }
+
+    @Override
+    public Set<Object> countBillsByType() {
+        return billRepository.countBillsByTypes();
+    }
 }

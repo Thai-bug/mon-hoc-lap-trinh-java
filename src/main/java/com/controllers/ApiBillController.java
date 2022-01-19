@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/bills")
+@RequestMapping("/api/v1/admin/bills")
 public class ApiBillController {
     @Autowired
     private BillService billService;
@@ -32,6 +32,15 @@ public class ApiBillController {
         Bill bill = billService.getBill(id);
         return new ResponseEntity<>(
                 bill,
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/total-by-type")
+    public ResponseEntity<Set<Object>> countBillsByType(
+    ) {
+        Set<Object> result = billService.countBillsByType();
+        return new ResponseEntity<>(
+                result,
                 HttpStatus.OK);
     }
 

@@ -14,4 +14,6 @@ public interface BillRepository {
     boolean update(Bill bill);
 
     boolean create(Bill bill);
+
+    Set<Object> countBillsByTypes();
 }
