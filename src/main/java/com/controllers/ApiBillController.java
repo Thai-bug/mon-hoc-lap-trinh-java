@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.SubClass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.pojos.Bill;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.Map;
@@ -42,6 +44,14 @@ public class ApiBillController {
         return new ResponseEntity<>(
                 result,
                 HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/static", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<Set<SubClass>> staticBills( @RequestBody Map<String, Object> json){
+        String type = (String) json.get("type");
+        Set<SubClass> result = billService.staticBill(type);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(value = "/update",

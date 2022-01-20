@@ -1,5 +1,6 @@
 package com.services.impl;
 
+import com.SubClass;
 import com.pojos.Bill;
 import com.repositories.BillRepository;
 import com.services.BillService;
@@ -41,5 +42,17 @@ public class BillServiceImpl implements BillService {
     @Override
     public Set<Object> countBillsByType() {
         return billRepository.countBillsByTypes();
+    }
+
+    @Override
+    public Set<SubClass> staticBill(String type) {
+        switch (type) {
+            case "month":
+                return billRepository.totalMoneyBillsByMonths();
+            case "quarter":
+                return billRepository.totalMoneyBillsByQuarter();
+            default:
+                return billRepository.totalMoneyBillsByDays();
+        }
     }
 }

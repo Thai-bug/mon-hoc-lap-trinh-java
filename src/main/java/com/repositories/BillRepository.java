@@ -1,5 +1,6 @@
 package com.repositories;
 
+import com.SubClass;
 import com.pojos.Bill;
 
 import java.util.Set;
@@ -16,4 +17,11 @@ public interface BillRepository {
     boolean create(Bill bill);
 
     Set<Object> countBillsByTypes();
+
+    Set<SubClass> totalMoneyBillsByDays();
+
+    Set<SubClass> totalMoneyBillsByMonths();
+
+    Set<SubClass> totalMoneyBillsByQuarter();
+
 }

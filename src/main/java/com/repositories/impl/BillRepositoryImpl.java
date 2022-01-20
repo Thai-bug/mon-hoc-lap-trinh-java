@@ -1,16 +1,13 @@
 package com.repositories.impl;
 
+import com.SubClass;
 import com.pojos.Bill;
-import com.pojos.Drink;
 import com.pojos.Employee;
 import com.repositories.BillRepository;
 import com.repositories.EmployeeRepository;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.annotations.QueryHints;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +17,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Repository
 @Transactional
@@ -125,5 +121,88 @@ public class BillRepositoryImpl implements BillRepository {
         );
 
         return (Set<Object>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public Set<SubClass> totalMoneyBillsByDays() {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String query =  "select sum(bill.final_money) as total, Date(bill.created_at) as date from bill \n" +
+                "\tGROUP BY DATE (bill.created_at)\n" +
+                "ORDER BY date ASC";
+
+        NativeQuery q = session.createNativeQuery(
+                query
+        );
+        List<Object> countList=q.getResultList();
+        LinkedList<SubClass> lists = new LinkedList<>();
+
+        for(Object obj: countList){
+            if (obj.getClass().isArray()) {
+                Object[] objects = (Object[]) obj;
+                SubClass subClass = new SubClass();
+                subClass.setTotal((new Double((double) objects[0])).longValue());
+                subClass.setCreatedAt((Date) objects[1]);
+                lists.add(subClass);
+            }
+        }
+
+        return (Set<SubClass>) new HashSet<>(lists);
+    }
+
+    @Override
+    public Set<SubClass> totalMoneyBillsByMonths() {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String query =  "select sum(bill.final_money) as total, MONTH (bill.created_at) as month, YEAR(bill.created_at) as year\n" +
+                "from bill\n" +
+                "GROUP BY month, year\n" +
+                "order by year, month;";
+
+        NativeQuery q = session.createNativeQuery(
+                query
+        );
+
+        List<Object> countList=q.getResultList();
+        LinkedList<SubClass> lists = new LinkedList<>();
+
+        for(Object obj: countList){
+            if (obj.getClass().isArray()) {
+                Object[] objects = (Object[]) obj;
+                SubClass subClass = new SubClass();
+                subClass.setTotal((new Double((double) objects[0])).longValue());
+                subClass.setMonth((int) objects[1]);
+                subClass.setYear((int) objects[2]);
+                lists.add(subClass);
+            }
+        }
+
+        return (Set<SubClass>) new HashSet<>(lists);
+    }
+
+    @Override
+    public Set<SubClass> totalMoneyBillsByQuarter() {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String query =  "select sum(bill.final_money) as total,QUARTER(bill.created_at) as quarter, YEAR(bill.created_at) as year\n" +
+                "from bill\n" +
+                "GROUP BY quarter, year\n" +
+                "order by year, quarter;";
+
+        NativeQuery q = session.createNativeQuery(
+                query
+        );
+        List<Object> countList=q.getResultList();
+        LinkedList<SubClass> lists = new LinkedList<>();
+
+        for(Object obj: countList){
+            if (obj.getClass().isArray()) {
+                Object[] objects = (Object[]) obj;
+                SubClass subClass = new SubClass();
+                subClass.setTotal((new Double((double) objects[0])).longValue());
+                subClass.setQuarter((int) objects[1]);
+                subClass.setYear((int) objects[2]);
+                lists.add(subClass);
+            }
+        }
+
+        return (Set<SubClass>) new HashSet<>(lists);
     }
 }

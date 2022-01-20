@@ -1,5 +1,6 @@
 package com.services;
 
+import com.SubClass;
 import com.pojos.Bill;
 
 import java.util.Set;
@@ -16,4 +17,6 @@ public interface BillService {
     boolean create(Bill bill);
 
     Set<Object> countBillsByType();
+
+    Set<SubClass> staticBill(String type);
 }

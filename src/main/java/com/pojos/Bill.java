@@ -39,6 +39,7 @@ public class Bill implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt = new Date();
 
     @ManyToOne(fetch = FetchType.EAGER)
