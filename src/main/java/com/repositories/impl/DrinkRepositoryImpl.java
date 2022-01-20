@@ -65,9 +65,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     public boolean updateDrink(Drink drink) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try{
-            session.getTransaction().begin();
             session.update(drink);
-            session.getTransaction().commit();
         }
         catch (Exception err){
             return false;
@@ -79,9 +77,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     public boolean add(Drink drink) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try{
-            session.getTransaction().begin();
             session.save(drink);
-            session.getTransaction().commit();
         }
         catch (Exception err){
             return false;

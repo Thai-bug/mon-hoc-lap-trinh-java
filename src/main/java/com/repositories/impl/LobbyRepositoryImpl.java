@@ -85,9 +85,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         Session session = sessionFactory.getObject().getCurrentSession();
         Transaction tx;
         try {
-            tx = session.beginTransaction();
             session.save(String.valueOf(Lobby.class), lobby);
-            tx.commit();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

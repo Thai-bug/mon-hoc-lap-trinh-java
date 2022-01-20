@@ -190,7 +190,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="lobbyCreate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý sảnh"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/lobby/create.jsp" name="create" extends="lobbyCreate">
+            <definition template="/WEB-INF/jsp/lobby/create.jsp" name="lobby-create" extends="lobbyCreate">
                 <put-attribute name="createForm"
                                value="/WEB-INF/jsp/components/lobby-create.jsp"/>
             </definition>

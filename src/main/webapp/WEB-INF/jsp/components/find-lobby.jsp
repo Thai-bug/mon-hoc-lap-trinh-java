@@ -12,6 +12,7 @@
 
 <div class="text-sm text-gray-400 mb-8">Quản lý sảnh cưới</div>
 
+<div><a href="<c:url value="/admin/lobby/create" />"><i class="fas fa-plus"></i>Tạo mới</a></div>
 
 <table id="lobbies" style="width: 100%;">
     <thead>

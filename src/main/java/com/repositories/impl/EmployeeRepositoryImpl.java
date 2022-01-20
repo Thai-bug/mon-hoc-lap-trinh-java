@@ -120,9 +120,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         try {
             Employee emp = session.get(Employee.class, employee.getId());
             emp.setAvatarLink(employee.getAvatarLink());
-            session.getTransaction().begin();
             session.update(emp);
-            session.getTransaction().commit();
             return true;
         } catch (Exception e) {
             return false;
@@ -133,9 +131,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public boolean updateEmployee(Employee employee) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
-            session.getTransaction().begin();
             session.update(employee);
-            session.getTransaction().commit();
             return true;
         } catch (Exception e) {
             return false;
@@ -180,9 +176,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Session session = sessionFactory.getObject().getCurrentSession();
         Transaction tx;
         try {
-            tx = session.beginTransaction();
             session.save(String.valueOf(Employee.class), employee);
-            tx.commit();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

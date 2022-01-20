@@ -64,9 +64,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     public boolean update(Food food) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
-            session.getTransaction().begin();
             session.update(food);
-            session.getTransaction().commit();
             return true;
         } catch (Exception e) {
             return false;
@@ -77,9 +75,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     public boolean add(Food food) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
-            session.getTransaction().begin();
             session.save(food);
-            session.getTransaction().commit();
             return true;
         } catch (Exception e) {
             return false;
