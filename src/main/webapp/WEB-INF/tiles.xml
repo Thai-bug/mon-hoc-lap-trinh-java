@@ -146,7 +146,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="lobbyDetail" extends="baseLayout">
         <put-attribute name="title" value="Quản lý sảnh"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/lobby/detail.jsp" name="detail" extends="lobbyDetail">
+            <definition template="/WEB-INF/jsp/lobby/detail.jsp" name="lobby-detail" extends="lobbyDetail">
                 <put-attribute name="detail-page"
                                value="/WEB-INF/jsp/components/lobby-detail.jsp"/>
             </definition>
@@ -168,7 +168,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="lobbyUpdate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý sảnh"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/lobby/update.jsp" name="update" extends="lobbyUpdate">
+            <definition template="/WEB-INF/jsp/lobby/update.jsp" name="lobby-update" extends="lobbyUpdate">
                 <put-attribute name="update-page"
                                value="/WEB-INF/jsp/components/lobby-update.jsp"/>
             </definition>

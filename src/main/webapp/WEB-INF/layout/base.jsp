@@ -22,8 +22,6 @@
     <link href="<c:url value="/css/utils.css"/>" rel="stylesheet"/>
 
     <link href="<c:url value="/css/datepicker.min.css"/>" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css"/>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
     <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
@@ -31,17 +29,30 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
           rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
             integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://raw.githubusercontent.com/msroot/Notify.js/master/Notify.js" defer></script>
     <script src="<c:url value="/js/datepicker.min.js"/>" rel="stylesheet"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
@@ -50,7 +61,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"
             integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
     <title>
         <tiles:insertAttribute name="title"/>
@@ -59,26 +69,30 @@
 <body>
 <%--HEADER--%>
 <div id="notifications"></div>
-<div class="h-screen md:container mx-auto flex flex-auto box-border min-h-0 flex flex-row">
-    <c:if test="${param.accessDenied !=null}">
-        lỗi truy cập
-    </c:if>
-    <c:if test="${pageContext.request.userPrincipal.name !=null}">
-        <div class="sider">
-            <tiles:insertAttribute name="sider"/>
-        </div>
-    </c:if>
-
-    <div class="layout w-full">
-        <tiles:insertAttribute name="header"/>
-
-        <%--CONTENT--%>
-        <tiles:insertAttribute name="content"/>
-
-        <%--FOOTER--%>
-        <tiles:insertAttribute name="footer"/>
+<c:if test="${pageContext.request.userPrincipal.name == null}">
+    <div class="flex items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-right bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white  md:block   ">
+        <a href="${login}" class="py-5 px-3">Đăng nhập</a>
     </div>
+</c:if>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <c:if test="${param.accessDenied !=null}">
+            lỗi truy cập
+        </c:if>
+        <c:if test="${pageContext.request.userPrincipal.name !=null}">
+            <tiles:insertAttribute name="sider"/>
+        </c:if>
 
+        <div class="col py-3">
+            <%--            <tiles:insertAttribute name="header"/>--%>
+   <%--CONTENT--%>
+            <tiles:insertAttribute name="content"/>
+
+            <%--FOOTER--%>
+            <%--            <tiles:insertAttribute name="footer"/>--%>
+        </div>
+
+    </div>
 </div>
 
 <script src="<c:url value="/js/index.js"/>"></script>

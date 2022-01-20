@@ -296,6 +296,35 @@ $(document).ready(function () {
         },
         templateResult: formatSearchBoxLobby
     });
+
+    $('#type').select2({
+        placeholder: "Chọn dịch vụ để thêm",
+        ajax: {
+            url: '/restaurant_war_exploded/api/v1/admin/types',
+            dataType: 'json',
+            delay: 100,
+            data: function (params) {
+                let query = {
+                    name: params.term,
+                    status: true
+                }
+
+                // Query parameters will be ?search=[term]&type=public
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(item => {
+                        return {
+                            id: item?.id,
+                            text: item?.title,
+                        }
+                    })
+                };
+            },
+            cache: false
+        }
+    });
 });
 
 function formatSearchBoxLobby(lobby) {
@@ -333,50 +362,75 @@ $('#beginDate').on('change', function (e) {
     $('#endDate').val(moment($(this).val(), 'DD/MM/YYYY HH:mm').add(4, 'hour').format('DD/MM/YYYY HH:mm'))
 })
 
+function changeTablesAction(type, tables, oldTables){
+    let delta = tables - oldTables;
+    switch (type){
+        case 'food':
+            if(localStorage.getItem('orderedFood')){
+                let orderedFood = JSON.parse(localStorage.getItem('orderedFood'));
+                total += orderedFood.reduce((temp, item) => {
+                    return temp + +(item.price);
+                }, 0)  * delta;
+            }
+            break;
+        case 'drink':
+            if(localStorage.getItem('orderedDrink')){
+                let orderedDrink = JSON.parse(localStorage.getItem('orderedDrink'));
+                total += orderedDrink.reduce((temp, item) => {
+                    return temp + +(item.price);
+                }, 0)  * delta;
+            }
+            break;
+    }
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
+    $('#total').val(dottedMoney(total));
+}
 
-$('#tables').on('input', function () {
-    clearTimeout(timeOut);
 
-    timeOut = setTimeout(function () {
-        let oldMoney = +$('#total').val().replace(/\./g, '');
-
-        let foodMoney = 0;
-        JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {
-            foodMoney += +item.price * +localStorage.getItem('tables');
-        })
-
-        let drinkMoney = 0;
-        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
-            drinkMoney += +item.price * +localStorage.getItem('tables');
-        })
-
-        let serviceMoney = 0;
-        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
-            serviceMoney += +item.price;
-        })
-
-        let temp = +$('#total').val().replace(/\./g, '') - (foodMoney + drinkMoney + serviceMoney);
-
-        foodMoney = 0;
-        JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {
-            foodMoney += +item.price * +$('#tables').val();
-        })
-
-        drinkMoney = 0;
-        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
-            drinkMoney += +item.price * +$('#tables').val();
-        })
-
-        serviceMoney = 0;
-        JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
-            serviceMoney += +item.price;
-        })
-
-        $('#total').val(dottedMoney(temp + foodMoney + drinkMoney + serviceMoney));
-        localStorage.setItem('tables', $('#tables').val());
-
-    }, 250);
-});
+// $('#tables').on('input', function () {
+//     clearTimeout(timeOut);
+//
+//     timeOut = setTimeout(function () {
+//         let oldMoney = +$('#total').val().replace(/\./g, '');
+//
+//         let foodMoney = 0;
+//         JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {
+//             foodMoney += +item.price * +localStorage.getItem('tables');
+//         })
+//
+//         let drinkMoney = 0;
+//         JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+//             drinkMoney += +item.price * +localStorage.getItem('tables');
+//         })
+//
+//         let serviceMoney = 0;
+//         JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+//             serviceMoney += +item.price;
+//         })
+//
+//         let temp = +$('#total').val().replace(/\./g, '') - (foodMoney + drinkMoney + serviceMoney);
+//
+//         foodMoney = 0;
+//         JSON.parse(localStorage.getItem('orderedFood')).forEach(item => {
+//             foodMoney += +item.price * +$('#tables').val();
+//         })
+//
+//         drinkMoney = 0;
+//         JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+//             drinkMoney += +item.price * +$('#tables').val();
+//         })
+//
+//         serviceMoney = 0;
+//         JSON.parse(localStorage.getItem('orderedDrink')).forEach(item => {
+//             serviceMoney += +item.price;
+//         })
+//
+//         $('#total').val(dottedMoney(temp + foodMoney + drinkMoney + serviceMoney));
+//         localStorage.setItem('tables', $('#tables').val());
+//
+//     }, 250);
+// });
 
 //reload window
 $(window).on('load', function () {

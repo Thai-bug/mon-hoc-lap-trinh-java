@@ -16,8 +16,8 @@ public class LobbyServiceImpl implements LobbyService {
     private LobbyRepository lobbyRepository;
 
     @Override
-    public Set<Lobby> getLobbies(String kw, int page) {
-        return lobbyRepository.getLobbies(kw, page);
+    public Set<Lobby> getLobbies(String kw, int page, int length) {
+        return lobbyRepository.getLobbies(kw, page, length);
     }
 
     @Override

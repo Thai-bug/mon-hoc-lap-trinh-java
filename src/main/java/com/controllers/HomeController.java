@@ -28,4 +28,11 @@ public class HomeController {
 //        model.addAttribute("products", products);
         return "index";
     }
+
+    @RequestMapping("/general")
+    public String general(Model model, @RequestParam(value = "kw", required = false, defaultValue = "") String kw){
+//        Set<Product> products = this.productService.getProductsByName(kw);
+//        model.addAttribute("products", products);
+        return "generalPage";
+    }
 }

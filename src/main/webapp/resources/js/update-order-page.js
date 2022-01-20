@@ -1,10 +1,11 @@
 let data;
-
 let orderedFood = [];
-
 let orderedDrink = [];
-
 let orderedService = [];
+let total = 0;
+let tables = 0;
+let preOrder = 0;
+let oldTables = 0;
 
 $(document).ready(function () {
 })
@@ -13,7 +14,7 @@ const id = new URLSearchParams(location.search).get("id")
 const callApi = async (identity) => {
     if(window.location.pathname.includes('/bills/update')) {
         const id = identity
-        const urlString = `/restaurant_war_exploded/api/v1/bills/detail/` + id
+        const urlString = `/restaurant_war_exploded/api/v1/admin/bills/detail/` + id
         const response = await fetch(urlString);
         data = await response.json();
         if (response.status === 200) {
@@ -28,8 +29,14 @@ const updateAction = async () => {
         code: $('#code').val(),
         customerName: $('#customer-name').val(),
         name: $('#name').val(),
-        employee: +$('#employee').attr('employee-id'),
+        employee: {id: +$('#employee').attr('employee-id')},
         lobby: {id: +$('#lobby-select').val()} ,
+
+        total: total,
+        deposit: preOrder,
+        tables: tables,
+
+        type: {id: +$('#type').val()},
 
         addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item => {
             return {id: item?.id}
@@ -53,19 +60,25 @@ const updateAction = async () => {
         })
     }
 
-    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/update',...data).catch(e=>e)
+    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/update',{
+        ...data
+    }).catch(e=>e)
 
     if (response instanceof Error) {
-        return Notify(response?.message,null, null,'danger'
+        return Notify(response?.data.message,null, null,'danger'
         );
     }
-    return Notify(response?.message,
+    Notify(response?.data.message,
         null, null,'success'
     );
+    return setTimeout(()=>{
+        window.reload()
+    }, 1000);
 }
 
 const passData = (orderInfo) => {
     data = orderInfo;
+    total = data.finalMoney
 
     $('#code').val(orderInfo.code);
 
@@ -77,8 +90,17 @@ const passData = (orderInfo) => {
     $('#employee').val(employeeName);
     $('#employee').attr('employee-id', orderInfo.employee?.id)
 
+    $('<option>').val(orderInfo?.type?.id)
+        .text(orderInfo?.type?.title)
+        .appendTo(`#type`);
+
     lobbyPrice = orderInfo.lobby?.money;
     total = orderInfo?.finalMoney;
+    tables = orderInfo?.totalTable;
+    oldTables = orderInfo?.totalTable;
+    preOrder = orderInfo?.provisionalMoney;
+    if(preOrder > 0)
+        $('#pre-order').prop('checked', true)
 
     $('#lobby').val(orderInfo.lobby?.name);
     $('#employee').attr('lobby-id', orderInfo.lobby?.id)
@@ -90,11 +112,11 @@ const passData = (orderInfo) => {
     localStorage.setItem('endDate', orderInfo.endDate);
     $('#status').attr('status-id', orderInfo?.status?.id).val(orderInfo.status?.title);
 
-    $('#deposit').val(dottedMoney(orderInfo.provisionalMoney));
+    $('#deposit').val(dottedMoney(preOrder));
 
-    $('#total').val(dottedMoney(orderInfo.finalMoney));
+    $('#total').val(dottedMoney(total));
 
-    $('#tables').val(orderInfo.totalTable);
+    $('#tables-bill').val(tables);
     localStorage.setItem('tables', orderInfo.totalTable);
 
     $('<option>').val(orderInfo?.lobby?.id)
@@ -199,6 +221,18 @@ $(document).ready(function () {
     callApi(id);
 })
 
+$('#tables-bill').on('keyup', function () {
+    console.log('helo')
+    if(isNaN($(this).val().replace(/\./g, '')))
+        return;
+    tables = +$(this).val().replace(/\./g, '');
+
+    changeTablesAction('food',tables, oldTables);
+    changeTablesAction('drink',tables, oldTables);
+    oldTables = tables
+    $('#tables-bill').val(dottedMoney(tables));
+})
+
 //add food
 $(document.body).on("change", "#food-list", function () {
     if(window.location.pathname.includes('/bills/create'))
@@ -215,14 +249,16 @@ $(document.body).on("change", "#food-list", function () {
             price: +$(this).select2('data')[0].price
         });
 
-        const totalPrice = +$('#total').val().replace(/\./g, '')
-            + +$('#tables').val() * $(this).select2('data')[0].price;
-        $('#total').val(dottedMoney(totalPrice));
+        total = total + +tables * $(this).select2('data')[0].price;
+        $('#total').val(dottedMoney(total));
     }
 
     if (!addedFood.filter(item => +item === +this.value)[0]) {
         addedFood.push({id: +this.value});
     }
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
 
     deletedFood = deletedFood.filter(item => +item?.id !== +this.value);
 
@@ -239,11 +275,17 @@ const deleteFood = (id) => {
     let deletedFood = !localStorage.getItem('deletedFood') ? [] : JSON.parse(localStorage.getItem('deletedFood'));
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
 
+    total -= orderedFood.filter(item => +item?.id === +id)[0].price * tables;
+    console.log(total);
+
     if (!deletedFood.filter(item => +item === +id)[0] && data.foodList.filter(item => item?.id === +id).length > 0) {
         deletedFood.push({
             id: +id
         });
     }
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
 
     addedFood = addedFood.filter(item => +item?.id !== +id);
     orderedFood = orderedFood.filter(item => +item?.id !== +id);
@@ -253,6 +295,8 @@ const deleteFood = (id) => {
     localStorage.setItem('orderedFood', JSON.stringify(orderedFood));
 
     showFoods();
+
+    $(`#total`).val(dottedMoney(total));
 }
 
 //add drink
@@ -270,9 +314,8 @@ $(document.body).on("change", "#drink-list", function () {
             price: +$(this).select2('data')[0].price
         });
 
-        const totalPrice = +$('#total').val().replace(/\./g, '')
-            + +$('#tables').val() * $(this).select2('data')[0].price;
-        $('#total').val(dottedMoney(totalPrice));
+        total = total + +tables * $(this).select2('data')[0].price;
+        $('#total').val(dottedMoney(total));
     }
 
     if (!addedDrink.filter(item => +item === +this.value)[0]) {
@@ -280,6 +323,9 @@ $(document.body).on("change", "#drink-list", function () {
             id: +this.value
         });
     }
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
 
     deletedDrink = deletedDrink.filter(item => +item?.id !== +this.value);
 
@@ -329,9 +375,8 @@ $(document.body).on("change", "#service-list", function () {
             price: +$(this).select2('data')[0].price
         });
 
-        const totalPrice = +$('#total').val().replace(/\./g, '')
-            + +$('#tables').val() * $(this).select2('data')[0].price;
-        $('#total').val(dottedMoney(totalPrice));
+         total = +total +  +$(this).select2('data')[0].price;
+        $('#total').val(dottedMoney(total));
     }
 
     if (!addedService.filter(item => +item === +this.value)[0]) {
@@ -339,6 +384,9 @@ $(document.body).on("change", "#service-list", function () {
             id: +this.value
         });
     }
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
 
     deletedService = deletedService.filter(item => +item?.id !== +this.value);
 

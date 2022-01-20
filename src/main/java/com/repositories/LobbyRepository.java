@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Set;
 
 public interface LobbyRepository {
-    Set<Lobby> getLobbies(String kw, int page);
+    Set<Lobby> getLobbies(String kw, int page, int length);
 
     int countLobby(String kw);
 

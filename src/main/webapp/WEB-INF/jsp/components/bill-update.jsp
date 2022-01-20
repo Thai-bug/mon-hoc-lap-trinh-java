@@ -26,13 +26,18 @@
             </div>
 
             <div>
+                <div class="text-sm mb-1 mt-2">Loại tiệc:</div>
+                <select id="type" class="border-gray-400 border rounded-xl w-full capitalize"></select>
+            </div>
+
+            <div>
                 <div class="text-sm mb-1 mt-2">Tên bữa tiệc:</div>
                 <input id="name" class="border-gray-400 border rounded-xl w-full capitalize"/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng bàn:</div>
-                <input id="tables" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="tables-bill" class="border-gray-400 border rounded-xl w-full capitalize"/>
             </div>
         </div>
         <div>
@@ -75,6 +80,11 @@
                 <input id="total" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
             </div>
 
+            <div>
+                <div class="text-sm mb-1 mt-2">Đặt cọc trước:</div>
+                <input type="checkbox" id="pre-order" class=""/>
+            </div>
+
         </div>
     </div>
 
@@ -88,7 +98,6 @@
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="food">
             </div>
         </div>
-
         <div class="p-2">
             <h1 class="text-center leading-loose">THỨC UỐNG</h1>
             <div class="mb-3">
@@ -98,6 +107,7 @@
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="drink">
             </div>
         </div>
+
 
         <div class="p-2">
             <h1 class="text-center leading-loose">DỊCH VỤ</h1>

@@ -59,6 +59,7 @@ public class ApiBillController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody
     ResponseEntity<Object> updateBill(@RequestBody BillRequest billRequest) {
+        System.out.println("hello");
         Map<String, Object> response = new LinkedHashMap<>();
         try {
             Bill bill = billService.getBill(billRequest.getCode());
@@ -87,8 +88,11 @@ public class ApiBillController {
             bill.setDrinkList(orderedDrinks);
             bill.setFoodList(orderedFood);
             bill.setServiceList(orderedServices);
-
-            System.out.println(bill.getDrinkList().size());
+            bill.setTotalTable(billRequest.getTables());
+            bill.setType(billRequest.getType());
+            bill.setName(billRequest.getName());
+            bill.setFinalMoney(billRequest.getTotal());
+            bill.setProvisionalMoney(billRequest.getDeposit());
 
             billService.update(bill);
 

@@ -28,11 +28,21 @@ public class BillRequest {
 
     Employee employee;
 
+    Type type;
+
     long total;
 
     int tables;
 
     long deposit;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;

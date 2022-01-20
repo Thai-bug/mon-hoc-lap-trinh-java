@@ -25,19 +25,12 @@ public class LobbyController {
             @RequestParam(required = false) Map<String, String> params,
             @CurrentSecurityContext(expression = "authentication") Authentication authentication
     ) {
-        int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        String kw = params.get("kw") == null ? "" : params.get("kw");
-
-        Set<Lobby> lobbies = lobbyService.getLobbies(kw, page);
-        int total = lobbyService.countLobby(kw);
-
-        model.addAttribute("lobbies", new ArrayList<>(lobbies));
-        model.addAttribute("total", total);
         return "lobbies";
     }
 
     @RequestMapping("/lobby/{id}")
     public String detailLobby(Model model, @PathVariable(value = "id") int id) {
+        System.out.println(id);
         Lobby lobby = lobbyService.getLobbyById(id);
 
         model.addAttribute("lobby", lobby);

@@ -15,30 +15,6 @@ const getEmployee = async () => {
     }
 }
 
-function changeTablesAction(type, tables, oldTables){
-    let delta = tables - oldTables;
-    switch (type){
-        case 'food':
-            if(localStorage.getItem('orderedFood')){
-                let orderedFood = JSON.parse(localStorage.getItem('orderedFood'));
-                total += orderedFood.reduce((temp, item) => {
-                    return temp + +(item.price);
-                }, 0)  * delta;
-            }
-            break;
-        case 'drink':
-            if(localStorage.getItem('orderedDrink')){
-                let orderedDrink = JSON.parse(localStorage.getItem('orderedDrink'));
-                total += orderedDrink.reduce((temp, item) => {
-                    return temp + +(item.price);
-                }, 0)  * delta;
-            }
-            break;
-    }
-    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
-    $('#deposit').val(dottedMoney(preOrder));
-    $('#total').val(dottedMoney(total));
-}
 
 const showFoods = () => {
     $("#food").empty();
@@ -282,10 +258,10 @@ $(document.body).on("change", "#service-list", function () {
 async function createOrder(){
     const begin = moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
     const end = moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
-    const response = await axios.post('/restaurant_war_exploded/api/v1/bills/create', {
+    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/create', {
         tables: tables,
         total: total,
-        deposit: +$('#deposit').val() || 0,
+        deposit: preOrder,
         addedFoods: JSON.parse(localStorage.getItem('orderedFood')) || [],
         addedDrinks: JSON.parse(localStorage.getItem('orderedDrink')) || [],
         addedServices: JSON.parse(localStorage.getItem('orderedService')) || [],

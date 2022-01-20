@@ -28,7 +28,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public Set<Lobby> getLobbies(String kw, int page) {
+    public Set<Lobby> getLobbies(String kw, int page, int length) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
@@ -39,7 +39,10 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
 
-        return (Set<Lobby>) new HashSet<>(session.createQuery(query).getResultList());
+
+        return (Set<Lobby>) new HashSet<>(session.createQuery(query)
+                .setFirstResult((page - 1) * length)
+                .setMaxResults(length).getResultList());
     }
 
     @Override
@@ -69,9 +72,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     public boolean updateLobby(Lobby lobby) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
-            session.getTransaction().begin();
             session.update(lobby);
-            session.getTransaction().commit();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
