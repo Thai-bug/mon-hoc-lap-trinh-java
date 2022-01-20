@@ -12,6 +12,9 @@
 
 <div class="text-sm text-gray-400 mb-8">Quản lý đồ uống</div>
 
+<div><a href="<c:url value="/admin/drinks/add" />"><i class="fas fa-plus"></i>Tạo mới</a></div>
+
+
 <table id="drinks" style="width: 100%">
     <thead>
     <tr>

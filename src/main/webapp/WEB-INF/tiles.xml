@@ -234,7 +234,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="drinkDetail" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đồ uồng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/drink/detail.jsp" name="detail" extends="drinkDetail">
+            <definition template="/WEB-INF/jsp/drink/detail.jsp" name="drink-detail" extends="drinkDetail">
                 <put-attribute name="detail-page"
                                value="/WEB-INF/jsp/components/drink-detail.jsp"/>
             </definition>
@@ -322,7 +322,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="foodDetail" extends="baseLayout">
         <put-attribute name="title" value="Quản lý thức ăn"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/food/detail.jsp" name="detail" extends="foodDetail">
+            <definition template="/WEB-INF/jsp/food/detail.jsp" name="food-detail" extends="foodDetail">
                 <put-attribute name="food-detail"
                                value="/WEB-INF/jsp/components/food-detail.jsp"/>
             </definition>
@@ -344,7 +344,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="foodUpdate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý thức ăn"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/food/update.jsp" name="update" extends="foodUpdate">
+            <definition template="/WEB-INF/jsp/food/update.jsp" name="food-update" extends="foodUpdate">
                 <put-attribute name="food-update"
                                value="/WEB-INF/jsp/components/food-update.jsp"/>
             </definition>
@@ -366,7 +366,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="foodAdd" extends="baseLayout">
         <put-attribute name="title" value="Quản lý thức ăn"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/food/add.jsp" name="add" extends="foodAdd">
+            <definition template="/WEB-INF/jsp/food/add.jsp" name="add-food" extends="foodAdd">
                 <put-attribute name="food-add"
                                value="/WEB-INF/jsp/components/food-add.jsp"/>
             </definition>
@@ -389,7 +389,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="services" extends="baseLayout">
         <put-attribute name="title" value="Quản lý dịch vụ"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/service/index.jsp" name="find" extends="services">
+            <definition template="/WEB-INF/jsp/service/index.jsp" name="find-service" extends="services">
                 <put-attribute name="service-find"
                                value="/WEB-INF/jsp/components/service-find.jsp"/>
             </definition>
@@ -411,7 +411,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="serviceDetail" extends="baseLayout">
         <put-attribute name="title" value="Quản lý dịch vụ"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/service/detail.jsp" name="detail" extends="serviceDetail">
+            <definition template="/WEB-INF/jsp/service/detail.jsp" name="detail-service" extends="serviceDetail">
                 <put-attribute name="service-detail"
                                value="/WEB-INF/jsp/components/service-detail.jsp"/>
             </definition>
@@ -433,7 +433,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="serviceUpdate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý thức ăn"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/service/update.jsp" name="update" extends="serviceUpdate">
+            <definition template="/WEB-INF/jsp/service/update.jsp" name="update-service" extends="serviceUpdate">
                 <put-attribute name="service-update"
                                value="/WEB-INF/jsp/components/service-update.jsp"/>
             </definition>
@@ -455,7 +455,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="serviceAdd" extends="baseLayout">
         <put-attribute name="title" value="Quản lý dịch vụ"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/service/add.jsp" name="add" extends="serviceAdd">
+            <definition template="/WEB-INF/jsp/service/add.jsp" name="add-service" extends="serviceAdd">
                 <put-attribute name="service-add"
                                value="/WEB-INF/jsp/components/service-add.jsp"/>
             </definition>
@@ -477,7 +477,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="bills" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/bill/index.jsp" name="find" extends="bills">
+            <definition template="/WEB-INF/jsp/bill/index.jsp" name="find-bill" extends="bills">
                 <put-attribute name="bill-find"
                                value="/WEB-INF/jsp/components/bill-find.jsp"/>
             </definition>
@@ -499,7 +499,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="billDetail" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/bill/detail.jsp" name="detail" extends="billDetail">
+            <definition template="/WEB-INF/jsp/bill/detail.jsp" name="detail-bill" extends="billDetail">
                 <put-attribute name="bill-detail"
                                value="/WEB-INF/jsp/components/bill-detail.jsp"/>
             </definition>
@@ -521,7 +521,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="billUpdate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/bill/update.jsp" name="update" extends="billUpdate">
+            <definition template="/WEB-INF/jsp/bill/update.jsp" name="update-bill" extends="billUpdate">
                 <put-attribute name="bill-update"
                                value="/WEB-INF/jsp/components/bill-update.jsp"/>
             </definition>
@@ -543,7 +543,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="billCreate" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/bill/create.jsp" name="create" extends="billCreate">
+            <definition template="/WEB-INF/jsp/bill/create.jsp" name="create-bill" extends="billCreate">
                 <put-attribute name="bill-create"
                                value="/WEB-INF/jsp/components/bill-create.jsp"/>
             </definition>
