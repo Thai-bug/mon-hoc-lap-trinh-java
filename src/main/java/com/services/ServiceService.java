@@ -5,7 +5,7 @@ import com.pojos.Service;
 import java.util.Set;
 
 public interface ServiceService {
-    Set<Service> getServices(String kw, int page);
+    Set<Service> getServices(String kw, int page, int length);
 
     int getServicesCount(String kw);
 

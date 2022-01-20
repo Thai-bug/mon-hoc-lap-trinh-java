@@ -24,7 +24,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public Set<Service> getServices(String kw, int pgae) {
+    public Set<Service> getServices(String kw, int page, int length) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
@@ -33,7 +33,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
-        Query q = session.createQuery(query);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
         return (Set<Service>) new HashSet<>(q.getResultList());
     }
 

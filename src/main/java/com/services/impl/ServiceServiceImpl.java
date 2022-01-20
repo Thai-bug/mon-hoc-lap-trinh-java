@@ -13,8 +13,8 @@ public class ServiceServiceImpl implements ServiceService {
     private ServiceRepository serviceRepository;
 
     @Override
-    public Set<com.pojos.Service> getServices(String kw, int page) {
-        return serviceRepository.getServices(kw, page);
+    public Set<com.pojos.Service> getServices(String kw, int page, int length) {
+        return serviceRepository.getServices(kw, page, length);
     }
 
     @Override

@@ -25,13 +25,6 @@ public class ServiceController {
             Model model,
             @RequestParam(required = false) Map<String, String> params
     ) {
-        int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        String kw = params.get("kw") == null ? "" : params.get("kw");
-        List<Service> services = new ArrayList<>(service.getServices(kw, page));
-        int total = service.getServicesCount(kw);
-        model.addAttribute("services", services);
-        model.addAttribute("total", total);
-
         return "services";
     }
 
