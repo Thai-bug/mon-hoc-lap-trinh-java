@@ -56,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Set<Employee> getEmployees(int page, String kw) {
-        return employeeRepository.getEmployees(page, kw);
+    public Set<Employee> getEmployees(String kw, int page, int length) {
+        return employeeRepository.getEmployees(kw, page, length);
     }
 
     @Override

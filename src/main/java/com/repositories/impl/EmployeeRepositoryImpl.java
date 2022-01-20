@@ -54,7 +54,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public Set<Employee> getEmployees(int page, String kw) {
+    public Set<Employee> getEmployees(String kw, int page, int length) {
         Employee loginEmployee = loadLoginEmployee();
         Session session = sessionFactory.getObject().getCurrentSession();
         String query = "" +
@@ -71,7 +71,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 "FROM\n" +
                 "    child where child.id != :id \n" +
                 "order by child.id \n" +
-                "limit 5 offset :offset ;\n";
+                "limit :length offset :offset ;\n";
         NativeQuery q = session.createNativeQuery(
                 query, Employee.class
         );
@@ -79,6 +79,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         q.setParameter("kw", "%" + kw + "%");
         q.setParameter("id", loginEmployee.getId());
         q.setParameter("offset", (page - 1) * 5);
+        q.setParameter("length", length);
         return (Set<Employee>) new HashSet<>(q.getResultList());
     }
 

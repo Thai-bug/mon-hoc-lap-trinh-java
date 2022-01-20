@@ -13,7 +13,7 @@ public interface EmployeeService extends UserDetailsService {
 
     Employee getEmployeeIn(String email);
 
-    Set<Employee> getEmployees(int page, String kw);
+    Set<Employee> getEmployees( String kw, int page, int length);
 
     long getCountAllEmployee(String kw);
 

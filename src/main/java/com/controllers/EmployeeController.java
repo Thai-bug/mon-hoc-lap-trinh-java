@@ -50,13 +50,6 @@ public class EmployeeController {
     public String returnPage(Model model,
                              @RequestParam(required = false) Map<String, String> params,
                              @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
-        int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        String kw = params.get("kw") == null ? "" : params.get("kw");
-
-        List<Employee> employees = new ArrayList<>(employeeService.getEmployees(page, kw));
-        long total = employeeService.getCountAllEmployee(kw);
-        model.addAttribute("employees", employees);
-        model.addAttribute("total", total);
 
         return "employees";
     }

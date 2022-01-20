@@ -11,7 +11,7 @@ public interface EmployeeRepository {
 
     Employee loadLoginEmployee();
 
-    Set<Employee> getEmployees(int page, String kw);
+    Set<Employee> getEmployees(String kw, int page, int length);
 
     long getCountAllEmployees(String kw);
 
