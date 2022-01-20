@@ -25,7 +25,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public Set<Drink> getDrinks(String kw, int page) {
+    public Set<Drink> getDrinks(String kw, int page, int length) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
@@ -34,7 +34,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
 
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw +"%");
         query = query.where(p);
-        Query q = session.createQuery(query);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
         return (Set<Drink>) new HashSet<>(q.getResultList());
     }
 

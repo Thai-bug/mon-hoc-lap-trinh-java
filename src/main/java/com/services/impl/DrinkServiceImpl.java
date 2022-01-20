@@ -14,8 +14,8 @@ public class DrinkServiceImpl implements DrinkService {
     private DrinkRepository drinkRepository;
 
     @Override
-    public Set<Drink> getDrinks(String kw, int page) {
-        return drinkRepository.getDrinks(kw, page);
+    public Set<Drink> getDrinks(String kw, int page, int length) {
+        return drinkRepository.getDrinks(kw, page, length);
     }
 
     @Override

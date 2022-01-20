@@ -212,7 +212,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="drinks" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đồ uống"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/drink/index.jsp" name="find" extends="drinks">
+            <definition template="/WEB-INF/jsp/drink/index.jsp" name="find-drink" extends="drinks">
                 <put-attribute name="findForm"
                                value="/WEB-INF/jsp/components/drink-find.jsp"/>
             </definition>

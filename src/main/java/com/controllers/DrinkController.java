@@ -23,14 +23,6 @@ public class DrinkController {
             Model model,
             @RequestParam(required = false) Map<String, String> params
     ) {
-        int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        String kw = params.get("kw") == null ? "" : params.get("kw");
-
-        List<Drink> drinks = new ArrayList<>(drinkService.getDrinks(kw, page));
-        int total = drinkService.getCountDrinks(kw);
-
-        model.addAttribute("drinks", drinks);
-        model.addAttribute("total", total);
         return "drinks";
     }
 

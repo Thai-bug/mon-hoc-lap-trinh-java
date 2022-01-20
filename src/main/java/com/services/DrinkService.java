@@ -5,7 +5,7 @@ import com.pojos.Drink;
 import java.util.Set;
 
 public interface DrinkService {
-    Set<Drink> getDrinks(String kw, int page);
+    Set<Drink> getDrinks(String kw, int page, int length);
 
     int getCountDrinks(String kw);
 
