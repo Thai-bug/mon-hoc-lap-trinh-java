@@ -5,7 +5,7 @@ import com.pojos.Food;
 import java.util.Set;
 
 public interface FoodRepository {
-    Set<Food> getFoods(String kw, int page);
+    Set<Food> getFoods(String kw, int page, int length);
 
     int getFoodCount(String kw);
 

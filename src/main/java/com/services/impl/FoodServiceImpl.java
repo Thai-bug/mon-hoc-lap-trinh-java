@@ -14,8 +14,8 @@ public class FoodServiceImpl implements FoodService {
     private FoodRepository foodRepository;
 
     @Override
-    public Set<Food> getFoods(String kw, int page) {
-        return foodRepository.getFoods(kw, page);
+    public Set<Food> getFoods(String kw, int page, int length) {
+        return foodRepository.getFoods(kw, page, length);
     }
 
     @Override

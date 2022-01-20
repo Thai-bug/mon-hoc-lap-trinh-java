@@ -52,9 +52,6 @@
                     <span class="label-text">Giá tiền</span>
                 </label>
                 <br />
-                <label class="label">
-                    <span class="label-text">Giá tiền</span>
-                </label>
                 <form:input path="price" placeholder="Giá tiền"
                             cssClass="input input-bordered w-full capitalize"/>
             </div>

@@ -24,7 +24,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public Set<Food> getFoods(String kw, int page) {
+    public Set<Food> getFoods(String kw, int page, int length) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
@@ -33,7 +33,7 @@ public class FoodRepositoryImpl implements FoodRepository {
 
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
         query = query.where(p);
-        Query q = session.createQuery(query);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
         return (Set<Food>) new HashSet<>(q.getResultList());
     }
 

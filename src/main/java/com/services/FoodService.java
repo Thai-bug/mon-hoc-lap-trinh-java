@@ -5,7 +5,7 @@ import com.pojos.Food;
 import java.util.Set;
 
 public interface FoodService {
-    Set<Food> getFoods(String kw, int page);
+    Set<Food> getFoods(String kw, int page, int length);
 
     int getFoodCount(String kw);
 

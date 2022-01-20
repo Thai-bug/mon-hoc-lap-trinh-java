@@ -24,13 +24,6 @@ public class FoodController {
             Model model,
             @RequestParam(required = false) Map<String, String> params
     ) {
-        int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
-        String kw = params.get("kw") == null ? "" : params.get("kw");
-        List<Food> foods = new ArrayList<>(foodService.getFoods(kw, page));
-        int total = foodService.getFoodCount(kw);
-        model.addAttribute("foods", foods);
-        model.addAttribute("total", total);
-
         return "food";
     }
 
