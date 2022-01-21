@@ -24,4 +24,7 @@ public interface BillRepository {
 
     Set<SubClass> totalMoneyBillsByQuarter();
 
+    int countBill(String keyword);
+
+    Set<Bill> getBills(String keyword, int page, int length);
 }

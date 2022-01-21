@@ -19,4 +19,8 @@ public interface BillService {
     Set<Object> countBillsByType();
 
     Set<SubClass> staticBill(String type);
+
+    int countBill(String keyword);
+
+    Set<Bill> getBills(String keyword, int page, int length);
 }

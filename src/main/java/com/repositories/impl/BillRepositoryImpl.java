@@ -2,6 +2,7 @@ package com.repositories.impl;
 
 import com.SubClass;
 import com.pojos.Bill;
+import com.pojos.Drink;
 import com.pojos.Employee;
 import com.repositories.BillRepository;
 import com.repositories.EmployeeRepository;
@@ -85,10 +86,9 @@ public class BillRepositoryImpl implements BillRepository {
     @Override
     public boolean update(Bill bill) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        try{
+        try {
             session.saveOrUpdate(bill);
-        }
-        catch (Exception err){
+        } catch (Exception err) {
             System.out.println(err.getMessage());
             return false;
         }
@@ -98,10 +98,9 @@ public class BillRepositoryImpl implements BillRepository {
     @Override
     public boolean create(Bill bill) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        try{
+        try {
             session.save(bill);
-        }
-        catch (Exception err){
+        } catch (Exception err) {
             System.out.println(err.getMessage());
             return false;
         }
@@ -112,7 +111,7 @@ public class BillRepositoryImpl implements BillRepository {
     public Set<Object> countBillsByTypes() {
 
         Session session = sessionFactory.getObject().getCurrentSession();
-        String query =  "select count(bill.id) as total, type.* from bill \n" +
+        String query = "select count(bill.id) as total, type.* from bill \n" +
                 "\tjoin type on type.id = bill.type_id\n" +
                 "\tGROUP BY type.id";
 
@@ -126,17 +125,17 @@ public class BillRepositoryImpl implements BillRepository {
     @Override
     public Set<SubClass> totalMoneyBillsByDays() {
         Session session = sessionFactory.getObject().getCurrentSession();
-        String query =  "select sum(bill.final_money) as total, Date(bill.created_at) as date from bill \n" +
+        String query = "select sum(bill.final_money) as total, Date(bill.created_at) as date from bill \n" +
                 "\tGROUP BY DATE (bill.created_at)\n" +
                 "ORDER BY date ASC";
 
         NativeQuery q = session.createNativeQuery(
                 query
         );
-        List<Object> countList=q.getResultList();
+        List<Object> countList = q.getResultList();
         LinkedList<SubClass> lists = new LinkedList<>();
 
-        for(Object obj: countList){
+        for (Object obj : countList) {
             if (obj.getClass().isArray()) {
                 Object[] objects = (Object[]) obj;
                 SubClass subClass = new SubClass();
@@ -146,13 +145,13 @@ public class BillRepositoryImpl implements BillRepository {
             }
         }
 
-        return (Set<SubClass>) new HashSet<>(lists);
+        return new HashSet<>(lists);
     }
 
     @Override
     public Set<SubClass> totalMoneyBillsByMonths() {
         Session session = sessionFactory.getObject().getCurrentSession();
-        String query =  "select sum(bill.final_money) as total, MONTH (bill.created_at) as month, YEAR(bill.created_at) as year\n" +
+        String query = "select sum(bill.final_money) as total, MONTH (bill.created_at) as month, YEAR(bill.created_at) as year\n" +
                 "from bill\n" +
                 "GROUP BY month, year\n" +
                 "order by year, month;";
@@ -161,10 +160,10 @@ public class BillRepositoryImpl implements BillRepository {
                 query
         );
 
-        List<Object> countList=q.getResultList();
+        List<Object> countList = q.getResultList();
         LinkedList<SubClass> lists = new LinkedList<>();
 
-        for(Object obj: countList){
+        for (Object obj : countList) {
             if (obj.getClass().isArray()) {
                 Object[] objects = (Object[]) obj;
                 SubClass subClass = new SubClass();
@@ -175,13 +174,13 @@ public class BillRepositoryImpl implements BillRepository {
             }
         }
 
-        return (Set<SubClass>) new HashSet<>(lists);
+        return new HashSet<>(lists);
     }
 
     @Override
     public Set<SubClass> totalMoneyBillsByQuarter() {
         Session session = sessionFactory.getObject().getCurrentSession();
-        String query =  "select sum(bill.final_money) as total,QUARTER(bill.created_at) as quarter, YEAR(bill.created_at) as year\n" +
+        String query = "select sum(bill.final_money) as total,QUARTER(bill.created_at) as quarter, YEAR(bill.created_at) as year\n" +
                 "from bill\n" +
                 "GROUP BY quarter, year\n" +
                 "order by year, quarter;";
@@ -189,10 +188,10 @@ public class BillRepositoryImpl implements BillRepository {
         NativeQuery q = session.createNativeQuery(
                 query
         );
-        List<Object> countList=q.getResultList();
+        List<Object> countList = q.getResultList();
         LinkedList<SubClass> lists = new LinkedList<>();
 
-        for(Object obj: countList){
+        for (Object obj : countList) {
             if (obj.getClass().isArray()) {
                 Object[] objects = (Object[]) obj;
                 SubClass subClass = new SubClass();
@@ -203,6 +202,33 @@ public class BillRepositoryImpl implements BillRepository {
             }
         }
 
-        return (Set<SubClass>) new HashSet<>(lists);
+        return new HashSet<>(lists);
+    }
+
+    @Override
+    public int countBill(String keyword) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("select count(*) from Bill where name like :kw or customerName like :kw");
+
+        q.setParameter("kw", "%" + keyword + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Set<Bill> getBills(String keyword, int page, int length) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
+        Root root = query.from(Bill.class);
+        query = query.select(root);
+
+        Predicate p = builder.or(
+                builder.like(
+                        root.get("customerName").as(String.class), "%" + keyword + "%"),
+                builder.like(
+                        root.get("name").as(String.class), "%" + keyword + "%"));
+        query = query.where(p);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
+        return (Set<Bill>) new HashSet<>(q.getResultList());
     }
 }

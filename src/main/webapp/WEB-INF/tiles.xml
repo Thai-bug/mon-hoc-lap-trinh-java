@@ -22,7 +22,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
     <definition name="login" extends="baseLayout">
         <put-attribute name="title" value="Đăng nhập"/>
-        <put-attribute name="content"
+        <put-attribute name="client-content"
                        value="/WEB-INF/jsp/login.jsp"/>
         <put-attribute name="header" value=""/>
         <put-attribute name="footer" value=""/>
@@ -578,6 +578,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/footer.jsp"/>
         <put-attribute name="sider"
                        value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
+    <definition name="clientPage" extends="baseLayout">
+        <put-attribute name="title" value="Nhà hàng ăn cay"/>
+        <put-attribute name="client-content">
+            <definition template="/WEB-INF/jsp/client.jsp" name="client-page" extends="clientPage"/>
+        </put-attribute>
+
     </definition>
 
     <!--    403 error page-->

@@ -70,8 +70,35 @@
 <%--HEADER--%>
 <div id="notifications"></div>
 <c:if test="${pageContext.request.userPrincipal.name == null}">
-    <div class="flex items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-right bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white  md:block   ">
-        <a href="${login}" class="py-5 px-3">Đăng nhập</a>
+    <div class="">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link " href="/restaurant_war_exploded/lobbies">Sảnh tiệc</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/restaurant_war_exploded/drinks">Đồ uống</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/restaurant_war_exploded/foods">Thức ăn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/restaurant_war_exploded/services">Dịch vụ</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <a href="/restaurant_war_exploded/login" class="py-5 px-3">Đăng nhập</a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <tiles:insertAttribute name="client-content"/>
     </div>
 </c:if>
 <div class="container-fluid">
@@ -82,15 +109,11 @@
         <c:if test="${pageContext.request.userPrincipal.name !=null}">
             <tiles:insertAttribute name="sider"/>
         </c:if>
-
-        <div class="col py-3">
-            <%--            <tiles:insertAttribute name="header"/>--%>
-   <%--CONTENT--%>
-            <tiles:insertAttribute name="content"/>
-
-            <%--FOOTER--%>
-            <%--            <tiles:insertAttribute name="footer"/>--%>
-        </div>
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <div class="col py-3">
+                <tiles:insertAttribute name="content"/>
+            </div>
+        </c:if>
 
     </div>
 </div>

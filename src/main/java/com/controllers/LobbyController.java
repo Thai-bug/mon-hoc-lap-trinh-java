@@ -14,12 +14,12 @@ import java.util.Set;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("")
 public class LobbyController {
     @Autowired
     private LobbyService lobbyService;
 
-    @RequestMapping("/lobbies")
+    @RequestMapping("/admin/lobbies")
     public String getLobby(
             Model model,
             @RequestParam(required = false) Map<String, String> params,
@@ -28,7 +28,7 @@ public class LobbyController {
         return "lobbies";
     }
 
-    @RequestMapping("/lobby/{id}")
+    @RequestMapping("/admin/lobby/{id}")
     public String detailLobby(Model model, @PathVariable(value = "id") int id) {
         System.out.println(id);
         Lobby lobby = lobbyService.getLobbyById(id);
@@ -37,7 +37,7 @@ public class LobbyController {
         return "lobbyDetail";
     }
 
-    @PostMapping("/lobby/update/{id}")
+    @PostMapping("/admin/lobby/update/{id}")
     public String updateEmployee(Model model,
                                  @ModelAttribute(value = "lobby") Lobby lobby) {
 
@@ -49,7 +49,7 @@ public class LobbyController {
         return "redirect:" + lobby.getId();
     }
 
-    @RequestMapping("/lobby/update/{id}")
+    @RequestMapping("/admin/lobby/update/{id}")
     public String updatePage(Model model,
                                  @PathVariable(value = "id") int id) {
         Lobby lobby = lobbyService.getLobbyById(id);
@@ -57,13 +57,13 @@ public class LobbyController {
         return "lobbyUpdate";
     }
 
-    @RequestMapping("/lobby/create")
+    @RequestMapping("/admin/lobby/create")
     public String create(Model model) {
         model.addAttribute("lobby", new Lobby());
         return "lobbyCreate";
     }
 
-    @PostMapping("/lobby/create")
+    @PostMapping("/admin/lobby/create")
     public String createLobby(
             Model model,
             @ModelAttribute(value = "lobby") Lobby lobby
@@ -75,5 +75,10 @@ public class LobbyController {
             return "redirect:/admin/lobbies";
         }
         return "redirect:";
+    }
+
+    @GetMapping("/lobbies")
+    public  String indexClientLobbies(){
+        return "client-lobbies";
     }
 }

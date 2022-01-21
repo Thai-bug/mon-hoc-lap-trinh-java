@@ -55,4 +55,14 @@ public class BillServiceImpl implements BillService {
                 return billRepository.totalMoneyBillsByDays();
         }
     }
+
+    @Override
+    public int countBill(String keyword) {
+        return billRepository.countBill(keyword);
+    }
+
+    @Override
+    public Set<Bill> getBills(String keyword, int page, int length) {
+        return billRepository.getBills(keyword, page, length);
+    }
 }

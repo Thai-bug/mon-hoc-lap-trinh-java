@@ -20,7 +20,7 @@ public class ServiceController {
     @Autowired
     private ServiceService service;
 
-    @RequestMapping(value = "")
+    @RequestMapping(value = "/admin/services")
     public String services(
             Model model,
             @RequestParam(required = false) Map<String, String> params
@@ -28,7 +28,7 @@ public class ServiceController {
         return "services";
     }
 
-    @RequestMapping("/detail/{id}")
+    @RequestMapping("/admin/services/detail/{id}")
     public String service(
             Model model,
             @PathVariable(value = "id") int id
@@ -39,7 +39,7 @@ public class ServiceController {
         return "serviceDetail";
     }
 
-    @RequestMapping("/update/{id}")
+    @RequestMapping("/admin/services/update/{id}")
     public String serviceUpdate(
             Model model,
             @PathVariable(value = "id") int id
@@ -50,7 +50,7 @@ public class ServiceController {
         return "serviceUpdate";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/admin/services/update/{id}")
     public String update(
             Model model,
             @ModelAttribute(value = "service") Service service
@@ -62,7 +62,7 @@ public class ServiceController {
         return "serviceUpdate";
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/admin/services/add")
     public String serviceAdd(
             Model model
     ) {
