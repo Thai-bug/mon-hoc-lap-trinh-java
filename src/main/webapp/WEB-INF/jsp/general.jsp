@@ -24,7 +24,7 @@
             <option value="date">Ngày</option>
             <option value="month">Tháng</option>
             <option value="quarter">Quý</option>
-        </select>
+        <option disabled></option></select>
         <div>
 
             <canvas id="static-chart" width="10" height="400"></canvas>

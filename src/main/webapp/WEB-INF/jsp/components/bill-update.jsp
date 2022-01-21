@@ -27,7 +27,9 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Loại tiệc:</div>
-                <select id="type" class="border-gray-400 border rounded-xl w-full capitalize"></select>
+                <select id="type" class="border-gray-400 border rounded-xl w-full capitalize">
+                    <option disabled></option>
+                </select>
             </div>
 
             <div>
@@ -59,7 +61,9 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tên sảnh:</div>
-                <select id="lobby-select" class=""></select>
+                <select id="lobby-select" class="">
+                    <option disabled></option>
+                </select>
             </div>
         </div>
 
@@ -93,6 +97,7 @@
             <h1 class="text-center leading-loose">THỰC ĐƠN</h1>
             <div class="mb-3">
                 <select id="food-list" class="w-full">
+                    <option disabled></option>
                 </select>
             </div>
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="food">
@@ -102,6 +107,7 @@
             <h1 class="text-center leading-loose">THỨC UỐNG</h1>
             <div class="mb-3">
                 <select id="drink-list" class="w-full">
+                    <option disabled></option>
                 </select>
             </div>
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="drink">
@@ -113,7 +119,7 @@
             <h1 class="text-center leading-loose">DỊCH VỤ</h1>
             <div class="mb-3">
                 <select id="service-list" class="w-full">
-                </select>
+                <option disabled></option></select>
             </div>
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="service">
             </div>

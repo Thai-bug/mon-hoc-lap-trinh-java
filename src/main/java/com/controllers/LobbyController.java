@@ -79,6 +79,6 @@ public class LobbyController {
 
     @GetMapping("/lobbies")
     public  String indexClientLobbies(){
-        return "client-lobbies";
+        return "client-lobby";
     }
 }
