@@ -9,8 +9,16 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 
 <div class="container">
-    Tìm kiếm sảnh tiệc
-    <div id="demo"></div>
+    <div style="font-weight: bold; text-transform: uppercase; font-size: 26px">Danh sách sản cưới</div>
+
+    <div>
+        <input type="text" placeholder="Tìm sảnh theo tên" id="keyword" />
+    </div>
+
+    <div class="container">
+
+    </div>
+    <div id="pagintaion-lobbies" style="margin-top: 10px"></div>
 </div>
 
-<script src="<c:url value="/js/client-lobby.js"/>"></script>
+<script src="<c:url value="/js/client/lobbies.js"/>"></script>

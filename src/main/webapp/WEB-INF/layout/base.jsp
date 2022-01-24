@@ -32,6 +32,7 @@
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css" integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -63,6 +64,8 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
     <script src="https://pagination.js.org/dist/2.1.5/pagination.min.js"></script>
+    <script src="http://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+
     <title>
         <tiles:insertAttribute name="title"/>
     </title>

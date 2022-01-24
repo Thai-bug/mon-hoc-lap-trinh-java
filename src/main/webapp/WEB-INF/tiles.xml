@@ -593,7 +593,13 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="client-content">
             <definition template="/WEB-INF/jsp/client-lobby.jsp" name="lobby-client" extends="client-lobby"/>
         </put-attribute>
+    </definition>
 
+    <definition name="client-lobby-detail" extends="baseLayout">
+        <put-attribute name="title" value="Nhà hàng ăn cay"/>
+        <put-attribute name="client-content">
+            <definition template="/WEB-INF/jsp/client-lobby-detail.jsp" name="lobby-detail-client" extends="client-lobby-detail"/>
+        </put-attribute>
     </definition>
 
     <!--    403 error page-->

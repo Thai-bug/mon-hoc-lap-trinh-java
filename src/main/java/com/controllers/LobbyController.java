@@ -81,4 +81,9 @@ public class LobbyController {
     public  String indexClientLobbies(){
         return "client-lobby";
     }
+
+    @GetMapping("/lobbies/{code}")
+    public  String clientLobbyDetail(){
+        return "client-lobby-detail";
+    }
 }

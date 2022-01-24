@@ -3,7 +3,9 @@ package com.services;
 import com.pojos.Bill;
 import com.pojos.Lobby;
 
+import javax.persistence.Lob;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 public interface LobbyService {
@@ -18,4 +20,8 @@ public interface LobbyService {
     boolean createLobby(Lobby lobby);
 
     Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id, int seats);
+
+    Map<String, Object> getLobbiesForClient(int page, int limit, String kw);
+
+    Map<String, Lobby> getClientLobbyByCode(String code);
 }

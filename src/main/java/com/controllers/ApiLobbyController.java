@@ -12,18 +12,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Map;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/v1/admin/lobby")
+@RequestMapping("/api/v1")
 public class ApiLobbyController {
     @Autowired
     private LobbyService lobbyService;
 
-    @GetMapping("/select2/lobby-by-name")
+    @GetMapping("/admin/lobby/select2/lobby-by-name")
     public ResponseEntity<Set<Lobby>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -39,7 +36,7 @@ public class ApiLobbyController {
                 HttpStatus.OK);
     }
 
-    @PostMapping(value = "/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/lobby/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Map<String, Object>> findLobby(@RequestBody Map<String, Object> json){
         String type = (String) json.get("type");
@@ -55,5 +52,38 @@ public class ApiLobbyController {
         result.put("draw", json.get("draw"));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/lobbies")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getLobbiesForClient(
+            @RequestParam(required = false) Map<String, String> params
+    ){
+        try{
+            int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
+            int limit = params.get("limit") == null ? 10 : Integer.parseInt(params.get("limit"));
+            String kw = params.get("kw") == null ? "" : params.get("kw").toLowerCase(Locale.ROOT);
+            Map<String, Object> result = lobbyService.getLobbiesForClient(page, limit, kw);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
+    }
+
+    @GetMapping(value = "/lobbies/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Lobby>> getLobbyForClient(
+            @PathVariable(value = "code") String code
+    ){
+        try{
+            return new ResponseEntity<>(lobbyService.getClientLobbyByCode(code), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
     }
 }

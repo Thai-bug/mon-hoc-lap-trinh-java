@@ -1,25 +1,23 @@
 package com.repositories.impl;
 
-        import com.pojos.Bill;
-        import com.pojos.Employee;
-        import com.pojos.Lobby;
-        import com.repositories.LobbyRepository;
-        import org.hibernate.Session;
-        import org.hibernate.SessionFactory;
-        import org.hibernate.Transaction;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-        import org.springframework.stereotype.Repository;
-        import org.springframework.transaction.annotation.Transactional;
+import com.pojos.Bill;
+import com.pojos.Employee;
+import com.pojos.Lobby;
+import com.repositories.LobbyRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-        import javax.persistence.Query;
-        import javax.persistence.criteria.CriteriaBuilder;
-        import javax.persistence.criteria.CriteriaQuery;
-        import javax.persistence.criteria.Predicate;
-        import javax.persistence.criteria.Root;
-        import java.util.Date;
-        import java.util.HashSet;
-        import java.util.Set;
+import javax.persistence.Query;
+import javax.persistence.criteria.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -40,7 +38,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         query = query.where(p);
 
 
-        return (Set<Lobby>) new HashSet<>(session.createQuery(query)
+        return new HashSet<>(session.createQuery(query)
                 .setFirstResult((page - 1) * length)
                 .setMaxResults(length).getResultList());
     }
@@ -107,7 +105,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
                 "or (b.begin_date > :endDate or b.end_date < :beginDate)\n" +
                 "or(b.begin_date <= :beginDate and b.end_date >= :beginDate and b.status_id = 4)\n" +
                 "or (b.begin_date <= :endDate and b.end_date >= :endDate and b.status_id = 4)\n" +
-                "or (b.begin_date >= :beginDate and b.end_date <= :endDate and b.status_id = 4)\n"+
+                "or (b.begin_date >= :beginDate and b.end_date <= :endDate and b.status_id = 4)\n" +
                 additional +
                 ")\n" +
                 "group by l.id\n" +
@@ -120,5 +118,53 @@ public class LobbyRepositoryImpl implements LobbyRepository {
         if (id != 0)
             q.setParameter("id", id);
         return (Set<Lobby>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public Set<Lobby> getLobbiesForClient(int page, int limit, String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
+        Root root = query.from(Lobby.class);
+        query = query.select(root);
+
+        Expression<String> lower = builder.lower(root.get("name"));
+
+        Predicate p = builder.and(
+                builder.isTrue(root.<Boolean>get("status")),
+                builder.like(
+                        lower, "%" + kw + "%")
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * limit).setMaxResults(limit);
+        return (Set<Lobby>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public int countLobbyClient(String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("select count(*) from Lobby where name like :kw and status = true");
+
+        q.setParameter("kw", "%" + kw + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Lobby getClientLobbyByCode(String code) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
+        Root root = query.from(Lobby.class);
+        query = query.select(root);
+
+        Predicate p = builder.and(
+                builder.equal(root.get("code").as(String.class), code),
+                builder.isTrue(root.<Boolean>get("status"))
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query);
+        return (Lobby) q.getSingleResult();
     }
 }

@@ -2,7 +2,9 @@ package com.repositories;
 
 import com.pojos.Lobby;
 
+import javax.persistence.Lob;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 public interface LobbyRepository {
@@ -17,4 +19,10 @@ public interface LobbyRepository {
     boolean createLobby(Lobby lobby);
 
     Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id, int seats);
+
+    Set<Lobby> getLobbiesForClient(int page, int limit, String kw);
+
+    int countLobbyClient(String kw);
+
+    Lobby getClientLobbyByCode(String code);
 }

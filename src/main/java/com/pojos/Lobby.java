@@ -1,8 +1,6 @@
 package com.pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -21,6 +19,12 @@ public class Lobby implements Serializable {
 
     @Column(name = "name")
     String name;
+
+    @Column(name = "code")
+    String code;
+
+    @Column(name = "description")
+    String description;
 
     @Column(name = "seats")
     @Min(value = 30)
@@ -44,6 +48,18 @@ public class Lobby implements Serializable {
     @OneToMany(mappedBy = "lobby")
     @JsonIgnore
     private Set<Bill> bills;
+
+    @OneToMany(mappedBy = "lobby")
+    @JsonIgnore
+    private Set<Comment> comments;
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Lobby() {
         this.status = true;
@@ -73,14 +89,6 @@ public class Lobby implements Serializable {
         this.name = name;
     }
 
-    public int getseats() {
-        return seats;
-    }
-
-    public void setseats(int seats) {
-        this.seats = seats;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -105,4 +113,27 @@ public class Lobby implements Serializable {
         this.money = money;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
 }
