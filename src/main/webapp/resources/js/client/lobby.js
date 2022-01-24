@@ -24,6 +24,19 @@ $('#add-comment').on('click', async function(){
     $(this).attr('disabled', false);
 })
 
+function renderLobbiesList(data) {
+    let html = `<ul>`
+    $.each(data, function (index, item) {
+        html += `
+    <li>${item.content}</li>
+`
+    });
+
+    html+=`</ul>`
+
+    return html;
+}
+
 $(document).ready(async function () {
     const response = await axios.get(`/restaurant_war_exploded/api/v1/lobbies/${lobbyCode}`).catch(e=>e);
     if(response instanceof Error)
@@ -41,7 +54,7 @@ $(document).ready(async function () {
         showNext: true,
         pageSize: 8,
         pageNumber: 8,
-        dataSource: `/restaurant_war_exploded/api/v1/comments`,
+        dataSource: `/restaurant_war_exploded/api/v1/comments?code=${lobbyCode}&type=1`,
         totalNumberLocator: (response) => {
             return response.total
         },
@@ -52,10 +65,11 @@ $(document).ready(async function () {
         locator: 'response.data',
         ajax: {
             beforeSend: function () {
-                container.prev().html('Đang tải dữ liệu ...');
+                container.prev().html('Đang tải dữ liệu');
             }
         },
         callback: function (response, pagination) {
+            console.log(response)
             container.prev().html(renderLobbiesList(response));
         }
     }

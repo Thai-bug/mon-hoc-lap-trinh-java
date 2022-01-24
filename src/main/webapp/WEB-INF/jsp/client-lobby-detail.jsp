@@ -27,6 +27,7 @@
     <div>
         Danh sách các bàn luận:
     </div>
+    <div></div>
     <div id="lobby-detail-comments"></div>
 </div>
 

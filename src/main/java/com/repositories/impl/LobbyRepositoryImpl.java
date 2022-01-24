@@ -144,7 +144,7 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     @Override
     public int countLobbyClient(String kw) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("select count(*) from Lobby where name like :kw and status = true");
+        Query q = session.createQuery("select count(*) from Lobby where lower(name) like :kw and status = true");
 
         q.setParameter("kw", "%" + kw + "%");
         return Integer.parseInt(q.getSingleResult().toString());
