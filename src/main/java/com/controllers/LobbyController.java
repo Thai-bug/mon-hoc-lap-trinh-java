@@ -39,12 +39,6 @@ public class LobbyController {
     @PostMapping("/admin/lobby/update/{code}")
     public String updateEmployee(Model model,
                                  @ModelAttribute(value = "lobby") Lobby lobby) {
-
-//        boolean updateLobby = lobbyService.updateLobby(lobby);
-//        model.addAttribute("lobby", lobby);
-//        if (updateLobby) {
-//            return "lobbyDetail";
-//        }
         return "redirect:" + lobby.getId();
     }
 
@@ -56,22 +50,7 @@ public class LobbyController {
 
     @RequestMapping("/admin/lobby/create")
     public String create(Model model) {
-        model.addAttribute("lobby", new Lobby());
         return "lobbyCreate";
-    }
-
-    @PostMapping("/admin/lobby/create")
-    public String createLobby(
-            Model model,
-            @ModelAttribute(value = "lobby") Lobby lobby
-    ) {
-        boolean updateLobby = lobbyService.createLobby(lobby);
-        model.addAttribute("lobby", lobby);
-        if (updateLobby) {
-            model.addAttribute("lobby", lobby);
-            return "redirect:/admin/lobbies";
-        }
-        return "redirect:";
     }
 
     @GetMapping("/lobbies")

@@ -46,14 +46,14 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     }
 
     @Override
-    public Drink getDrinkById(int id) {
+    public Drink getDrinkByCode(String code) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
         Root root = query.from(Drink.class);
         query = query.select(root);
 
-        Predicate p = builder.equal(root.get("id").as(Integer.class), id);
+        Predicate p = builder.equal(root.get("code").as(String.class), code);
         query = query.where(p);
 
         return session.createQuery(query).getSingleResult();

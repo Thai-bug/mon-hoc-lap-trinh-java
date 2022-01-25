@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Lob;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class LobbyServiceImpl implements LobbyService {
@@ -46,7 +43,16 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public boolean createLobby(Lobby lobby) {
+    public boolean createLobby(Map<String, Object> json) {
+        Lobby lobby = new Lobby();
+        lobby.setCode(UUID.randomUUID().toString());
+        lobby.setName(json.get("name").toString());
+        lobby.setDescription(json.get("description").toString());
+        lobby.setSeats(Integer.parseInt(json.get("seats").toString()));
+        lobby.setMoney(Integer.parseInt(json.get("money").toString()));
+        lobby.setStatus(true);
+        lobby.setCreatedAt(new Date());
+        System.out.println(lobby.getCode());
         return lobbyRepository.createLobby(lobby);
     }
 

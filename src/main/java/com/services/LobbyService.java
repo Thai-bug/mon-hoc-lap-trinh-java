@@ -17,7 +17,7 @@ public interface LobbyService {
 
     boolean updateLobby(Map<String, Object> lobby);
 
-    boolean createLobby(Lobby lobby);
+    boolean createLobby(Map<String, Object> json);
 
     Set<Lobby> getByNameWithDate(String name, Date beginDate, Date endDate, int page, int id, int seats);
 

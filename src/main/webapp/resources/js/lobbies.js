@@ -61,7 +61,7 @@ $(document).ready(function(){
             {
                 class: 'text-center',
                 data: (lobby) => {
-                    return moment(lobby.created_at).format('HH:mm DD/MM/YYYY');
+                    return moment(lobby.createdAt,'x').format('HH:mm DD/MM/YYYY');
                 }
             },
             {

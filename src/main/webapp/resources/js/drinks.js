@@ -54,20 +54,20 @@ $(document).ready(function(){
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return lobby.status === true ?  'Hoạt động' :'Tạm dừng';
+                data: (drink) => {
+                    return drink.status === true ?  'Hoạt động' :'Tạm dừng';
                 }
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return moment(lobby?.created_at).format('HH:mm DD/MM/YYYY');
+                data: (drink) => {
+                    return moment(drink?.createdAt).format('HH:mm DD/MM/YYYY');
                 }
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return '<a data-id="' + lobby?.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/drinks/detail/' + lobby?.id +'"><i class="fa fas fa-edit"></i></a>';
+                data: (drink) => {
+                    return '<a data-id="' + drink?.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/drinks/detail/' + drink?.code +'"><i class="fa fas fa-edit"></i></a>';
                 }
             }
         ]

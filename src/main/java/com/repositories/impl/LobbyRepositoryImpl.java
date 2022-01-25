@@ -81,9 +81,8 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     @Override
     public boolean createLobby(Lobby lobby) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        Transaction tx;
         try {
-            session.save(String.valueOf(Lobby.class), lobby);
+            session.save(lobby);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

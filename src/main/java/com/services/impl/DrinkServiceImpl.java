@@ -27,12 +27,19 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Drink getDrinkById(int id) {
-        return drinkRepository.getDrinkById(id);
+    public Drink getDrinkByCode(String code) {
+        return drinkRepository.getDrinkByCode(code);
     }
 
     @Override
-    public boolean updateDrink(Drink drink) {
+    public boolean updateDrink(Map<String, Object> json) {
+        Drink drink = drinkRepository.getDrinkByCode((String) json.get("code"));
+        drink.setName((String) json.get("name").toString());
+        drink.setDescription((String) json.get("description").toString());
+        drink.setPrice(Integer.parseInt(json.get("price").toString()));
+        drink.setUnit(json.get("unit").toString());
+        drink.setStatus((boolean) json.get("status"));
+
         return drinkRepository.updateDrink(drink);
     }
 

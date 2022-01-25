@@ -11,9 +11,9 @@ public interface DrinkService {
 
     int getCountDrinks(String kw);
 
-    Drink getDrinkById(int id);
+    Drink getDrinkByCode(String code);
 
-    boolean updateDrink(Drink drink);
+    boolean updateDrink(Map<String, Object> json);
 
     boolean add(Drink drink);
 

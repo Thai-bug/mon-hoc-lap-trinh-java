@@ -54,14 +54,14 @@ $(document).ready(function(){
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return lobby.status === true ?  'Hoạt động' :'Tạm dừng';
+                data: (food) => {
+                    return food.status === true ?  'Hoạt động' :'Tạm dừng';
                 }
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return moment(lobby?.created_at).format('HH:mm DD/MM/YYYY');
+                data: (food) => {
+                    return moment(food?.createdAt, 'x').format('HH:MM DD/MM/YYYY');
                 }
             },
             {

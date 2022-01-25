@@ -605,7 +605,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="client-drink" extends="baseLayout">
         <put-attribute name="title" value="Nhà hàng ăn cay"/>
         <put-attribute name="client-content">
-            <definition template="/WEB-INF/jsp/client-drink.jsp" name="drink-detail" extends="client-drink"/>
+            <definition template="/WEB-INF/jsp/client-drink.jsp" name="drink-client" extends="client-drink"/>
         </put-attribute>
     </definition>
 

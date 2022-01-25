@@ -1,6 +1,6 @@
-let lobbyDetail = {};
+let drinkCode = window.location.pathname.split('/').at(-1);
+let drinkDetail = {};
 let editor;
-let lobbyCode = window.location.pathname.split('/').at(-1);
 
 ClassicEditor
     .create(document.querySelector('#description'), {
@@ -23,47 +23,44 @@ const schemaUpdate = joi.object({
     status: joi.boolean().required().messages({
         "object.unknown": "Trạng thái không hợp lệ!!",
     }),
-    money: joi.number().min(0).required().messages({
-        "any.required": "Vui lòng nhập giá thuê!!",
-        "number.min": "Giá thuê không hợp lệ!!",
-        "number.base": "Vui lòng nhập giá thuê chính xác"
+    price: joi.number().min(0).required().messages({
+        "any.required": "Vui lòng nhập đơn giá!!",
+        "number.min": "Đơn giá không hợp lệ!!",
+        "number.base": "Vui lòng nhập đơn giá chính xác"
     }),
-    seats: joi.number().min(100).max(2000).required().messages({
-        "any.required": "Vui lòng nhập số bàn tối đa!!",
-        "number.min": "Số bàn không hợp lệ!!",
-        "number.max": "Số bàn không hợp lệ!!",
-        "number.base": "Vui lòng nhập số bàn chính xác"
+    unit: joi.string().required().messages({
+        "any.required": "Vui lòng nhập đơn vị tính!!",
     }),
     description: joi.string().allow(null, ''    )
 })
 
-$(document).ready(async function(){
-    const response = await axios.get(`/restaurant_war_exploded/api/v1/admin/lobbies/${lobbyCode}`).catch(e=>e);
+$(document).ready(async function () {
+    const response = await axios.get(`/restaurant_war_exploded/api/v1/admin/drinks/${drinkCode}`).catch(e=>e);
     if(response instanceof Error)
         return notifyToast('Có lỗi xảy ra. Vui lòng thử lai', 'error');
 
-    lobbyDetail = response.data.result;
+    drinkDetail = response.data.result;
 
-    $('#lobby-code').val(lobbyDetail.code);
+    $('#drink-code').val(drinkDetail.code);
 
-    $('#lobby-name').val(lobbyDetail.name);
+    $('#drink-name').val(drinkDetail.name);
 
-    $('#lobby-status').val(lobbyDetail.status ? 1 : 0);
+    $('#drink-status').val(drinkDetail.status ? 1 : 0);
 
-    $('#lobby-price').val(lobbyDetail.money);
+    $('#retail-price').val(drinkDetail.price);
 
-    $('#lobby-tables').val(lobbyDetail.seats / 10);
+    $('#unit').val(drinkDetail.unit);
 
-    editor.setData(lobbyDetail.description);
+    editor.setData(drinkDetail.description);
 })
 
 $('#update-btn').on('click', async function () {
     const requestData = {
-        code: $('#lobby-code').val(),
-        name: $('#lobby-name').val(),
-        status: +$('#lobby-status').val() === 1 ? true : false,
-        money: $('#lobby-price').val(),
-        seats:  $('#lobby-tables').val() * 10,
+        code: $('#drink-code').val(),
+        name: $('#drink-name').val(),
+        status: +$('#drink-status').val() === 1 ? true : false,
+        price: $('#retail-price').val(),
+        unit:  $('#unit').val(),
         description: editor.getData()
     }
 
@@ -72,7 +69,7 @@ $('#update-btn').on('click', async function () {
         return notifyToast(validate.message, 'error');
 
     $('#update-btn').attr('disabled', true);
-    const updateResponse = await axios.post('/restaurant_war_exploded/api/v1/admin/lobbies/update',
+    const updateResponse = await axios.post('/restaurant_war_exploded/api/v1/admin/drinks/update',
         requestData).catch(e=>e);
     $('#update-btn').attr('disabled', false);
 

@@ -9,7 +9,7 @@ public interface DrinkRepository {
 
     public int getCountDrinks(String kw);
 
-    public Drink getDrinkById(int id);
+    public Drink getDrinkByCode(String code);
 
     public boolean updateDrink(Drink drink);
 

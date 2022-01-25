@@ -26,32 +26,20 @@ public class DrinkController {
         return "drinks";
     }
 
-    @RequestMapping("/admin/drinks/detail/{id}")
+    @RequestMapping("/admin/drinks/detail/{code}")
     public String drinkDetail(Model model,
-                              @PathVariable(value = "id") int id) {
-        Drink drink = drinkService.getDrinkById(id);
+                              @PathVariable(value = "code") String code) {
+        Drink drink = drinkService.getDrinkByCode(code);
 
         model.addAttribute("drink", drink);
         return "drinkDetail";
     }
 
-    @RequestMapping("/admin/drinks/update/{id}")
-    public String getUpdateDrink(Model model, @PathVariable(value = "id") int id) {
-        Drink drink = drinkService.getDrinkById(id);
-
-        model.addAttribute("drink", drink);
-        return "drinkUpdate";
-    }
-
-    @PostMapping("/admin/drinks/update/{id}")
-    public String updateDrink(
-            Model model,
-            @ModelAttribute(value = "drink") Drink drink) {
-        model.addAttribute("drink", drink);
-        boolean updateDrink = drinkService.updateDrink(drink);
-        if (updateDrink)
-            return "redirect:/admin/drinks/detail/" + drink.getId();
-
+    @RequestMapping("/admin/drinks/update/{code}")
+    public String getUpdateDrink(Model model, @PathVariable(value = "code") String code) {
+//        Drink drink = drinkService.getDrinkById(id);
+//
+//        model.addAttribute("drink", drink);
         return "drinkUpdate";
     }
 

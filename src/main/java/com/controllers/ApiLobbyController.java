@@ -92,6 +92,27 @@ public class ApiLobbyController {
         }
     }
 
+    @PostMapping(value = "/admin/lobbies/create")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> createLobby(@RequestBody Map<String, Object> json){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            boolean result = lobbyService.createLobby(json);
+
+            if(result) {
+                response.put("message", "Thêm sảnh thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("message", "Thêm sảnh thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            response.put("message", "Thêm sảnh thất bạii");
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
     @GetMapping(value = "/lobbies")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> getLobbiesForClient(

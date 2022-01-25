@@ -10,53 +10,38 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<c:url var="action" value="/admin/lobby/create"/>
+<div class="fs-1 text text-center">Thông tin sảnh tiệc</div>
 
 <div class="container">
-    <form:form modelAttribute="lobby" method="post" enctype="multipart/form-data" action="${action}">
-        <div class="row">
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Tên sảnh</span>
-                </label> <br />
-                <form:input path="name" placeholder="Tên sảnh" cssClass="input input-bordered w-full"/>
-            </div>
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Trạng thái</span>
-                </label>
-                <br />
-                <form:select path="status" cssClass="select select-bordered status-select w-full">
-                    <form:option value="true"> Kích hoạt</form:option>
-                    <form:option value="false">Vô hiệu hoá</form:option>
-                </form:select>
-            </div>
+
+    <div class="form-control position-relative">
+        <label for="lobby-code">Mã sảnh</label>
+        <input type="text" id="lobby-code" class="form-control" disabled>
+
+        <label for="lobby-name">Tên Sảnh <span class="text-danger">*</span> </label>
+        <input type="text" id="lobby-name" class="form-control" aria-describedby="passwordHelpBlock">
+
+        <label for="lobby-tables">Số bàn <span class="text-danger">*</span> </label>
+        <input type="text" id="lobby-tables" class="form-control">
+
+        <label for="lobby-status">Trạng thái <span class="text-danger">*</span> </label>
+        <select class="form-select" id="lobby-status">
+            <option selected disabled>Chọn trạng thái sảnh</option>
+            <option value="1">Đang hoạt động</option>
+            <option value="0">Không hoạt động</option>
+        </select>
+
+        <label for="lobby-name">Gía thuê sảnh (/4 giờ) <span class="text-danger">*</span> </label>
+        <input type="text" id="lobby-price" class="form-control" aria-describedby="passwordHelpBlock">
+
+        <div class="mt-5">
+            <textarea id="description" ></textarea>
         </div>
-        <div class="row">
 
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Số lượng tối đa </span>
-                </label>
-                <br />
-                <form:input path="seats" placeholder="Số lượng"
-                            cssClass="input input-bordered w-full capitalize"/>
-            </div>
-
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Giá tiền</span>
-                </label>
-                <br />
-                <form:input path="money" placeholder="Giá tiền"
-                            cssClass="input input-bordered w-full capitalize"/>
-            </div>
-
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-success" id="update-btn">Thêm sảnh</button>
         </div>
-        <div class="text-center mt-3">
-
-            <button class="btn btn-success w-7/12">Tạo mới</button>
-        </div>
-    </form:form>
+    </div>
 </div>
+
+<script src="<c:url value="/js/admin/create-lobby.js"/>"></script>
