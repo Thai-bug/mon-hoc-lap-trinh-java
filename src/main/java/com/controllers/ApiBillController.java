@@ -43,6 +43,25 @@ public class ApiBillController {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/bills-by-lobby")
+    public ResponseEntity<Map<String, Object>> getBillsByLobbyCode(
+            @RequestParam(required = false) Map<String, String> params
+    ) {
+        int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
+        int limit = params.get("limit") == null ? 0 : Integer.parseInt(params.get("limit"));
+        String lobbyCode = params.get("lobbyCode").toString();
+        int total = billService.countBillsByLobbyCode(lobbyCode);
+        Set<Bill> bills = billService.getBillsByLobbyCode(lobbyCode, page, limit);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", bills);
+        response.put("total", total);
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.OK);
+    }
+
     @PostMapping(value = "/static", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Set<SubClass>> staticBills( @RequestBody Map<String, Object> json){

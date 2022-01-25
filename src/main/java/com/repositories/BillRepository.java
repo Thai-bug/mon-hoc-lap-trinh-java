@@ -27,4 +27,8 @@ public interface BillRepository {
     int countBill(String keyword);
 
     Set<Bill> getBills(String keyword, int page, int length);
+
+    Set<Bill> getBillByLobbyCode(String keyword, int page, int length);
+
+    int countBillsByLobbyCode(String code);
 }

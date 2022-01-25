@@ -231,4 +231,33 @@ public class BillRepositoryImpl implements BillRepository {
         Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
         return (Set<Bill>) new HashSet<>(q.getResultList());
     }
+
+    @Override
+    public Set<Bill> getBillByLobbyCode(String lobbyCode, int page, int length) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String queryStr = "select bill.* from bill\n" +
+                "join lobby on lobby.id = bill.lobby_id\n" +
+                "where lobby.code = :code " +
+                "order by lobby.created_at desc\n" +
+                "limit :limit offset :offset ";
+        NativeQuery q = session.createNativeQuery(queryStr, Bill.class);
+        q.setParameter("code", lobbyCode);
+        q.setParameter("offset", (page - 1) * length);
+        q.setParameter("limit", length);
+        return (Set<Bill>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public int countBillsByLobbyCode(String code) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String queryStr = "select count(*) from bill\n" +
+                "join lobby on lobby.id = bill.lobby_id\n" +
+                "where lobby.code = :code ";
+        NativeQuery q = session.createNativeQuery(queryStr);
+        q.setParameter("code", code);
+
+        return ((Number) q.getSingleResult()).intValue();
+
+
+    }
 }

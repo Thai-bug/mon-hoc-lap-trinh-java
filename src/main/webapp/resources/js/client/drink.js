@@ -3,15 +3,15 @@ let editor;
 let drinkCode = window.location.pathname.split('/').at(-1);
 
 ClassicEditor
-    .create( document.querySelector( '#comment' ),{
+    .create(document.querySelector('#comment'), {
         placeholder: 'Thêm bình luận tại đây'
     })
-    .then(newEditor=>{
+    .then(newEditor => {
         editor = newEditor;
     })
-    .catch( error => {
-        console.error( error );
-    } );
+    .catch(error => {
+        console.error(error);
+    });
 
 $('#add-comment').on('click', async function(){
     if(!editor.getData() || editor.getData() === '')

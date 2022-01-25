@@ -23,4 +23,8 @@ public interface BillService {
     int countBill(String keyword);
 
     Set<Bill> getBills(String keyword, int page, int length);
+
+    Set<Bill> getBillsByLobbyCode(String lobbyCode, int page, int length);
+
+    int countBillsByLobbyCode(String lobbyCode);
 }

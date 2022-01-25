@@ -2,6 +2,17 @@ let lobbyDetail = {};
 let editor;
 let lobbyCode = window.location.pathname.split('/').at(-1);
 
+ClassicEditor
+    .create(document.querySelector('#description'), {
+        placeholder: 'Cập nhật mô tả sảnh'
+    })
+    .then(newEditor => {
+        editor = newEditor;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
 const schemaUpdate = joi.object({
     code: joi.string().required().messages({
         "any.required": "Mã sảnh không hợp lệ!!",
@@ -23,7 +34,7 @@ const schemaUpdate = joi.object({
         "number.max": "Số bàn không hợp lệ!!",
         "number.base": "Vui lòng nhập số bàn chính xác"
     }),
-    description: joi.string().allow(null, '')
+    description: joi.string().allow(null, ''    )
 })
 
 $(document).ready(async function(){
@@ -42,6 +53,8 @@ $(document).ready(async function(){
     $('#lobby-price').val(lobbyDetail.money);
 
     $('#lobby-tables').val(lobbyDetail.seats / 10);
+
+    editor.setData(lobbyDetail.description);
 })
 
 $('#update-btn').on('click', async function () {
@@ -51,7 +64,7 @@ $('#update-btn').on('click', async function () {
         status: $('#lobby-status').val() === 1 ? true : false,
         money: $('#lobby-price').val(),
         seats:  $('#lobby-tables').val() * 10,
-        description: ''
+        description: editor.getData()
     }
 
     const validate = await schemaUpdate.validateAsync(requestData).catch(e=>e);

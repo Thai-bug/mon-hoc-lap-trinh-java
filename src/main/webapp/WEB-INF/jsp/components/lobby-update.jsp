@@ -35,7 +35,11 @@
         <label for="lobby-name">Gía thuê sảnh (/4 giờ) <span class="text-danger">*</span> </label>
         <input type="text" id="lobby-price" class="form-control" aria-describedby="passwordHelpBlock">
 
-        <button type="button" class="btn btn-success" id="update-btn">Cập nhật</button>
+        <textarea id="description"></textarea>
+
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-success" id="update-btn">Cập nhật</button>
+        </div>
     </div>
 </div>
 

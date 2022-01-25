@@ -65,4 +65,14 @@ public class BillServiceImpl implements BillService {
     public Set<Bill> getBills(String keyword, int page, int length) {
         return billRepository.getBills(keyword, page, length);
     }
+
+    @Override
+    public Set<Bill> getBillsByLobbyCode(String lobbyCode, int page, int length) {
+        return billRepository.getBillByLobbyCode(lobbyCode, page, length);
+    }
+
+    @Override
+    public int countBillsByLobbyCode(String lobbyCode) {
+        return billRepository.countBillsByLobbyCode(lobbyCode);
+    }
 }
