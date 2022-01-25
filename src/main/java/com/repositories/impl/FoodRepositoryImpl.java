@@ -2,6 +2,7 @@ package com.repositories.impl;
 
 import com.pojos.Employee;
 import com.pojos.Food;
+import com.pojos.Lobby;
 import com.repositories.FoodRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -106,5 +104,53 @@ public class FoodRepositoryImpl implements FoodRepository {
                 .setMaxResults(5);
 
         return (Set<Food>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public Set<Food> getFoodsForClient(int page, int limit, String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Food> query = builder.createQuery(Food.class);
+        Root root = query.from(Food.class);
+        query = query.select(root);
+
+        Expression<String> lower = builder.lower(root.get("name"));
+
+        Predicate p = builder.and(
+                builder.isTrue(root.<Boolean>get("status")),
+                builder.like(
+                        lower, "%" + kw + "%")
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * limit).setMaxResults(limit);
+        return (Set<Food>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public int countFoodClient(String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("select count(*) from Food where lower(name) like :kw and status = true");
+
+        q.setParameter("kw", "%" + kw + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Food getClientFoodByCode(String code) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Food> query = builder.createQuery(Food.class);
+        Root root = query.from(Food.class);
+        query = query.select(root);
+
+        Predicate p = builder.and(
+                builder.equal(root.get("code").as(String.class), code),
+                builder.isTrue(root.<Boolean>get("status"))
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query);
+        return (Food) q.getSingleResult();
     }
 }

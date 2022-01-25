@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/food")
+@RequestMapping("")
 public class FoodController {
     @Autowired
     private FoodService foodService;
@@ -27,7 +27,7 @@ public class FoodController {
         return "food";
     }
 
-    @RequestMapping("/detail/{id}")
+    @RequestMapping("/admin/food/detail/{id}")
     public String foodDetail(
             Model model,
             @PathVariable(value = "id") int id) {
@@ -37,7 +37,7 @@ public class FoodController {
         return "foodDetail";
     }
 
-    @RequestMapping("/update/{id}")
+    @RequestMapping("/admin/food/update/{id}")
     public String getUpdateDrink(Model model, @PathVariable(value = "id") int id) {
         Food food = foodService.getFoodById(id);
         model.addAttribute("food", food);
@@ -45,7 +45,7 @@ public class FoodController {
         return "foodUpdate";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/admin/food/update/{id}")
     public String updateDrink(
             Model model,
             @ModelAttribute(value = "food") Food food) {
@@ -57,7 +57,7 @@ public class FoodController {
         return "foodUpdate";
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/admin/food/add")
     public String addFood(
             Model model
     ) {
@@ -65,7 +65,7 @@ public class FoodController {
         return "foodAdd";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/admin/food/add")
     public String add(
             Model model,
             @ModelAttribute(value = "food") Food food
@@ -75,5 +75,15 @@ public class FoodController {
         if (add)
             return "redirect:/admin/food";
         return "foodAdd";
+    }
+
+    @GetMapping(value = "/foods")
+    public String clientFoods(){
+        return "client-food";
+    }
+
+    @GetMapping(value = "/foods/{code}")
+    public String clientFoodDetail(){
+        return "client-food-detail";
     }
 }

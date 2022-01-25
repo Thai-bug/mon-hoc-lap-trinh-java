@@ -11,16 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/admin/foods")
+@RequestMapping("/api/v1")
 public class ApiFoodController {
     @Autowired
     private FoodService foodService;
 
-    @GetMapping("/select2/food-by-name")
+    @GetMapping("/admin/foods/select2/food-by-name")
     public ResponseEntity<Set<Food>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -33,7 +34,7 @@ public class ApiFoodController {
                 HttpStatus.OK);
     }
 
-    @PostMapping(value = "/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/foods/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getAll(
             @RequestBody Map<String, Object> json
     ) {
@@ -50,5 +51,37 @@ public class ApiFoodController {
         return new ResponseEntity(
                 result,
                 HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/foods")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getFoodsForClient(
+            @RequestParam(required = false) Map<String, String> params
+    ){
+        try{
+            int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
+            int limit = params.get("limit") == null ? 10 : Integer.parseInt(params.get("limit"));
+            String kw = params.get("kw") == null ? "" : params.get("kw").toLowerCase(Locale.ROOT);
+            Map<String, Object> result = foodService.getFoodsForClient(page, limit, kw);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping(value = "/foods/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Food>> getDrinkForClient(
+            @PathVariable(value = "code") String code
+    ){
+        try{
+            return new ResponseEntity<>(foodService.getClientFoodByCode(code), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
     }
 }

@@ -16,4 +16,10 @@ public interface FoodRepository {
     boolean add(Food food);
 
     Set<Food> getFoodsByName(String name, boolean status, int page);
+
+    Set<Food> getFoodsForClient(int page, int limit, String kw);
+
+    int countFoodClient(String kw);
+
+    Food getClientFoodByCode(String code);
 }

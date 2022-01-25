@@ -48,6 +48,10 @@ public class CommentRepositoryImpl implements CommentRepository {
                 queryStr += " inner join drink on drink.id = comment.drink_id\n";
                 typeStr = "and drink.code like :code\n";
                 break;
+            case 3: // thuc an
+                queryStr += " inner join food on food.id = comment.food_id\n";
+                typeStr = "and food.code like :code\n";
+                break;
         }
 
         queryStr += "where lower(comment.content) like :kw\n" + typeStr;
@@ -79,6 +83,10 @@ public class CommentRepositoryImpl implements CommentRepository {
             case 2: // do uong
                 queryStr += " inner join drink on drink.id = comment.drink_id\n";
                 typeStr = "and drink.code like :code\n";
+                break;
+            case 3: // thuc an
+                queryStr += " inner join food on food.id = comment.food_id\n";
+                typeStr = "and food.code like :code\n";
                 break;
         }
 

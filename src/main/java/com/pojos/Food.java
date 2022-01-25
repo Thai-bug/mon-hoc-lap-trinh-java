@@ -46,6 +46,13 @@ public class Food implements Serializable {
     @JsonIgnore
     private Set<Bill> billList;
 
+    @Column(name ="code")
+    private String code;
+
+    @OneToMany(mappedBy = "food")
+    @JsonIgnore
+    private Set<Comment> comments;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,6 +70,14 @@ public class Food implements Serializable {
 
     public Food(){
         this.status = true;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Set<Bill> getBillList() {

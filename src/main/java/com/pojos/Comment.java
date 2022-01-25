@@ -33,6 +33,10 @@ public class Comment implements Serializable {
     @JoinColumn(name = "drink_id")
     private Drink drink;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "food_id")
+    private Food food;
+
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     Date createdAt;
@@ -43,6 +47,14 @@ public class Comment implements Serializable {
     public Comment() {
         createdAt = new Date();
         status = true;
+    }
+
+    public Food getFood() {
+        return food;
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
     }
 
     public Drink getDrink() {
