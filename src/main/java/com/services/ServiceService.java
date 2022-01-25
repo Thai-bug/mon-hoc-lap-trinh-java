@@ -10,14 +10,13 @@ public interface ServiceService {
 
     int getServicesCount(String kw);
 
-    Service getServiceById(int id);
+    Service getServiceByCode(String code);
 
-    boolean update(Service service);
+    boolean updateService(Map<String, Object> json);
 
-    boolean add(Service service);
+    boolean createService(Map<String, Object> json);
 
     Set<Service> getServicesByName(String name, boolean status, int page);
-
 
     Map<String, Object> getServicesForClient(int page, int limit, String kw);
 

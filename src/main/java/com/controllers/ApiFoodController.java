@@ -61,15 +61,15 @@ public class ApiFoodController {
             boolean result = foodService.createFood(json);
 
             if(result) {
-                response.put("message", "Thêm sảnh thành công");
+                response.put("message", "Thêm thức ăn thành công");
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-            response.put("message", "Thêm sảnh thất bại");
+            response.put("message", "Thêm thức ăn thất bại");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
             System.out.println(e);
-            response.put("message", "Thêm sảnh thất bạii");
+            response.put("message", "Thêm thức ăn thất bạii");
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
     }

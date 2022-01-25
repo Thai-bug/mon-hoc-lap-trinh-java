@@ -18,7 +18,7 @@ import java.util.Map;
 @RequestMapping("")
 public class ServiceController {
     @Autowired
-    private ServiceService service;
+    private ServiceService serviceService;
 
     @RequestMapping(value = "/admin/services")
     public String services(
@@ -28,37 +28,22 @@ public class ServiceController {
         return "services";
     }
 
-    @RequestMapping("/admin/services/detail/{id}")
+    @RequestMapping("/admin/services/detail/{code}")
     public String service(
             Model model,
-            @PathVariable(value = "id") int id
+            @PathVariable(value = "code") String code
     ) {
-        Service service = this.service.getServiceById(id);
+        Service service = serviceService.getServiceByCode(code);
         model.addAttribute("service", service);
 
         return "serviceDetail";
     }
 
-    @RequestMapping("/admin/services/update/{id}")
+    @RequestMapping("/admin/services/update/{code}")
     public String serviceUpdate(
             Model model,
-            @PathVariable(value = "id") int id
+            @PathVariable(value = "code") String code
     ) {
-        Service service = this.service.getServiceById(id);
-        model.addAttribute("service", service);
-
-        return "serviceUpdate";
-    }
-
-    @PostMapping("/admin/services/update/{id}")
-    public String update(
-            Model model,
-            @ModelAttribute(value = "service") Service service
-    ) {
-        model.addAttribute("service", service);
-        boolean update = this.service.update(service);
-        if (update)
-            return "redirect:/admin/services/detail/" + service.getId();
         return "serviceUpdate";
     }
 
@@ -67,19 +52,6 @@ public class ServiceController {
             Model model
     ) {
         model.addAttribute("service", new Service());
-
-        return "serviceAdd";
-    }
-
-    @PostMapping("/admin/services/add")
-    public String add(
-            Model model,
-            @ModelAttribute(value = "service") Service service
-    ) {
-        model.addAttribute("service", service);
-        boolean update = this.service.add(service);
-        if (update)
-            return "redirect:/admin/services";
 
         return "serviceAdd";
     }

@@ -44,6 +44,9 @@ public class Service implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "description")
+    private String description;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,6 +64,14 @@ public class Service implements Serializable {
 
     public Service() {
         this.status = true;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Comment> getComments() {

@@ -1,6 +1,7 @@
 package com.controllers;
 
 import com.pojos.Drink;
+import com.pojos.Food;
 import com.pojos.Service;
 import com.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,60 @@ public class ApiServiceController {
         return new ResponseEntity(
                 result,
                 HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/admin/services/create")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> createFood(@RequestBody Map<String, Object> json){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            boolean result = serviceService.createService(json);
+
+            if(result) {
+                response.put("message", "Thêm dịch vụ thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("message", "Thêm dịch vụ thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            response.put("message", "Thêm dịch vụ thất bạii");
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping(value = "/admin/services/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getDrink(
+            @PathVariable(value = "code") String code
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Service service = serviceService.getServiceByCode(code);
+            response.put("result", service);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @PostMapping(value = "/admin/services/update")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> updateFood(@RequestBody Map<String, Object> json) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            boolean result = serviceService.updateService(json);
+            if (result) {
+                response.put("result", "Cập nhật thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("result", "Cập nhật thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
     }
 
     @GetMapping(value = "/services")

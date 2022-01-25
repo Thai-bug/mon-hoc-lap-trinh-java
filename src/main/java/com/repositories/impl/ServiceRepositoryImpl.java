@@ -43,14 +43,14 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     }
 
     @Override
-    public Service getServiceById(int id) {
+    public Service getServiceByCode(String code) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Service> query = builder.createQuery(Service.class);
         Root root = query.from(Service.class);
         query = query.select(root);
 
-        Predicate p = builder.equal(root.get("id").as(Integer.class), id);
+        Predicate p = builder.equal(root.get("code").as(String.class), code);
         query = query.where(p);
 
         return session.createQuery(query).getSingleResult();

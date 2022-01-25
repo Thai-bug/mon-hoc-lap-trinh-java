@@ -26,7 +26,7 @@
             <option value="0">Không hoạt động</option>
         </select>
 
-        <label for="retail-price">Đơn vị tính  </label>
+        <label for="retail-price">Đơn giá</label>
         <input type="text" id="retail-price" class="form-control" disabled>
 
         <label for="unit">Đơn vị tính  </label>

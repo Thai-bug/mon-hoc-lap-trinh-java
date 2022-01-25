@@ -1,13 +1,12 @@
 package com.services.impl;
 
+import com.pojos.Food;
 import com.repositories.ServiceRepository;
 import com.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ServiceServiceImpl implements ServiceService {
@@ -25,17 +24,30 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public com.pojos.Service getServiceById(int id) {
-        return serviceRepository.getServiceById(id);
+    public com.pojos.Service getServiceByCode(String code) {
+        return serviceRepository.getServiceByCode(code);
     }
 
     @Override
-    public boolean add(com.pojos.Service service) {
+    public boolean createService(Map<String, Object> json) {
+        com.pojos.Service service = new com.pojos.Service ();
+        service.setCode(UUID.randomUUID().toString());
+        service.setName( json.get("name").toString());
+        service.setPrice(Integer.parseInt(json.get("price").toString()));
+        service.setStatus((boolean) json.get("status"));
+        service.setCreatedAt(new Date());
+        service.setDescription( json.get("description").toString());
+
         return serviceRepository.add(service);
     }
 
     @Override
-    public boolean update(com.pojos.Service service) {
+    public boolean updateService(Map<String, Object> json) {
+        com.pojos.Service service = serviceRepository.getServiceByCode(json.get("code").toString());
+        service.setName( json.get("name").toString());
+        service.setDescription( json.get("description").toString());
+        service.setPrice(Integer.parseInt(json.get("price").toString()));
+        service.setStatus((boolean) json.get("status"));
         return serviceRepository.update(service);
     }
 

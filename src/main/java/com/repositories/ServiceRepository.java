@@ -9,7 +9,7 @@ public interface ServiceRepository {
 
     int getServicesCount(String kw);
 
-    Service getServiceById(int id);
+    Service getServiceByCode(String code);
 
     boolean update(Service service);
 

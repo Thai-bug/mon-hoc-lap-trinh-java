@@ -1,56 +1,66 @@
 <%--
   Created by IntelliJ IDEA.
   User: thai-bug
-  Date: 12/12/2021
-  Time: 07:34
+  Date: 08/12/2021
+  Time: 02:31
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="flex flex-row justify-center">
-    <div class="w-9/12  bg-gray-200 p-8 rounded-xl border-gray-300 border border-solid shadow-xl">
-        <div class="text-center font-semibold text-2xl uppercase">Thông tin dịch vụ</div>
-        <div class="leading-10 mt-8">
-            <div class="grid grid-cols-2">
-                <div>
-                    <span>Tên đồ uống: </span><span
-                        class="capitalize font-semibold">${service.name}</span>
-                </div>
+<div class="fs-1 text text-center">Thông tin dịch vụ</div>
 
-                <div>
-                    <span>Giá tiền: </span><span class="font-semibold">${service.price}</span>
-                </div>
+<div class="container">
 
-<%--                <div>--%>
-<%--                    <span>Đơn vị tính: </span><span--%>
-<%--                        class="capitalize font-semibold">${service.unit}</span>--%>
-<%--                    </span>--%>
-<%--                </div>--%>
+    <div class="form-control position-relative">
+        <label for="service-code">Mã dịch vụ</label>
+        <input type="text" id="service-code" class="form-control" disabled>
 
-                <div>
-                    <span>Trạng thái: </span>
-                    <c:if test="${service.status == true}">
-                        <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-green-600 rounded-full">Hoạt động</span>
-                    </c:if>
-                    <c:if test="${service.status == false}">
-                        <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">Bị khoá</span>
-                    </c:if>
-                </div>
+        <label for="service-name">Tên dịch vụ</label>
+        <input type="text" id="service-name" class="form-control" aria-describedby="passwordHelpBlock" disabled>
 
-                <div>
-                    <span>Ngày tạo: </span>
-                    <span class="font-semibold">
-                 <c:set var="Date" value="${service.createdAt}"/>
-                 <fmt:formatDate value="${Date}" pattern="dd/MM/YYYY"/>
-                </span>
+        <label for="service-status">Trạng thái  </label>
+        <select class="form-select" id="service-status" disabled>
+            <option selected disabled>Chọn trạng thái sảnh</option>
+            <option value="1">Đang hoạt động</option>
+            <option value="0">Không hoạt động</option>
+        </select>
+
+        <label for="retail-price">Đơn giá / tiệc </label>
+        <input type="text" id="retail-price" class="form-control" disabled>
+
+        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Mô tả
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mô tả dịch vụ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="description">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
                 </div>
             </div>
-            <div class="text-center mt-3">
-                <a href="<c:url value="/admin/services/update/${id}"/>" class="btn btn-outline btn-success w-36">Cập
-                    nhật</a>
-            </div>
+        </div>
+
+        <div class=" text-center mt-2">
+            <a href="<c:url value="/admin/services/update/${service.code}"/>" class="btn btn-outline btn-success w-36">Cập
+                nhật</a>
         </div>
     </div>
 
+    <%--    <div>Danh sách các đơn hàng</div>--%>
+
+    <div class="mb-2 mt-2"></div>
+    <div id="pagintaion-bills"></div>
 </div>
+
+<script src="<c:url value="/js/admin/detail-service.js"/>"></script>

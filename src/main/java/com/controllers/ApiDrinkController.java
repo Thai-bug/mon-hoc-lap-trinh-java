@@ -76,15 +76,15 @@ public class ApiDrinkController {
             boolean result = drinkService.createDrink(json);
 
             if(result) {
-                response.put("message", "Thêm sảnh thành công");
+                response.put("message", "Thêm đồ uống thành công");
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-            response.put("message", "Thêm sảnh thất bại");
+            response.put("message", "Thêm đồ uống thất bại");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
             System.out.println(e);
-            response.put("message", "Thêm sảnh thất bạii");
+            response.put("message", "Thêm đồ uống thất bại");
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
     }
