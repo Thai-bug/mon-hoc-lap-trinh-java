@@ -53,6 +53,60 @@ public class ApiFoodController {
                 HttpStatus.OK);
     }
 
+    @PostMapping(value = "/admin/foods/create")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> createFood(@RequestBody Map<String, Object> json){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            boolean result = foodService.createFood(json);
+
+            if(result) {
+                response.put("message", "Thêm sảnh thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("message", "Thêm sảnh thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            response.put("message", "Thêm sảnh thất bạii");
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @PostMapping(value = "/admin/foods/update")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> updateFood(@RequestBody Map<String, Object> json) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            boolean result = foodService.updateFood(json);
+            if (result) {
+                response.put("result", "Cập nhật thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("result", "Cập nhật thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping(value = "/admin/foods/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getDrink(
+            @PathVariable(value = "code") String code
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Food food = foodService.getFoodByCode(code);
+            response.put("result", food);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
     @GetMapping(value = "/foods")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> getFoodsForClient(

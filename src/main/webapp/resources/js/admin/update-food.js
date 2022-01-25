@@ -1,5 +1,5 @@
-let drinkCode = window.location.pathname.split('/').at(-1);
-let drinkDetail = {};
+let foodCode = window.location.pathname.split('/').at(-1);
+let foodDetail = {};
 let editor;
 
 ClassicEditor
@@ -35,30 +35,30 @@ const schemaUpdate = joi.object({
 })
 
 $(document).ready(async function () {
-    const response = await axios.get(`/restaurant_war_exploded/api/v1/admin/drinks/${drinkCode}`).catch(e=>e);
+    const response = await axios.get(`/restaurant_war_exploded/api/v1/admin/foods/${foodCode}`).catch(e=>e);
     if(response instanceof Error)
         return notifyToast('Có lỗi xảy ra. Vui lòng thử lai', 'error');
 
-    drinkDetail = response.data.result;
+    foodDetail = response.data.result;
 
-    $('#drink-code').val(drinkDetail.code);
+    $('#food-code').val(foodDetail.code);
 
-    $('#drink-name').val(drinkDetail.name);
+    $('#food-name').val(foodDetail.name);
 
-    $('#drink-status').val(drinkDetail.status ? 1 : 0);
+    $('#food-status').val(foodDetail.status ? 1 : 0);
 
-    $('#retail-price').val(drinkDetail.price);
+    $('#retail-price').val(foodDetail.price);
 
-    $('#unit').val(drinkDetail.unit);
+    $('#unit').val(foodDetail.unit);
 
-    editor.setData(drinkDetail.description);
+    editor.setData(foodDetail.description);
 })
 
 $('#update-btn').on('click', async function () {
     const requestData = {
-        code: $('#drink-code').val(),
-        name: $('#drink-name').val(),
-        status: +$('#drink-status').val() === 1 ? true : false,
+        code: $('#food-code').val(),
+        name: $('#food-name').val(),
+        status: +$('#food-status').val() === 1 ? true : false,
         price: $('#retail-price').val(),
         unit:  $('#unit').val(),
         description: editor.getData()
@@ -69,7 +69,7 @@ $('#update-btn').on('click', async function () {
         return notifyToast(validate.message, 'error');
 
     $('#update-btn').attr('disabled', true);
-    const updateResponse = await axios.post('/restaurant_war_exploded/api/v1/admin/drinks/update',
+    const updateResponse = await axios.post('/restaurant_war_exploded/api/v1/admin/foods/update',
         requestData).catch(e=>e);
     $('#update-btn').attr('disabled', false);
 

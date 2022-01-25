@@ -619,7 +619,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="client-food" extends="baseLayout">
         <put-attribute name="title" value="Nhà hàng ăn cay"/>
         <put-attribute name="client-content">
-            <definition template="/WEB-INF/jsp/client-food.jsp" name="food-detail" extends="client-food"/>
+            <definition template="/WEB-INF/jsp/client-food.jsp" name="food-detail-client" extends="client-food"/>
         </put-attribute>
     </definition>
 

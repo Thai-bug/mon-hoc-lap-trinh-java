@@ -9,7 +9,7 @@ public interface FoodRepository {
 
     int getFoodCount(String kw);
 
-    Food getFoodById(int id);
+    Food getFoodByCode(String code);
 
     boolean update(Food food);
 

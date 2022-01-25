@@ -67,7 +67,7 @@ $(document).ready(function(){
             {
                 class: 'text-center',
                 data: (food) => {
-                    return '<a data-id="' + food?.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/food/detail/' + food?.id +'"><i class="fa fas fa-edit"></i></a>';
+                    return '<a data-id="' + food?.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/food/detail/' + food?.code +'"><i class="fa fas fa-edit"></i></a>';
                 }
             }
         ]

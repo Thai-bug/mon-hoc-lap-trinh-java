@@ -11,11 +11,11 @@ public interface FoodService {
 
     int getFoodCount(String kw);
 
-    Food getFoodById(int id);
+    Food getFoodByCode(String code);
 
-    boolean update(Food food);
+    boolean updateFood(Map<String, Object> json);
 
-    boolean add(Food food);
+    boolean createFood(Map<String, Object> json);
 
     Set<Food> getFoodsByName(String name, boolean status, int page);
 

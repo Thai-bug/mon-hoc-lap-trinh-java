@@ -35,7 +35,7 @@ ${_csrf.token}${_csrf.parameterName}
                                 class="ms-1 d-none d-sm-inline">Quản lý đồ uống</span></a>
                     </li>
                     <li>
-                        <a href="<c:url value="/admin/food"/>" class="nav-link px-0 align-middle">
+                        <a href="<c:url value="/admin/foods"/>" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-table"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lý thức ăn</span></a>
                     </li>

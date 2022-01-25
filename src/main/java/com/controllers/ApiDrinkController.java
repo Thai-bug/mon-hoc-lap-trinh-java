@@ -70,7 +70,7 @@ public class ApiDrinkController {
 
     @PostMapping(value = "/admin/drinks/create")
     public @ResponseBody
-    ResponseEntity<Map<String, Object>> createDrinkn(@RequestBody Map<String, Object> json){
+    ResponseEntity<Map<String, Object>> createDrink(@RequestBody Map<String, Object> json){
         Map<String, Object> response = new HashMap<>();
         try{
             boolean result = drinkService.createDrink(json);

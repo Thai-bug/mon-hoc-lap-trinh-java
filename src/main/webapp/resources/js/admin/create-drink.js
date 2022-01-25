@@ -15,7 +15,7 @@ ClassicEditor
 
 const schemaUpdate = joi.object({
     name: joi.string().required().messages({
-        "any.required": "Vui lòng nhập tên sảnh!!",
+        "any.required": "Vui lòng nhập tên đồ uống!!",
     }),
     status: joi.boolean().required().messages({
         "object.unknown": "Trạng thái không hợp lệ!!",

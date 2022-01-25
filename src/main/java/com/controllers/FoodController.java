@@ -19,7 +19,7 @@ public class FoodController {
     @Autowired
     private FoodService foodService;
 
-    @RequestMapping("")
+    @RequestMapping("/admin/foods")
     public String getFoods(
             Model model,
             @RequestParam(required = false) Map<String, String> params
@@ -27,33 +27,18 @@ public class FoodController {
         return "food";
     }
 
-    @RequestMapping("/admin/food/detail/{id}")
+    @RequestMapping("/admin/food/detail/{code}")
     public String foodDetail(
             Model model,
-            @PathVariable(value = "id") int id) {
-        Food food = foodService.getFoodById(id);
+            @PathVariable(value = "code") String code) {
+        Food food = foodService.getFoodByCode(code);
         model.addAttribute("food", food);
 
         return "foodDetail";
     }
 
-    @RequestMapping("/admin/food/update/{id}")
-    public String getUpdateDrink(Model model, @PathVariable(value = "id") int id) {
-        Food food = foodService.getFoodById(id);
-        model.addAttribute("food", food);
-
-        return "foodUpdate";
-    }
-
-    @PostMapping("/admin/food/update/{id}")
-    public String updateDrink(
-            Model model,
-            @ModelAttribute(value = "food") Food food) {
-        model.addAttribute("food", food);
-        boolean updateFood = foodService.update(food);
-        if (updateFood)
-            return "redirect:/admin/food/detail/" + food.getId();
-
+    @RequestMapping("/admin/foods/update/{code}")
+    public String getUpdateDrink(Model model, @PathVariable(value = "code") String code) {
         return "foodUpdate";
     }
 
@@ -62,18 +47,6 @@ public class FoodController {
             Model model
     ) {
         model.addAttribute("food", new Food());
-        return "foodAdd";
-    }
-
-    @PostMapping("/admin/food/add")
-    public String add(
-            Model model,
-            @ModelAttribute(value = "food") Food food
-    ) {
-        model.addAttribute("food", food);
-        boolean add = foodService.add(food);
-        if (add)
-            return "redirect:/admin/food";
         return "foodAdd";
     }
 

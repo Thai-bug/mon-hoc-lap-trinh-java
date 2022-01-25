@@ -45,14 +45,14 @@ public class FoodRepositoryImpl implements FoodRepository {
     }
 
     @Override
-    public Food getFoodById(int id) {
+    public Food getFoodByCode(String code) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Food> query = builder.createQuery(Food.class);
         Root root = query.from(Food.class);
         query = query.select(root);
 
-        Predicate p = builder.equal(root.get("id").as(Integer.class), id);
+        Predicate p = builder.equal(root.get("code").as(String.class), code);
         query = query.where(p);
 
         return session.createQuery(query).getSingleResult();
