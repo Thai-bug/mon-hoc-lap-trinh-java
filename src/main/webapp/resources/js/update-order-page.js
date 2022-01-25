@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 const id = new URLSearchParams(location.search).get("id")
 const callApi = async (identity) => {
-    if(window.location.pathname.includes('/bills/update')) {
+    if (window.location.pathname.includes('/bills/update')) {
         const id = identity
         const urlString = `/restaurant_war_exploded/api/v1/admin/bills/detail/` + id
         const response = await fetch(urlString);
@@ -30,7 +30,7 @@ const updateAction = async () => {
         customerName: $('#customer-name').val(),
         name: $('#name').val(),
         employee: {id: +$('#employee').attr('employee-id')},
-        lobby: {id: +$('#lobby-select').val()} ,
+        lobby: {id: +$('#lobby-select').val()},
 
         total: total,
         deposit: preOrder,
@@ -60,18 +60,18 @@ const updateAction = async () => {
         })
     }
 
-    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/update',{
+    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/update', {
         ...data
-    }).catch(e=>e)
+    }).catch(e => e)
 
     if (response instanceof Error) {
-        return notifyToast(response?.data.message,null, null,'danger'
+        return notifyToast(response?.data.message, null, null, 'danger'
         );
     }
     notifyToast(response?.data.message,
-        null, null,'success'
+        null, null, 'success'
     );
-    return setTimeout(()=>{
+    return setTimeout(() => {
         window.reload()
     }, 1000);
 }
@@ -99,7 +99,7 @@ const passData = (orderInfo) => {
     tables = orderInfo?.totalTable;
     oldTables = orderInfo?.totalTable;
     preOrder = orderInfo?.provisionalMoney;
-    if(preOrder > 0)
+    if (preOrder > 0)
         $('#pre-order').prop('checked', true)
 
     $('#lobby').val(orderInfo.lobby?.name);
@@ -151,21 +151,21 @@ const showFoods = () => {
         .map((item, index) => {
             if (index % 2 === 0)
                 return $("#food").append(
-                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="food-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                    `<div class="ml-5 mt-2 badge bg-primary" id="food-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteFood(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
                     </div>`
                 )
 
             return $("#food").append(
-                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                `<div class="ml-5 mt-2 badge bg-warning" id="food-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteFood(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
-                    </div>`
+                 </div>`
             )
         })
 }
@@ -176,21 +176,21 @@ const showDrinks = () => {
         .map((item, index) => {
             if (index % 2 === 0)
                 return $("#drink").append(
-                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="drink-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                    `<div class="ml-5 mt-2 badge bg-primary" id="drink-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteDrink(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
                     </div>`
                 )
 
             return $("#drink").append(
-                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                `<div class="ml-5 mt-2 badge bg-warning" id="drink-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteFood(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
-                    </div>`
+                 </div>`
             )
         })
 }
@@ -200,18 +200,18 @@ const showService = () => {
     const html = JSON.parse(localStorage.getItem('orderedService'))
         .map((item, index) => {
             if (index % 2 === 0)
-                return `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="service-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                return `<div class="ml-5 mt-2 badge bg-primary" id="service-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteService(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
                     </div>`
-            return `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="service-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+            return `<div class="ml-5 mt-2 badge bg-warning" id="service-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteService(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
-                    </div>`
+                 </div>`
         }).join("");
 
     document.querySelector('#service').insertAdjacentHTML("afterbegin", html);
@@ -223,19 +223,19 @@ $(document).ready(function () {
 
 $('#tables-bill').on('keyup', function () {
     console.log('helo')
-    if(isNaN($(this).val().replace(/\./g, '')))
+    if (isNaN($(this).val().replace(/\./g, '')))
         return;
     tables = +$(this).val().replace(/\./g, '');
 
-    changeTablesAction('food',tables, oldTables);
-    changeTablesAction('drink',tables, oldTables);
+    changeTablesAction('food', tables, oldTables);
+    changeTablesAction('drink', tables, oldTables);
     oldTables = tables
     $('#tables-bill').val(dottedMoney(tables));
 })
 
 //add food
 $(document.body).on("change", "#food-list", function () {
-    if(window.location.pathname.includes('/bills/create'))
+    if (window.location.pathname.includes('/bills/create'))
         return
     let addedFood = !localStorage.getItem('addedFood') ? [] : JSON.parse(localStorage.getItem('addedFood'));
     let deletedFood = !localStorage.getItem('deletedFood') ? [] : JSON.parse(localStorage.getItem('deletedFood'));
@@ -276,7 +276,6 @@ const deleteFood = (id) => {
     let orderedFood = !localStorage.getItem('orderedFood') ? [] : JSON.parse(localStorage.getItem('orderedFood'));
 
     total -= orderedFood.filter(item => +item?.id === +id)[0].price * tables;
-    console.log(total);
 
     if (!deletedFood.filter(item => +item === +id)[0] && data.foodList.filter(item => item?.id === +id).length > 0) {
         deletedFood.push({
@@ -342,12 +341,17 @@ const deleteDrink = (id) => {
     let deletedDrink = !localStorage.getItem('deletedDrink') ? [] : JSON.parse(localStorage.getItem('deletedDrink'));
     let orderedDrink = !localStorage.getItem('orderedDrink') ? [] : JSON.parse(localStorage.getItem('orderedDrink'));
 
+    total -= orderedDrink.filter(item => +item?.id === +id)[0].price * tables;
+
     if (
         !deletedDrink.filter(item => +item === +id)[0] && data.drinkList.filter(item => item?.id === +id).length > 0) {
         deletedDrink.push({
             id: +this.value
         });
     }
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
 
     addedDrink = addedDrink.filter(item => +item?.id !== +id);
     orderedDrink = orderedDrink.filter(item => +item?.id !== +id);
@@ -357,6 +361,8 @@ const deleteDrink = (id) => {
     localStorage.setItem('orderedDrink', JSON.stringify(orderedDrink));
 
     showDrinks();
+
+    $(`#total`).val(dottedMoney(total));
 }
 
 //add service
@@ -375,7 +381,7 @@ $(document.body).on("change", "#service-list", function () {
             price: +$(this).select2('data')[0].price
         });
 
-         total = +total +  +$(this).select2('data')[0].price;
+        total = +total + +$(this).select2('data')[0].price;
         $('#total').val(dottedMoney(total));
     }
 
@@ -403,12 +409,17 @@ const deleteService = (id) => {
     let deletedService = !localStorage.getItem('deletedService') ? [] : JSON.parse(localStorage.getItem('deletedService'));
     let orderedService = !localStorage.getItem('orderedService') ? [] : JSON.parse(localStorage.getItem('orderedService'));
 
+    total -= orderedService.filter(item => +item?.id === +id)[0].price;
+
     if (
-        !deletedService.filter(item => +item === +id)[0] && data.deletedService.filter(item => item?.id === +id).length > 0) {
+        !deletedService.filter(item => +item === +id)[0] && data.serviceList.filter(item => item?.id === +id).length > 0) {
         deletedService.push({
             id: +this.value
         });
     }
+
+    preOrder = $('#pre-order').prop('checked') ? total * 10 / 100 : 0;
+    $('#deposit').val(dottedMoney(preOrder));
 
     addedService = addedService.filter(item => +item?.id !== +id);
     orderedService = orderedService.filter(item => +item?.id !== +id);
@@ -417,11 +428,16 @@ const deleteService = (id) => {
     localStorage.setItem('addedService', JSON.stringify(addedService));
     localStorage.setItem('orderedService', JSON.stringify(orderedService));
 
-    showDrinks();
+    showService();
+
+    $(`#total`).val(dottedMoney(total));
 }
 
 $('#update-bill').on('click', async function () {
     $('#update-bill').attr('disabled', true);
-    await updateAction();
+    const response = await updateAction().catch(e => e);
     $('#update-bill').removeAttr('disabled');
+    if (response instanceof Error)
+        return notifyToast('Cập nhật đơn hàng thất bại!', 'error');
+    return notifyToast('Cập nhật đơn hàng thành công!', 'success');
 })

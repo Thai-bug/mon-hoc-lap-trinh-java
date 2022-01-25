@@ -125,9 +125,10 @@
         </div>
     </div>
 
-    <div>
-        <button type="button" id="update-bill">Cập nhật đơn
+    <div class="text-center mt-2">
+        <button type="button" class="btn btn-success" id="update-bill">Cập nhật đơn
             hàng</button>
+        <button type="button" type="button" class="btn btn-danger" id="cancel-bill">Huỷ đơn hàng</button>
     </div>
 </div>
 
