@@ -34,7 +34,14 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public boolean updateLobby(Lobby lobby) {
+    public boolean updateLobby(Map<String, Object> json) {
+        Lobby lobby = lobbyRepository.getLobbyByCode((String) json.get("code"));
+        lobby.setName((String) json.get("name").toString());
+        lobby.setDescription((String) json.get("description").toString());
+        lobby.setSeats(Integer.parseInt(json.get("seats").toString()));
+        lobby.setMoney(Integer.parseInt(json.get("money").toString()));
+        lobby.setStatus((boolean) json.get("status"));
+
         return lobbyRepository.updateLobby(lobby);
     }
 

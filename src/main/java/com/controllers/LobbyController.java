@@ -40,11 +40,11 @@ public class LobbyController {
     public String updateEmployee(Model model,
                                  @ModelAttribute(value = "lobby") Lobby lobby) {
 
-        boolean updateLobby = lobbyService.updateLobby(lobby);
-        model.addAttribute("lobby", lobby);
-        if (updateLobby) {
-            return "lobbyDetail";
-        }
+//        boolean updateLobby = lobbyService.updateLobby(lobby);
+//        model.addAttribute("lobby", lobby);
+//        if (updateLobby) {
+//            return "lobbyDetail";
+//        }
         return "redirect:" + lobby.getId();
     }
 

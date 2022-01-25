@@ -69,7 +69,27 @@ public class ApiLobbyController {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
         }
+    }
 
+    @PostMapping(value = "/admin/lobbies/update")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> updateLobby(@RequestBody Map<String, Object> json){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            boolean result = lobbyService.updateLobby(json);
+
+            if(result) {
+                response.put("message", "Cập nhật thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("message", "Cập nhật thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            response.put("message", "Cập nhật thất bạii");
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
     }
 
     @GetMapping(value = "/lobbies")
@@ -102,6 +122,5 @@ public class ApiLobbyController {
         catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
         }
-
     }
 }

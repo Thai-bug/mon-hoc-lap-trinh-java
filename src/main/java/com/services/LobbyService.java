@@ -15,7 +15,7 @@ public interface LobbyService {
 
     Lobby getLobbyByCode(String code);
 
-    boolean updateLobby(Lobby lobby);
+    boolean updateLobby(Map<String, Object> lobby);
 
     boolean createLobby(Lobby lobby);
 
