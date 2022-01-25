@@ -53,14 +53,14 @@ public class LobbyRepositoryImpl implements LobbyRepository {
     }
 
     @Override
-    public Lobby getLobbyById(int id) {
+    public Lobby getLobbyByCode(String code) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Lobby> query = builder.createQuery(Lobby.class);
         Root root = query.from(Lobby.class);
         query = query.select(root);
 
-        Predicate p = builder.equal(root.get("id").as(Integer.class), id);
+        Predicate p = builder.equal(root.get("code").as(String.class), code);
         query = query.where(p);
         Query q = session.createQuery(query);
         return (Lobby) q.getSingleResult();

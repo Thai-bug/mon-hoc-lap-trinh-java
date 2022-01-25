@@ -12,7 +12,7 @@ public interface LobbyRepository {
 
     int countLobby(String kw);
 
-    Lobby getLobbyById(int id);
+    Lobby getLobbyByCode(String code);
 
     boolean updateLobby(Lobby lobby);
 

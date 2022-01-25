@@ -82,6 +82,7 @@
     <!-- optionally if you need translation for your language then include locale file as mentioned below (replace LANG.js with your own locale file) -->
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/locales/LANG.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://unpkg.com/joi@17.5.0/dist/joi-browser.min.js"></script>
 
     <title>
         <tiles:insertAttribute name="title"/>

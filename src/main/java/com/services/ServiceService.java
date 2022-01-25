@@ -2,6 +2,7 @@ package com.services;
 
 import com.pojos.Service;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface ServiceService {
@@ -16,4 +17,9 @@ public interface ServiceService {
     boolean add(Service service);
 
     Set<Service> getServicesByName(String name, boolean status, int page);
+
+
+    Map<String, Object> getServicesForClient(int page, int limit, String kw);
+
+    Map<String, Object> getClientServiceByCode(String code);
 }

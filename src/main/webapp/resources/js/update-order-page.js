@@ -65,10 +65,10 @@ const updateAction = async () => {
     }).catch(e=>e)
 
     if (response instanceof Error) {
-        return Notify(response?.data.message,null, null,'danger'
+        return notifyToast(response?.data.message,null, null,'danger'
         );
     }
-    Notify(response?.data.message,
+    notifyToast(response?.data.message,
         null, null,'success'
     );
     return setTimeout(()=>{

@@ -275,12 +275,12 @@ async function createOrder(){
     }).catch(e=>e);
 
     if (response instanceof Error) {
-        return Notify(response?.response.data.message,null, null,'danger'
+        return notifyToast(response?.response.data.message,null, null,'danger'
         );
     }
 
     if (response instanceof Error) {
-        return Notify(response?.message,null, null,'danger'
+        return notifyToast(response?.message,null, null,'danger'
         );
     }
 }

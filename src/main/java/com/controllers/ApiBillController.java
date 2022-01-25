@@ -56,7 +56,6 @@ public class ApiBillController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody
     ResponseEntity<Object> updateBill(@RequestBody BillRequest billRequest) {
-        System.out.println("hello");
         Map<String, Object> response = new LinkedHashMap<>();
         try {
             Bill bill = billService.getBill(billRequest.getCode());

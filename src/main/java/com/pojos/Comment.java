@@ -37,6 +37,10 @@ public class Comment implements Serializable {
     @JoinColumn(name = "food_id")
     private Food food;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "service_id")
+    private Service service;
+
     @Column(name = "created_at",
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     Date createdAt;
@@ -47,6 +51,14 @@ public class Comment implements Serializable {
     public Comment() {
         createdAt = new Date();
         status = true;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public Food getFood() {

@@ -1,6 +1,6 @@
-let foodDetail = {};
+let serviceDetail = {};
 let editor;
-let foodCode = window.location.pathname.split('/').at(-1);
+let serviceCode = window.location.pathname.split('/').at(-1);
 
 ClassicEditor
     .create( document.querySelector( '#comment' ),{
@@ -19,8 +19,8 @@ $('#add-comment').on('click', async function(){
     $(this).attr('disabled', true);
     const response = await axios.post('/restaurant_war_exploded/api/v1/comments/add',{
         content: editor.getData(),
-        code: foodCode,
-        type: 3,
+        code: serviceCode,
+        type: 4,
         stars: $("#rating").val() || 0
     }).catch(e=>e);
 
@@ -34,7 +34,7 @@ $('#add-comment').on('click', async function(){
     $(this).attr('disabled', false);
 })
 
-function renderLobbiesList(data) {
+function renderServicesList(data) {
     let html = `<div class="mb-4 ">`
     $.each(data, function (index, item) {
         html += `
@@ -59,22 +59,21 @@ function renderLobbiesList(data) {
 }
 
 $(document).ready(async function () {
-    const response = await axios.get(`/restaurant_war_exploded/api/v1/foods/${foodCode}`).catch(e=>e);
+    const response = await axios.get(`/restaurant_war_exploded/api/v1/services/${serviceCode}`).catch(e=>e);
     if(response instanceof Error)
         return notifyToast('Có lỗi xảy ra. Vui lòng thử lại !', 'erroe')
 
-    foodDetail = response.data.result;
-    $('.food-name').html(foodDetail.name);
-    $('#retail-price').html(dottedMoney(foodDetail.price));
-    $('#unit').html(dottedMoney(foodDetail.unit));
+    serviceDetail = response.data.result;
+    $('.service-name').html(serviceDetail.name);
+    $('#retail-price').html(dottedMoney(serviceDetail.price));
 
-    const container = $('#food-detail-comments');
+    const container = $('#service-detail-comments');
     const setting = {
         showPrevious: true,
         showNext: true,
         pageSize: 5,
         pageNumber: 8,
-        dataSource: `/restaurant_war_exploded/api/v1/comments?code=${foodCode}&type=3`,
+        dataSource: `/restaurant_war_exploded/api/v1/comments?code=${serviceCode}&type=4`,
         totalNumberLocator: (response) => {
             return response.total
         },
@@ -89,7 +88,7 @@ $(document).ready(async function () {
             }
         },
         callback: function (response, pagination) {
-            container.prev().html(renderLobbiesList(response));
+            container.prev().html(renderServicesList(response));
         }
     }
     container.pagination(setting)

@@ -10,16 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/admin/services")
+@RequestMapping("/api/v1")
 public class ApiServiceController {
     @Autowired
     private ServiceService serviceService;
 
-    @GetMapping("/select2/service-by-name")
+    @GetMapping("/admin/services/select2/service-by-name")
     public ResponseEntity<Set<Service>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -32,7 +33,7 @@ public class ApiServiceController {
                 HttpStatus.OK);
     }
 
-    @PostMapping(value = "/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/services/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getAll(
             @RequestBody Map<String, Object> json
     ) {
@@ -49,5 +50,38 @@ public class ApiServiceController {
         return new ResponseEntity(
                 result,
                 HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/services")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getServicesForClient(
+            @RequestParam(required = false) Map<String, String> params
+    ){
+        try{
+            int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
+            int limit = params.get("limit") == null ? 10 : Integer.parseInt(params.get("limit"));
+            String kw = params.get("kw") == null ? "" : params.get("kw").toLowerCase(Locale.ROOT);
+            Map<String, Object> result = serviceService.getServicesForClient(page, limit, kw);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
+    }
+
+    @GetMapping(value = "/services/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getServiceForClient(
+            @PathVariable(value = "code") String code
+    ){
+        try{
+            return new ResponseEntity<>(serviceService.getClientServiceByCode(code), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
     }
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/services")
+@RequestMapping("")
 public class ServiceController {
     @Autowired
     private ServiceService service;
@@ -71,7 +71,7 @@ public class ServiceController {
         return "serviceAdd";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/admin/services/add")
     public String add(
             Model model,
             @ModelAttribute(value = "service") Service service
@@ -82,5 +82,15 @@ public class ServiceController {
             return "redirect:/admin/services";
 
         return "serviceAdd";
+    }
+
+    @GetMapping("/services")
+    public  String indexClientLobbies(){
+        return "client-service";
+    }
+
+    @GetMapping("/services/{code}")
+    public  String clientLobbyDetail(){
+        return "client-service-detail";
     }
 }

@@ -4,11 +4,9 @@ import com.pojos.Comment;
 import com.pojos.Drink;
 import com.pojos.Food;
 import com.pojos.Lobby;
-import com.repositories.CommentRepository;
-import com.repositories.DrinkRepository;
-import com.repositories.FoodRepository;
-import com.repositories.LobbyRepository;
+import com.repositories.*;
 import com.services.CommentService;
+import com.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +28,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private FoodRepository foodRepository;
 
+    @Autowired
+    private ServiceRepository serviceRepository;
+
     @Override
     public boolean addComment(int type, String code, String content, int stars) {
         Comment newComment = new Comment();
@@ -45,6 +46,10 @@ public class CommentServiceImpl implements CommentService {
             case 3: //food
                 Food food = foodRepository.getClientFoodByCode(code);
                 newComment.setFood(food);
+                break;
+            case 4: //dich vu
+                com.pojos.Service service = serviceRepository.getClientServiceByCode(code);
+                newComment.setService(service);
                 break;
         }
 

@@ -630,6 +630,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         </put-attribute>
     </definition>
 
+    <definition name="client-service" extends="baseLayout">
+        <put-attribute name="title" value="Nhà hàng ăn cay"/>
+        <put-attribute name="client-content">
+            <definition template="/WEB-INF/jsp/client-service.jsp" name="service-detail" extends="client-service"/>
+        </put-attribute>
+    </definition>
+
+    <definition name="client-service-detail" extends="baseLayout">
+        <put-attribute name="title" value="Nhà hàng ăn cay"/>
+        <put-attribute name="client-content">
+            <definition template="/WEB-INF/jsp/client-service-detail.jsp" name="service-detail-client" extends="client-service-detail"/>
+        </put-attribute>
+    </definition>
+
     <!--    403 error page-->
     <definition name="403" extends="baseLayout">
         <put-attribute name="title" value="Lỗi 403"/>

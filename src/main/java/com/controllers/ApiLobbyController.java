@@ -54,6 +54,24 @@ public class ApiLobbyController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/admin/lobbies/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Lobby>> getLobby(
+            @PathVariable(value = "code") String code
+    ){
+        try{
+            Map<String, Lobby> result = new HashMap<>();
+            Lobby lobby = lobbyService.getLobbyByCode(code);
+            result.put("result", lobbyService.getLobbyByCode(code));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
+    }
+
     @GetMapping(value = "/lobbies")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> getLobbiesForClient(

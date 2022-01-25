@@ -15,7 +15,7 @@ ClassicEditor
 
 $('#add-comment').on('click', async function(){
     if(!editor.getData() || editor.getData() === '')
-        return notify('Vui lòng nhập nội dung', 'warning')
+        return notifyToast('Vui lòng nhập nội dung', 'warning')
 
     $(this).attr('disabled', true);
     const response = await axios.post('/restaurant_war_exploded/api/v1/comments/add',{
@@ -25,9 +25,9 @@ $('#add-comment').on('click', async function(){
         stars: $("#rating").val()
     });
     if(response instanceof Error)
-        notify('Có lỗi xảy ra', 'danger');
+        notifyToast('Có lỗi xảy ra', 'danger');
     else
-        notify('Đã thêm bình luận', 'success');
+        notifyToast('Đã thêm bình luận', 'success');
 
     editor.setData('');
     $("#rating").val(0)
@@ -59,7 +59,7 @@ function renderLobbiesList(data) {
 $(document).ready(async function () {
     const response = await axios.get(`/restaurant_war_exploded/api/v1/lobbies/${lobbyCode}`).catch(e=>e);
     if(response instanceof Error) {
-        return notify('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+        return notifyToast('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
     }
 
     lobbyDetail = response.data.result;

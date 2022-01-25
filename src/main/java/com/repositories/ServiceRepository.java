@@ -16,4 +16,10 @@ public interface ServiceRepository {
     boolean add(Service service);
 
     Set<Service> getServicesByName(String name, boolean status, int page);
+
+    Set<Service> getServicesForClient(int page, int limit, String kw);
+
+    int countServiceClient(String kw);
+
+    Service getClientServiceByCode(String code);
 }

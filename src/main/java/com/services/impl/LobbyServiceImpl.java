@@ -29,8 +29,8 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public Lobby getLobbyById(int id) {
-        return lobbyRepository.getLobbyById(id);
+    public Lobby getLobbyByCode(String code) {
+        return lobbyRepository.getLobbyByCode(code);
     }
 
     @Override

@@ -40,7 +40,7 @@
                     </span>
     </div>
     <div class="text-center mt-3">
-        <a href="<c:url value="/admin/lobby/update/${id}"/>" class="btn btn-outline btn-success w-36">Cập
+        <a href="<c:url value="/admin/lobby/update/${lobby.code}"/>" class="btn btn-outline btn-success w-36">Cập
             nhật</a>
     </div>
 </div>

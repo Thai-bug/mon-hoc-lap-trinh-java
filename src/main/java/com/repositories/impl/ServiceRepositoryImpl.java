@@ -1,6 +1,5 @@
 package com.repositories.impl;
 
-import com.pojos.Food;
 import com.pojos.Service;
 import com.repositories.ServiceRepository;
 import org.hibernate.Session;
@@ -10,10 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -107,5 +103,54 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 .setMaxResults(5);
 
         return (Set<Service>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public Set<Service> getServicesForClient(int page, int limit, String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Service> query = builder.createQuery(Service.class);
+        Root root = query.from(Service.class);
+        query = query.select(root);
+
+        Expression<String> lower = builder.lower(root.get("name"));
+
+        Predicate p = builder.and(
+                builder.isTrue(root.<Boolean>get("status")),
+                builder.like(
+                        lower, "%" + kw + "%")
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * limit).setMaxResults(limit);
+        return (Set<Service>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public int countServiceClient(String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("select count(*) from Service where lower(name) like :kw and status = true");
+
+        q.setParameter("kw", "%" + kw + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
+    }
+
+
+    @Override
+    public Service getClientServiceByCode(String code) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Service> query = builder.createQuery(Service.class);
+        Root root = query.from(Service.class);
+        query = query.select(root);
+
+        Predicate p = builder.and(
+                builder.equal(root.get("code").as(String.class), code),
+                builder.isTrue(root.<Boolean>get("status"))
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query);
+        return (Service) q.getSingleResult();
     }
 }

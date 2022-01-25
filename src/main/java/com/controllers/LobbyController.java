@@ -28,16 +28,15 @@ public class LobbyController {
         return "lobbies";
     }
 
-    @RequestMapping("/admin/lobby/{id}")
-    public String detailLobby(Model model, @PathVariable(value = "id") int id) {
-        System.out.println(id);
-        Lobby lobby = lobbyService.getLobbyById(id);
+    @RequestMapping("/admin/lobby/{code}")
+    public String detailLobby(Model model, @PathVariable(value = "code") String code) {
+        Lobby lobby = lobbyService.getLobbyByCode(code);
 
         model.addAttribute("lobby", lobby);
         return "lobbyDetail";
     }
 
-    @PostMapping("/admin/lobby/update/{id}")
+    @PostMapping("/admin/lobby/update/{code}")
     public String updateEmployee(Model model,
                                  @ModelAttribute(value = "lobby") Lobby lobby) {
 
@@ -49,11 +48,9 @@ public class LobbyController {
         return "redirect:" + lobby.getId();
     }
 
-    @RequestMapping("/admin/lobby/update/{id}")
+    @RequestMapping("/admin/lobby/update/{code}")
     public String updatePage(Model model,
-                                 @PathVariable(value = "id") int id) {
-        Lobby lobby = lobbyService.getLobbyById(id);
-        model.addAttribute("lobby", lobby);
+                                 @PathVariable(value = "code") String code) {
         return "lobbyUpdate";
     }
 

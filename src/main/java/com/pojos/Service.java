@@ -37,6 +37,13 @@ public class Service implements Serializable {
     @JsonIgnore
     private Set<Bill> billList;
 
+    @OneToMany(mappedBy = "service")
+    @JsonIgnore
+    private Set<Comment> comments;
+
+    @Column(name = "code")
+    private String code;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,6 +61,22 @@ public class Service implements Serializable {
 
     public Service() {
         this.status = true;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Set<Bill> getBillList() {
