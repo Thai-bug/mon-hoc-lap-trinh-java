@@ -28,7 +28,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         query = query.select(root);
 
         Predicate p = builder.like(root.get("name").as(String.class), "%" + kw + "%");
-        query = query.where(p);
+        query = query.where(p).orderBy(builder.desc(root.get("id")));
         Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
         return (Set<Service>) new HashSet<>(q.getResultList());
     }
@@ -96,11 +96,12 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                                 builder.isTrue(root.<Boolean>get("status")) :
                                 builder.isFalse(root.<Boolean>get("status"))
                 );
-        query = query.where(p);
+        query = query.where(p).orderBy(builder.desc(root.get("createdAt")));
         Query q = session
                 .createQuery(query)
                 .setFirstResult((page - 1) * 5)
-                .setMaxResults(5);
+                .setMaxResults(5)
+                ;
 
         return (Set<Service>) new HashSet<>(q.getResultList());
     }

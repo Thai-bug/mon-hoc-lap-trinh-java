@@ -17,7 +17,7 @@
 <div class="container">
 
     <div class="form-control position-relative">
-        <label for="service-code">Mã đồ uống</label>
+        <label for="service-code">Mã dịch vụ</label>
         <input type="text" id="service-code" class="form-control" disabled>
 
         <label for="service-name">Tên dịch vụ <span class="text-danger">*</span> </label>
@@ -32,7 +32,7 @@
 
         <label for="retail-price">Đơn giá / bữa tiệc <span class="text-danger">*</span> </label>
         <input type="text" id="retail-price" class="form-control" >
-        
+
         <div class="mt-5">
             <textarea id="description" ></textarea>
         </div>

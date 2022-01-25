@@ -11,47 +11,41 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<c:url var="action" value="/admin/services/add"/>
 
 <div class="fs-1 text text-center">Thông tin dịch vụ</div>
 
 <div class="container">
-    <form:form modelAttribute="service" method="post" enctype="multipart/form-data" action="${action}">
-        <form:input path="id" type="hidden"/>
-        <div class="row">
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Tên dịch vụ</span>
-                </label> <br/>
-                <form:input path="name" placeholder="Tên dịch vụ" cssClass="input input-bordered w-full"/>
-            </div>
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Trạng thái</span>
-                </label>
-                <br/>
-                <form:select path="status" cssClass="select select-bordered status-select w-full">
-                    <form:option value="true"> Kích hoạt</form:option>
-                    <form:option value="false">Vô hiệu hoá</form:option>
-                </form:select>
-            </div>
-        </div>
-        <div class="row">
 
-            <div class="col">
-                <label class="label">
-                    <span class="label-text">Giá tiền</span>
-                </label>
-                <br/>
-                <form:input path="price" placeholder="Giá tiền"
-                            cssClass="input input-bordered w-full capitalize"/>
-            </div>
+    <div class="form-control position-relative">
+        <label for="service-code">Mã dịch vụ</label>
+        <input type="text" id="service-code" class="form-control" disabled>
 
-        </div>
-        <div class="text-center mt-3">
+        <label for="service-name">Tên dịch vụ <span class="text-danger">*</span> </label>
+        <input type="text" id="service-name" class="form-control" aria-describedby="passwordHelpBlock" >
 
-            <button class="btn btn-success w-7/12">Tạo mới</button>
+        <label for="service-status">Trạng thái <span class="text-danger">*</span> </label>
+        <select class="form-select" id="service-status" >
+            <option selected >Chọn trạng dịch vụ</option>
+            <option value="1">Đang hoạt động</option>
+            <option value="0">Không hoạt động</option>
+        </select>
+
+        <label for="retail-price">Đơn giá / bữa tiệc <span class="text-danger">*</span> </label>
+        <input type="text" id="retail-price" class="form-control" >
+
+        <div class="mt-5">
+            <textarea id="description" ></textarea>
         </div>
-    </form:form>
+
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-success" id="update-btn">Cập nhật</button>
+        </div>
+    </div>
+
+    <%--    <div>Danh sách các đơn hàng</div>--%>
+
+    <div class="mb-2 mt-2"></div>
+    <div id="pagintaion-bills"></div>
 </div>
+
+<script src="<c:url value="/js/admin/create-service.js"/>"></script>
