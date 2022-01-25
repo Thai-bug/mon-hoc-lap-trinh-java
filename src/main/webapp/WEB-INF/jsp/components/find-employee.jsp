@@ -12,6 +12,8 @@
 
 <div class="text-sm text-gray-400 mb-8">Quản lý nhân viên</div>
 
+<div><a href="<c:url value="/admin/employees/create" />"><i class="fas fa-plus"></i>Tạo mới</a></div>
+
 <table id="employees" style="width: 100%;">
     <thead>
     <tr>

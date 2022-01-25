@@ -80,7 +80,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="updateEmployee" extends="baseLayout">
         <put-attribute name="title" value="Quản lý nhân viên"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/employee/update.jsp" name="update" extends="updateEmployee">
+            <definition template="/WEB-INF/jsp/employee/update.jsp" name="update-employee" extends="updateEmployee">
                 <put-attribute name="updateForm"
                                value="/WEB-INF/jsp/components/update-form.jsp"/>
             </definition>
@@ -102,7 +102,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="createEmployee" extends="baseLayout">
         <put-attribute name="title" value="Quản lý nhân viên"/>
         <put-attribute name="content">
-            <definition template="/WEB-INF/jsp/employee/add.jsp" name="update" extends="createEmployee">
+            <definition template="/WEB-INF/jsp/employee/add.jsp" name="add-employee" extends="createEmployee">
                 <put-attribute name="createForm"
                                value="/WEB-INF/jsp/components/create-form.jsp"/>
             </definition>

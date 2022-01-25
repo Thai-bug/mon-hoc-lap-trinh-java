@@ -110,7 +110,7 @@ public class EmployeeController {
         return "updateEmployee";
     }
 
-    @RequestMapping("/admin/employee/create")
+    @RequestMapping("/admin/employees/create")
     public String createEmployeePage(Model model) {
         List<Employee> parents = new ArrayList<>(employeeService.getParentList());
         model.addAttribute("employee", new Employee());
@@ -118,7 +118,7 @@ public class EmployeeController {
         return "createEmployee";
     }
 
-    @PostMapping("/admin/employee/create")
+    @PostMapping("/admin/employees/create")
     public String createEmployee(
             Model model,
             @Valid Employee employee,

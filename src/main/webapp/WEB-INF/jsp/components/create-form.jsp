@@ -31,131 +31,73 @@
             <button class="btn btn-sm btn-ghost mr-2 alert-button">Đóng</button>
         </div>
     </div>
-
 </c:if>
 
 
-<div class="relative flex justify-around bg-gray w-full mb-6 shadow-lg rounded p-8">
-    <div class="rounded  bg-transparent " id="avatar-user">
-        <img class="w-auto mx-auto h-64 object-cover object-center" src="<c:url value="/images/default-avatar.jpeg"/>"
-             alt="avatar"
-             style="border-radius: 50%"/>
+<div class="d-flex justify-content-between">
+<%--    <div class="rounded  bg-transparent " id="avatar-user" style="width: 30%;">--%>
+<%--        <img class="w-auto mx-auto h-64 object-cover object-center" src="<c:url value="/images/default-avatar.jpeg"/>"--%>
+<%--             alt="avatar"--%>
+<%--             style="border-radius: 50%"/>--%>
+<%--    </div>--%>
+
+    <div class="rounded  bg-transparent " id="avatar-user" style="width: 30%;">
+        <img class="" src="<c:url value="/images/default-avatar.jpeg"/>" alt="avatar"
+             style="border-radius: 50%; width: 300px;"/>
     </div>
 
 
-    <div class="w-7/12">
-        <div class="text-center font-bold uppercase">Thêm thông tin nhân viên</div>
+    <div class="" style="width: 70%;">
+        <div class="text-center fw-bold">Thêm nhân viên</div>
         <div>
-            <form:form modelAttribute="employee" method="post" enctype="multipart/form-data" action="${action}"
-                       autocomplete="off">
-                <div class="form-control grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="label inline-block">
-                            <span class="label-text">Email</span>
-                        </label>
-                        <form:errors path="email" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:input path="email" placeholder="Email" cssClass="input input-bordered w-full"
-                                    autocomplete="false"/>
+            <form:form modelAttribute="employee" method="post" enctype="multipart/form-data" action="${action}" cssClass="form-control">
+                <form:input path="id" type="hidden"/>
+                <form:input path="avatarLink" type="hidden"/>
 
-                    </div>
+                <label for="email">email <span class="text-danger">*</span> </label>
+                <form:input path="email" placeholder="Email" cssClass="form-control"
+                            readonly="true"/>
 
-                    <div class="">
-                        <label class="label">
-                            <span class="label-text">Trạng thái</span>
-                        </label>
-                        <form:select path="status" cssClass="select select-bordered status-select w-full">
-                            <form:option value="true"> Kích hoạt</form:option>
-                            <form:option value="false">Vô hiệu hoá</form:option>
-                        </form:select>
-                    </div>
+                <label for="status">Trạng thái <span class="text-danger">*</span> </label>
+                <form:select path="status" cssClass="form-select">
+                    <form:option value="true"> Kích hoạt</form:option>
+                    <form:option value="false">Vô hiệu hoá</form:option>
+                </form:select>
 
-                    <div>
-                        <label class="label inline-block">
-                            <span class="label-text">Họ </span>
-                        </label>
-                        <form:errors path="firstName" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:input path="firstName" placeholder="Họ"
-                                    cssClass="input input-bordered w-full capitalize"/>
-                    </div>
+                <label for="firstName">Họ <span class="text-danger">*</span> </label>
+                <form:input path="firstName" placeholder="Họ"
+                            cssClass="form-control"/>
 
-                    <div>
-                        <label class="label inline-block">
-                            <span class="label-text">Tên</span>
-                        </label>
-                        <form:errors path="lastName" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:input path="lastName" placeholder="Tên"
-                                    cssClass="input input-bordered w-full capitalize"/>
-                    </div>
+                <label for="lastName">Tên <span class="text-danger">*</span> </label>
+                <form:input path="lastName" placeholder="Họ"
+                            cssClass="form-control"/>
 
-                    <div class="">
-                        <label class="label inline-block">
-                            <span class="label-text">Giới tính</span>
-                        </label>
-                        <form:errors path="gender" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:select path="gender" cssClass="select select-bordered w-full">
-                            <option selected disabled>Chọn giới tính</option>
-                            <form:option value="${1}">Nam</form:option>
-                            <form:option value="${2}">Nữ</form:option>
-                        </form:select>
-                    </div>
+                <label for="gender">Giới tính<span class="text-danger">*</span> </label>
+                <form:select path="gender" cssClass="form-select">
+                    <form:option value="1">Nam</form:option>
+                    <form:option value="2">Nữ</form:option>
+                </form:select>
 
-                    <div>
-                        <label class="label inline-block">
-                            <span class="label-text">Số điện thoại</span>
-                        </label>
-                        <form:errors path="phoneNumber" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:input path="phoneNumber" placeholder="Số điện thoại"
-                                    cssClass="input input-bordered w-full capitalize"/>
-                    </div>
+                <label for="phoneNumber">Số điện thoại<span class="text-danger">*</span> </label>
+                <form:input path="phoneNumber" placeholder="Số điện thoại"
+                            cssClass="form-control"/>
 
-                    <div class="">
-                        <label class="label inline-block">
-                            <span class="label-text">Chức vụ</span>
-                        </label>
-                        <form:errors path="role" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:select path="role" cssClass="select select-bordered w-full">
-                            <option disabled selected>Chọn chức vụ</option>
-                            <form:option value="EMPLOYEE">Nhân viên tiệc cưới</form:option>
-                            <form:option value="CS">Nhân viên CSKH</form:option>
-                        </form:select>
-                    </div>
-                    <c:if test="${fn:contains(employee.role, 'MANAGER') != true}">
-                        <div class="">
-                            <label class="label">
-                                <span class="label-text">Người quản lý</span>
-                            </label>
+                <label for="role">Chức vụ<span class="text-danger">*</span> </label>
+                <form:select path="role" cssClass="form-select">
+                    <form:option value="EMPLOYEE">Nhân viên</form:option>
+                    <form:option value="CS">Nhân viên CSKH</form:option>
+                </form:select>
 
-                            <form:select path="parent.id" cssClass="select select-bordered w-full">
-                                <option selected disabled>Chọn người quản lý</option>
-                                <c:forEach var="parent" items="${parents}">
-                                    <form:option value="${parent.id}"
-                                                 itemValue="id">${parent.firstName} ${parent.lastName}</form:option>
-                                </c:forEach>
-                            </form:select>
-                        </div>
-                    </c:if>
+                <label for="parent.id">Người quản lý<span class="text-danger">*</span> </label>
 
-                    <div class="">
-                        <label class="label inline-block">
-                            <span class="label-text">Mật khẩu</span>
-                        </label>
-                        <form:errors path="password" cssClass="text-red-500 text-sm" element="span"/>
-                        <form:input path="password" cssClass="input input-bordered w-full" type="password"
-                                    autocomplete="false" placeholder="Nhập mật khẩu"/>
-                    </div>
-                    <div class="">
-                        <label class="label">
-                            <span class="label-text">Nhập lại mật khẩu</span>
-                        </label>
-                        <form:input path="confirmPassword" placeholder="Nhập lại mật khẩu"
-                                    class="input input-bordered w-full" type="password"/>
-                        <form:errors path="confirmPassword" cssClass="text-red-500 text-sm" element="div"/>
-
-                    </div>
-
-                </div>
+                <form:select path="parent.id" cssClass="form-select">
+                    <c:forEach var="parent" items="${parents}">
+                        <form:option value="${parent.id}"
+                                     itemValue="id">${parent.firstName} ${parent.lastName}</form:option>
+                    </c:forEach>
+                </form:select>
                 <div class="text-center mt-3">
-                    <button class="btn btn-success w-7/12">Cập nhật</button>
+                    <button class="btn btn-success w-7/12">Thêm mới</button>
                 </div>
 
             </form:form>
