@@ -1,6 +1,7 @@
 package com.repositories.impl;
 
 import com.pojos.Comment;
+import com.pojos.Drink;
 import com.repositories.CommentRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,7 +24,6 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public boolean addComment(Comment comment) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        Transaction tx;
         try {
             session.save(String.valueOf(Comment.class), comment);
             return true;
@@ -111,7 +111,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public Set<Comment> getComments(String kw, int page, int limit) {
+    public Set<Comment> getComments(String kw, int start, int limit) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Comment> query = builder.createQuery(Comment.class);
@@ -124,7 +124,7 @@ public class CommentRepositoryImpl implements CommentRepository {
         );
 
         query = query.where(p);
-        Query q = session.createQuery(query).setFirstResult((page - 1) * limit ).setMaxResults(limit);
+        Query q = session.createQuery(query).setFirstResult(start ).setMaxResults(limit);
         return (Set<Comment>) new HashSet<>(q.getResultList());
     }
 
@@ -135,5 +135,31 @@ public class CommentRepositoryImpl implements CommentRepository {
 
         q.setParameter("kw", "%" + kw + "%");
         return Integer.parseInt(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Comment getCommentByCode(String code) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Comment> query = builder.createQuery(Comment.class);
+        Root root = query.from(Comment.class);
+        query = query.select(root);
+
+        Predicate p = builder.equal(root.get("code").as(String.class), code);
+        query = query.where(p);
+
+        return session.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public boolean updateComment(Comment comment) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        try {
+            session.update(comment);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

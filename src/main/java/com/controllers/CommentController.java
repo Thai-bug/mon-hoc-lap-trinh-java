@@ -27,6 +27,6 @@ public class CommentController {
     @RequestMapping("/admin/comments/detail/{code}")
     public String showDetailPage(
             @PathVariable(value = "code") String code)  {
-        return "detailComment";
+        return "commentDetail";
     }
 }

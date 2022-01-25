@@ -40,11 +40,11 @@ public class ApiCommentController {
     public ResponseEntity<Map<String, Object>> getAll(
             @RequestBody Map<String, Object> json
     ) {
-        int start = json.get("start") == null ? 1 : Integer.parseInt(json.get("start").toString()) + 1;
+        int start = json.get("start") == null ? 1 : Integer.parseInt(json.get("start").toString());
         int length = json.get("length") == null ? 0 : Integer.parseInt(json.get("length").toString());
         Map<String, String> searchObj = (Map<String, String>) json.get("search");
-        Set<Comment> comments = commentService.getComments(searchObj.get("value").toString(), start, length);
-        int total = commentService.getTotal(searchObj.get("value").toString());
+        Set<Comment> comments = commentService.getComments(searchObj.get("value"), start, length);
+        int total = commentService.getTotal(searchObj.get("value"));
         Map<String, Object> result = new HashMap<>();
         result.put("data", comments);
         result.put("recordsFiltered", total);
@@ -53,6 +53,17 @@ public class ApiCommentController {
         return new ResponseEntity(
                 result,
                 HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/admin/detail/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getComment(
+            @PathVariable("code") String code
+    ) {
+        Map<String, Object> result = new HashMap<>();
+        Comment comment = commentService.getCommentByCode(code);
+        result.put("result", comment);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(value = "")
@@ -71,5 +82,35 @@ public class ApiCommentController {
         result.put("total", total);
         result.put("data", comments);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/admin/active/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> activeComment(
+            @PathVariable("code") String code
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        boolean result = commentService.updateCommentStatus(code, true);
+        if (result) {
+            response.put("result", "Cập nhật thành công");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("result", "Cập nhật thất bại");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping(value = "/admin/disabled/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> disableComment(
+            @PathVariable("code") String code
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        boolean result = commentService.updateCommentStatus(code, false);
+        if (result) {
+            response.put("result", "Cập nhật thành công");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("result", "Cập nhật thất bại");
+        return new ResponseEntity<>(response,    HttpStatus.BAD_REQUEST);
     }
 }

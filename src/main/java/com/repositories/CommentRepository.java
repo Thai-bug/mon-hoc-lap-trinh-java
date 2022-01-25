@@ -14,4 +14,8 @@ public interface CommentRepository {
     Set<Comment> getComments(String kw, int page, int limit);
 
     int getTotal(String kw);
+
+    Comment getCommentByCode(String code);
+
+    boolean updateComment(Comment comment);
 }

@@ -12,7 +12,11 @@ public interface CommentService {
 
     int countComments(int statusType, String kw, int codeType, String code);
 
-    Set<Comment> getComments(String kw, int page, int length);
+    Set<Comment> getComments(String kw, int start, int length);
 
     int getTotal(String kw);
+
+    Comment getCommentByCode(String code);
+
+    boolean updateCommentStatus(String code, boolean status);
 }

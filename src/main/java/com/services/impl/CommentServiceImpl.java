@@ -73,14 +73,26 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Set<Comment> getComments(String kw, int page, int length) {
+    public Set<Comment> getComments(String kw, int start, int length) {
         kw = kw.toLowerCase(Locale.ROOT);
-        return commentRepository.getComments(kw, page, length);
+        return commentRepository.getComments(kw, start, length);
     }
 
     @Override
     public int getTotal(String kw) {
         kw = kw.toLowerCase(Locale.ROOT);
         return commentRepository.getTotal(kw);
+    }
+
+    @Override
+    public Comment getCommentByCode(String code) {
+        return commentRepository.getCommentByCode(code);
+    }
+
+    @Override
+    public boolean updateCommentStatus(String code, boolean status) {
+        Comment comment = commentRepository.getCommentByCode(code);
+        comment.setStatus(status);
+        return commentRepository.updateComment(comment);
     }
 }
