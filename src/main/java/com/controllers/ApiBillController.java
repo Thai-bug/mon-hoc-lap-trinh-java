@@ -159,6 +159,7 @@ public class ApiBillController {
             bill.setEmployee(billRequest.getEmployee());
             bill.setBeginDate(billRequest.getBeginDate());
             bill.setEndDate(billRequest.getEndDate());
+            bill.setType(billRequest.getType());
 
             response.put("message", "Tạo đơn hàng thành công");
 

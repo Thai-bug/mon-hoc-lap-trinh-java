@@ -13,43 +13,50 @@
     <div class="text-center uppercase text-blue-500 font-bold text-3xl">
         Thông tin đơn hàng
     </div>
-    <div class="grid grid-cols-3 gap-x-16 gap-y-4">
-        <div>
+    <div class="row">
+        <div class="col-4">
             <div>
                 <div class="text-sm mb-1 mt-2">Mã đơn hàng</div>
-                <input id="code" class="border-gray-400 border rounded-xl w-full" disabled/>
+                <input id="code" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Họ và tên khách hàng:</div>
-                <input id="customer-name" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="customer-name" class="form-control"/>
+            </div>
+
+            <div>
+                <div class="text-sm mb-1 mt-2">Loại tiệc:</div>
+                <select id="type" class="form-control">
+                    <option disabled></option>
+                </select>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tên bữa tiệc:</div>
-                <input id="name" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="name" class="form-control"/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng bàn:</div>
-                <input id="tables-bill" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="tables-bill" class="form-control"/>
             </div>
         </div>
-        <div>
 
+        <div class="col-4">
             <div>
                 <div class="text-sm mb-1 mt-2">Trạng thái:</div>
-                <input id="status" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="status" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian bắt đầu:</div>
-                <input id="beginDate" class="datetimepicker border-gray-400 border rounded-xl w-full capitalize" autocomplete="off"  placeholder="Chọn ngày">
+                <input id="beginDate" class="datetimepicker form-control" autocomplete="off"  placeholder="Chọn ngày">
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian kết thúc:</div>
-                <input id="endDate" class="datetimepicker border-gray-400 border rounded-xl w-full capitalize" autocomplete="off" placeholder="Chọn ngày" disabled/>
+                <input id="endDate" class="datetimepicker form-control" autocomplete="off" placeholder="Chọn ngày" disabled/>
             </div>
 
             <div>
@@ -58,21 +65,20 @@
             </div>
         </div>
 
-        <div>
-
+        <div class="col-4">
             <div>
                 <div class="text-sm mb-1 mt-2">Nhân viên sale:</div>
-                <input id="employee" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="employee" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Đặt cọc:</div>
-                <input id="deposit" class="border-gray-400 border rounded-xl w-full capitalize" value="0" disabled/>
+                <input id="deposit" class="form-control" value="0" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng tiền:</div>
-                <input id="total" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="total" class="form-control" disabled/>
             </div>
 
             <div>
@@ -83,8 +89,8 @@
         </div>
     </div>
 
-    <div class="mt-5 grid grid-cols-3 gap-8">
-        <div class="p-2">
+    <div class="row">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">THỰC ĐƠN</h1>
             <div class="mb-3">
                 <select id="food-list" class="w-full">
@@ -94,7 +100,7 @@
             </div>
         </div>
 
-        <div class="p-2">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">THỨC UỐNG</h1>
             <div class="mb-3">
                 <select id="drink-list" class="w-full">
@@ -104,7 +110,7 @@
             </div>
         </div>
 
-        <div class="p-2">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">DỊCH VỤ</h1>
             <div class="mb-3">
                 <select id="service-list" class="w-full">
@@ -115,8 +121,8 @@
         </div>
     </div>
 
-    <div>
-        <button type="button" id="create-bill" onclick="createOrder()">Tạo đơn
+    <div class="text-center">
+        <button type="button" class="btn btn-success" id="create-bill" onclick="createOrder()">Tạo đơn
             hàng</button>
     </div>
 </div>

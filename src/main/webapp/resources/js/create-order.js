@@ -22,21 +22,21 @@ const showFoods = () => {
         .map((item, index) => {
             if (index % 2 === 0)
                 return $("#food").append(
-                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="food-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                    `<div class="ml-5 mt-2 badge bg-primary" id="food-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteFood(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
                     </div>`
                 )
 
             return $("#food").append(
-                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteFood(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                `<div class="ml-5 mt-2 badge bg-warning" id="food-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteFood(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
-                    </div>`
+                 </div>`
             )
         })
 }
@@ -47,21 +47,21 @@ const showDrinks = () => {
         .map((item, index) => {
             if (index % 2 === 0)
                 return $("#drink").append(
-                    `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="drink-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                    `<div class="ml-5 mt-2 badge bg-primary" id="drink-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteDrink(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
                     </div>`
                 )
 
             return $("#drink").append(
-                `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="drink-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteDrink(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                `<div class="ml-5 mt-2 badge bg-warning" id="drink-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteFood(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
-                    </div>`
+                 </div>`
             )
         })
 }
@@ -71,18 +71,18 @@ const showService = () => {
     const html = JSON.parse(localStorage.getItem('orderedService'))
         .map((item, index) => {
             if (index % 2 === 0)
-                return `<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose" id="service-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                return  `<div class="ml-5 mt-2 badge bg-primary" id="service-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteService(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
                     </div>`
-            return `<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose" id="service-${item?.id}"}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current" onclick="deleteService(${item?.id})">--%>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+            return `<div class="ml-5 mt-2 badge bg-warning" id="service-${item?.id}"}>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteService(${item.id})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         ${item?.name}
-                    </div>`
+                 </div>`
         }).join("");
 
     document.querySelector('#service').insertAdjacentHTML("afterbegin", html);
@@ -255,10 +255,36 @@ $(document.body).on("change", "#service-list", function () {
     $('#service-list').val(null).trigger('change')
 })
 
+const validateCreateSchema = joi.object({
+    tables: joi.number().required(),
+    total: joi.number().required(),
+    deposit: joi.number().required(),
+    beginDate: joi.number().required(),
+    endDate: joi.number().required(),
+    name: joi.string().required(),
+    customerName: joi.string().required(),
+    status: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    employee: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    lobby: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    type: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    addedFoods: joi.array().allow(),
+    addedDrinks: joi.array().allow(),
+    addedServices: joi.array().allow(),
+})
+
 async function createOrder(){
     const begin = moment($('#beginDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
     const end = moment($('#endDate').val(), 'DD/MM/YYYY hh:mm').valueOf();
-    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/create', {
+
+    const requestData = {
         tables: tables,
         total: total,
         deposit: preOrder,
@@ -270,17 +296,21 @@ async function createOrder(){
         lobby: {id: +$('#lobby-select').val()},
         employee: {id: employee.id},
         status: {id: $('#pre-order').prop('checked') ? 2 : 1},
+        type: {id: $('#type').val()},
         customerName: $('#customer-name').val(),
         name: $('#name').val(),
-    }).catch(e=>e);
+    };
+
+    const validate = await validateCreateSchema.validateAsync(requestData).catch(e=>e)
+    if(validate instanceof Error)
+        return notifyToast(validate.message, 'error')
+
+    const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/create', validate ).catch(e=>e);
 
     if (response instanceof Error) {
-        return notifyToast(response?.response.data.message,null, null,'danger'
+        return notifyToast(response?.response.data.message,'error'
         );
     }
 
-    if (response instanceof Error) {
-        return notifyToast(response?.message,null, null,'danger'
-        );
-    }
+    return notifyToast('Tạo đơn hàng thành công','success');
 }

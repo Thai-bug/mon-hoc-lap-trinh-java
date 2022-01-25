@@ -13,8 +13,8 @@
     <div class="text-center uppercase text-blue-500 font-bold text-3xl">
         Thông tin đơn hàng
     </div>
-    <div class="grid grid-cols-3 gap-x-16 gap-y-4">
-        <div>
+    <div class="row">
+        <div class="col-4">
             <div>
                 <div class="text-sm mb-1 mt-2">Mã đơn hàng</div>
                 <input id="code" class="border-gray-400 border rounded-xl w-full" disabled/>
@@ -22,66 +22,72 @@
 
             <div>
                 <div class="text-sm mb-1 mt-2">Họ và tên khách hàng:</div>
-                <input id="customer-name" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="customer-name" class="form-control" disabled/>
+            </div>
+
+            <div>
+                <div class="text-sm mb-1 mt-2">Loại bữa tiệc:</div>
+                <input id="type" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tên bữa tiệc:</div>
-                <input id="name" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="name" class="form-control" disabled/>
             </div>
         </div>
-        <div>
+
+        <div class="col-4">
 
             <div>
                 <div class="text-sm mb-1 mt-2">Trạng thái:</div>
-                <input id="bill" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="bill" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tên sánh:</div>
-                <input id="lobby" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="lobby" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian bắt đầu:</div>
-                <input id="beginDate" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="beginDate" class="form-control" disabled/>
             </div>
         </div>
 
-        <div>
+        <div class="col-4">
 
             <div>
                 <div class="text-sm mb-1 mt-2">Nhân viên sale:</div>
-                <input id="employee" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="employee" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Đặt cọc:</div>
-                <input id="deposit" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="deposit" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng tiền:</div>
-                <input id="total" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="total" class="form-control" disabled/>
             </div>
         </div>
 
     </div>
 
-    <div class="mt-5 grid grid-cols-3 gap-8">
-        <div class="p-2">
+    <div class="row">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">THỰC ĐƠN</h1>
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="food">
             </div>
         </div>
 
-        <div class="p-2">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">THỨC UỐNG</h1>
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="drink">
             </div>
         </div>
 
-        <div class="p-2">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">DỊCH VỤ</h1>
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="service">
             </div>
@@ -93,122 +99,7 @@
     </div>
 </div>
 
-<script>
-    let data;
-    const id = new URLSearchParams(location.search).get("id")
-    const callApi = async (identity) => {
-        const id = identity
-        const urlString = `/restaurant_war_exploded/api/v1/admin/bills/detail/` + id
-        const response = await fetch(urlString);
-        data = await response.json();
-        if (response.status === 200) {
-            passData(data);
-            $('#main').removeClass('hidden')
-        }
-    }
-
-    const passData = (orderInfo) => {
-        $('#code').val(orderInfo.code);
-
-        $('#customer-name').val(orderInfo.customerName);
-
-        $('#name').val(orderInfo.name);
-
-        const employeeName = orderInfo.employee.firstName + ' ' + orderInfo.employee.lastName
-        $('#employee').val(employeeName);
-
-        $('#lobby').val(orderInfo.lobby?.name);
-
-        $('#beginDate').val(moment(orderInfo.beginDate).format('DD/MM/YYYY HH:mm'));
-
-        $('#bill').val(orderInfo.status?.title);
-
-        $('#deposit').val(orderInfo.provisionalMoney?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-
-        $('#total').val(orderInfo.finalMoney?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-
-        showFoods(orderInfo.foodList)
-
-        showDrinks(orderInfo.drinkList);
-
-        showService(orderInfo.serviceList);
-    }
-
-    const showFoods = (foods) => {
-        foods.map((item, index) => {
-            if (index % 2 === 0)
-                return $("#food").append(
-                    '<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose ">' +
-                    //  '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
-                    // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
-                    //  '</svg>'+
-                    item?.name +
-                    '</div>'
-                )
-
-            return $("#food").append(
-                '<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose ">' +
-                // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
-                // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
-                // '</svg>'+
-                item?.name +
-                '</div>'
-            )
-        })
-    }
-
-    const showDrinks = (drinks) => {
-        drinks.map((item, index) => {
-            if (index % 2 === 0)
-                return $("#drink").append(
-                    '<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose ">' +
-                    // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
-                    // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
-                    // '</svg>'+
-                    item?.name +
-                    '</div>'
-                )
-
-            return $("#drink").append(
-                '<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose ">' +
-                // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
-                // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
-                // '</svg>'+
-                item?.name +
-                '</div>'
-            )
-        })
-    }
-
-    const showService = (services) => {
-        services.map((item, index) => {
-            if (index % 2 === 0)
-                return $("#service").append(
-                    '<div class="ml-5 mt-2 badge badge-accent badge-lg leading-loose ">' +
-                    // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
-                    // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
-                    // '</svg>'+
-                    item?.name +
-                    '</div>'
-                )
-
-            return $("#service").append(
-                '<div class="ml-5 mt-2 badge badge-success badge-lg leading-loose ">' +
-                // '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 mr-2 stroke-current">'+
-                // '   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' +
-                // '</svg>'+
-                item?.name +
-                '</div>'
-            )
-        })
-    }
-
-    $(document).ready(function () {
-        callApi(id);
-    })
-
-</script>
-
+<script src="<c:url value="/js/bill-detail.js"/>"></script>
 <style>
     input {
         padding-left: 10px;

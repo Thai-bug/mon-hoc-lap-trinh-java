@@ -312,7 +312,7 @@ $(document).ready(function () {
     });
 
     $('#type').select2({
-        placeholder: "Chọn dịch vụ để thêm",
+        placeholder: "Chọn loại tiệc",
         ajax: {
             url: '/restaurant_war_exploded/api/v1/admin/types',
             dataType: 'json',

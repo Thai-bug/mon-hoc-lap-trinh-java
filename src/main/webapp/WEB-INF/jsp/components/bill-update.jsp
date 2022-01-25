@@ -13,50 +13,51 @@
     <div class="text-center uppercase text-blue-500 font-bold text-3xl">
         Thông tin đơn hàng
     </div>
-    <div class="grid grid-cols-3 gap-x-16 gap-y-4">
-        <div>
+    <div class="row">
+        <div class="col-4">
             <div>
                 <div class="text-sm mb-1 mt-2">Mã đơn hàng</div>
-                <input id="code" class="border-gray-400 border rounded-xl w-full" disabled/>
+                <input id="code" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Họ và tên khách hàng:</div>
-                <input id="customer-name" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="customer-name" class="form-control"/>
             </div>
 
-            <div>
-                <div class="text-sm mb-1 mt-2">Loại tiệc:</div>
-                <select id="type" class="border-gray-400 border rounded-xl w-full capitalize">
-                    <option disabled></option>
-                </select>
-            </div>
+                <div>
+                    <div class="text-sm mb-1 mt-2">Loại tiệc:</div>
+                    <select id="type" class="form-control">
+                        <option disabled></option>
+                    </select>
+                </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tên bữa tiệc:</div>
-                <input id="name" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="name" class="form-control"/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng bàn:</div>
-                <input id="tables-bill" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="tables-bill" class="form-control"/>
             </div>
         </div>
-        <div>
+
+        <div class="col-4">
 
             <div>
                 <div class="text-sm mb-1 mt-2">Trạng thái:</div>
-                <input id="status" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="status" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian bắt đầu:</div>
-                <input id="beginDate" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="beginDate" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Thời gian kết thúc:</div>
-                <input id="endDate" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="endDate" class="form-control" disabled/>
             </div>
 
             <div>
@@ -67,21 +68,20 @@
             </div>
         </div>
 
-        <div>
-
+        <div class="col-4">
             <div>
                 <div class="text-sm mb-1 mt-2">Nhân viên sale:</div>
-                <input id="employee" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="employee" class="form-control" disabled/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Đặt cọc:</div>
-                <input id="deposit" class="border-gray-400 border rounded-xl w-full capitalize"/>
+                <input id="deposit" class="form-control"/>
             </div>
 
             <div>
                 <div class="text-sm mb-1 mt-2">Tổng tiền:</div>
-                <input id="total" class="border-gray-400 border rounded-xl w-full capitalize" disabled/>
+                <input id="total" class="form-control" disabled/>
             </div>
 
             <div>
@@ -92,8 +92,8 @@
         </div>
     </div>
 
-    <div class="mt-5 grid grid-cols-3 gap-8">
-        <div class="p-2">
+    <div class="mt-5 row ">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">THỰC ĐƠN</h1>
             <div class="mb-3">
                 <select id="food-list" class="w-full">
@@ -103,7 +103,7 @@
             <div class="w-full rounded-lg border-gray-900 border min-height-200 max-height-200" id="food">
             </div>
         </div>
-        <div class="p-2">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">THỨC UỐNG</h1>
             <div class="mb-3">
                 <select id="drink-list" class="w-full">
@@ -114,8 +114,7 @@
             </div>
         </div>
 
-
-        <div class="p-2">
+        <div class="p-2 col-4">
             <h1 class="text-center leading-loose">DỊCH VỤ</h1>
             <div class="mb-3">
                 <select id="service-list" class="w-full">
