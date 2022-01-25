@@ -67,6 +67,7 @@ $(document).ready(async function () {
     $('.drink-name').html(drinkDetail.name);
     $('#retail-price').html(dottedMoney(drinkDetail.price));
     $('#unit').html(dottedMoney(drinkDetail.unit));
+    $('#description').html(drinkDetail.description);
 
     const container = $('#drink-detail-comments');
     const setting = {

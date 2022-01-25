@@ -67,6 +67,7 @@ $(document).ready(async function () {
     $('.food-name').html(foodDetail.name);
     $('#retail-price').html(dottedMoney(foodDetail.price));
     $('#unit').html(dottedMoney(foodDetail.unit));
+    $('#description').html(foodDetail.description);
 
     const container = $('#food-detail-comments');
     const setting = {

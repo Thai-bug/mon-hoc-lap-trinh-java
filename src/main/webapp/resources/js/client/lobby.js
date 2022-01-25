@@ -66,6 +66,7 @@ $(document).ready(async function () {
     $('.lobby-name').html(lobbyDetail.name);
     $('#retail-price').html(dottedMoney(lobbyDetail.money));
     $('#max-tables').html(dottedMoney(lobbyDetail.seats / 10));
+    $('#description').html(lobbyDetail.description);
 
     const container = $('#lobby-detail-comments');
     const setting = {

@@ -66,6 +66,7 @@ $(document).ready(async function () {
     serviceDetail = response.data.result;
     $('.service-name').html(serviceDetail.name);
     $('#retail-price').html(dottedMoney(serviceDetail.price));
+    $('#description').html(serviceDetail.description);
 
     const container = $('#service-detail-comments');
     const setting = {
