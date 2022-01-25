@@ -7,9 +7,7 @@ import com.services.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class DrinkServiceImpl implements DrinkService {
@@ -33,9 +31,9 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public boolean updateDrink(Map<String, Object> json) {
-        Drink drink = drinkRepository.getDrinkByCode((String) json.get("code"));
-        drink.setName((String) json.get("name").toString());
-        drink.setDescription((String) json.get("description").toString());
+        Drink drink = drinkRepository.getDrinkByCode(json.get("code").toString());
+        drink.setName( json.get("name").toString());
+        drink.setDescription( json.get("description").toString());
         drink.setPrice(Integer.parseInt(json.get("price").toString()));
         drink.setUnit(json.get("unit").toString());
         drink.setStatus((boolean) json.get("status"));
@@ -44,7 +42,16 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public boolean add(Drink drink) {
+    public boolean createDrink(Map<String, Object> json) {
+        Drink drink = new Drink();
+        drink.setCode(UUID.randomUUID().toString());
+        drink.setName( json.get("name").toString());
+        drink.setPrice(Integer.parseInt(json.get("price").toString()));
+        drink.setUnit(json.get("unit").toString());
+        drink.setStatus((boolean) json.get("status"));
+        drink.setCreatedAt(new Date());
+        drink.setDescription( json.get("description").toString());
+
         return drinkRepository.add(drink);
     }
 

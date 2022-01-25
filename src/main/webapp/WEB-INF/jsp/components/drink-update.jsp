@@ -20,12 +20,12 @@
         <label for="drink-code">Mã sảnh</label>
         <input type="text" id="drink-code" class="form-control" disabled>
 
-        <label for="drink-name">Tên Sảnh <span class="text-danger">*</span> </label>
+        <label for="drink-name">Tên đồ uống <span class="text-danger">*</span> </label>
         <input type="text" id="drink-name" class="form-control" aria-describedby="passwordHelpBlock" >
 
         <label for="drink-status">Trạng thái <span class="text-danger">*</span> </label>
         <select class="form-select" id="drink-status" >
-            <option selected >Chọn trạng thái sảnh</option>
+            <option selected >Chọn trạng đồ uống</option>
             <option value="1">Đang hoạt động</option>
             <option value="0">Không hoạt động</option>
         </select>

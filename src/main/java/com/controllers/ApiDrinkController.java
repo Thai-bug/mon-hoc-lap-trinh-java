@@ -68,6 +68,27 @@ public class ApiDrinkController {
         }
     }
 
+    @PostMapping(value = "/admin/drinks/create")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> createDrinkn(@RequestBody Map<String, Object> json){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            boolean result = drinkService.createDrink(json);
+
+            if(result) {
+                response.put("message", "Thêm sảnh thành công");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            response.put("message", "Thêm sảnh thất bại");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            response.put("message", "Thêm sảnh thất bạii");
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+    }
+
     @PostMapping(value = "/admin/drinks/update")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> updateDrink(@RequestBody Map<String, Object> json) {
@@ -100,7 +121,6 @@ public class ApiDrinkController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
         }
-
     }
 
     @GetMapping(value = "/drinks/{code}")

@@ -37,9 +37,6 @@ public class DrinkController {
 
     @RequestMapping("/admin/drinks/update/{code}")
     public String getUpdateDrink(Model model, @PathVariable(value = "code") String code) {
-//        Drink drink = drinkService.getDrinkById(id);
-//
-//        model.addAttribute("drink", drink);
         return "drinkUpdate";
     }
 
@@ -47,18 +44,6 @@ public class DrinkController {
     public String addDrink(
             Model model) {
         model.addAttribute("drink", new Drink());
-        return "drinkAdd";
-    }
-
-
-    @PostMapping("/admin/drinks/add")
-    public String add(
-            Model model,
-            @ModelAttribute(value = "drink") Drink drink) {
-        model.addAttribute("drink", drink);
-        boolean add = drinkService.add(drink);
-        if (add)
-            return "redirect:/admin/drinks";
         return "drinkAdd";
     }
 

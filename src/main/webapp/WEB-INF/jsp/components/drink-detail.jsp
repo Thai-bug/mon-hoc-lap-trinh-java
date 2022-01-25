@@ -13,10 +13,10 @@
 <div class="container">
 
     <div class="form-control position-relative">
-        <label for="drink-code">Mã sảnh</label>
+        <label for="drink-code">Mã đồ uống</label>
         <input type="text" id="drink-code" class="form-control" disabled>
 
-        <label for="drink-name">Tên Sảnh  </label>
+        <label for="drink-name">Tên đồ uống</label>
         <input type="text" id="drink-name" class="form-control" aria-describedby="passwordHelpBlock" disabled>
 
         <label for="drink-status">Trạng thái  </label>
@@ -41,7 +41,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Mô tả sảnh tiệc</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Mô tả đồ uống</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="description">

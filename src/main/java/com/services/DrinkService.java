@@ -15,7 +15,7 @@ public interface DrinkService {
 
     boolean updateDrink(Map<String, Object> json);
 
-    boolean add(Drink drink);
+    boolean createDrink(Map<String, Object> json);
 
     Set<Drink> getDrinkByName(String name, boolean status, int page);
 
