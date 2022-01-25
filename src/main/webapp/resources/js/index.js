@@ -9,6 +9,20 @@ $('.datetimepicker').datetimepicker({
     minDate: moment()
 })
 
+function notify(content, type) {
+    switch (type){
+        case 'success':
+            return toastr.success(content, 'Chúc mừng', {timeOut: 1500})
+        case 'warning':
+            return toastr.warning(content, 'Chú ý', {timeOut: 1500})
+        case 'error':
+            return toastr.success(content, 'Lỗi', {timeOut: 1500})
+        default:
+            return toastr.info(content, {timeOut: 1500})
+    }
+}
+
+
 Notify = function (text, callback, close_callback, style) {
     var time = '2000';
     var $container = $('#notifications');

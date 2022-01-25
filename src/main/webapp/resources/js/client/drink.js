@@ -1,6 +1,6 @@
-let lobbyDetail = {};
+let drinkDetail = {};
 let editor;
-let lobbyCode = window.location.pathname.split('/').at(-1);
+let drinkCode = window.location.pathname.split('/').at(-1);
 
 ClassicEditor
     .create( document.querySelector( '#comment' ),{
@@ -16,14 +16,14 @@ ClassicEditor
 $('#add-comment').on('click', async function(){
     if(!editor.getData() || editor.getData() === '')
         return notify('Vui lòng nhập nội dung', 'warning')
-
     $(this).attr('disabled', true);
     const response = await axios.post('/restaurant_war_exploded/api/v1/comments/add',{
         content: editor.getData(),
-        code: lobbyCode,
-        type: 1,
-        stars: $("#rating").val()
-    });
+        code: drinkCode,
+        type: 2,
+        stars: $("#rating").val() || 0
+    }).catch(e=>e);
+
     if(response instanceof Error)
         notify('Có lỗi xảy ra', 'danger');
     else
@@ -47,7 +47,9 @@ function renderLobbiesList(data) {
         </div>
     </div>
 `
+
         let str = "#rating-"+item.id;
+        console.log(str)
         $(str).val(2);
     });
 
@@ -57,23 +59,22 @@ function renderLobbiesList(data) {
 }
 
 $(document).ready(async function () {
-    const response = await axios.get(`/restaurant_war_exploded/api/v1/lobbies/${lobbyCode}`).catch(e=>e);
-    if(response instanceof Error) {
-        return notify('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
-    }
+    const response = await axios.get(`/restaurant_war_exploded/api/v1/drinks/${drinkCode}`).catch(e=>e);
+    if(response instanceof Error)
+            return notify('Có lỗi xảy ra. Vui lòng thử lại !', 'erroe')
 
-    lobbyDetail = response.data.result;
-    $('.lobby-name').html(lobbyDetail.name);
-    $('#retail-price').html(dottedMoney(lobbyDetail.money));
-    $('#max-tables').html(dottedMoney(lobbyDetail.seats / 10));
+    drinkDetail = response.data.result;
+    $('.drink-name').html(drinkDetail.name);
+    $('#retail-price').html(dottedMoney(drinkDetail.price));
+    $('#unit').html(dottedMoney(drinkDetail.unit));
 
-    const container = $('#lobby-detail-comments');
+    const container = $('#drink-detail-comments');
     const setting = {
         showPrevious: true,
         showNext: true,
         pageSize: 5,
         pageNumber: 8,
-        dataSource: `/restaurant_war_exploded/api/v1/comments?code=${lobbyCode}&type=1`,
+        dataSource: `/restaurant_war_exploded/api/v1/comments?code=${drinkCode}&type=2`,
         totalNumberLocator: (response) => {
             return response.total
         },

@@ -138,4 +138,23 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         q.setParameter("kw", "%" + kw + "%");
         return Integer.parseInt(q.getSingleResult().toString());
     }
+
+
+    @Override
+    public Drink getClientDrinkByCode(String code) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
+        Root root = query.from(Drink.class);
+        query = query.select(root);
+
+        Predicate p = builder.and(
+                builder.equal(root.get("code").as(String.class), code),
+                builder.isTrue(root.<Boolean>get("status"))
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query);
+        return (Drink) q.getSingleResult();
+    }
 }

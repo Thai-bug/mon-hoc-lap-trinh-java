@@ -54,7 +54,7 @@ public class ApiDrinkController {
 
     @GetMapping(value = "/drinks")
     public @ResponseBody
-    ResponseEntity<Map<String, Object>> getLobbiesForClient(
+    ResponseEntity<Map<String, Object>> getDrinksForClient(
             @RequestParam(required = false) Map<String, String> params
     ){
         try{
@@ -64,6 +64,21 @@ public class ApiDrinkController {
             Map<String, Object> result = drinkService.getDrinksForClient(page, limit, kw);
 
             return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
+    }
+
+    @GetMapping(value = "/drinks/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getDrinkForClient(
+            @PathVariable(value = "code") String code
+    ){
+        try{
+
+            return new ResponseEntity<>(drinkService.getClientDrinkByCode(code), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);

@@ -1,8 +1,10 @@
 package com.services.impl;
 
 import com.pojos.Comment;
+import com.pojos.Drink;
 import com.pojos.Lobby;
 import com.repositories.CommentRepository;
+import com.repositories.DrinkRepository;
 import com.repositories.LobbyRepository;
 import com.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private LobbyRepository lobbyRepository;
 
+    @Autowired
+    private DrinkRepository drinkRepository;
+
     @Override
     public boolean addComment(int type, String code, String content, int stars) {
         Comment newComment = new Comment();
@@ -27,6 +32,11 @@ public class CommentServiceImpl implements CommentService {
             case 1: //lobby
                 Lobby lobby = lobbyRepository.getClientLobbyByCode(code);
                 newComment.setLobby(lobby);
+                break;
+            case 2: //drink
+                System.out.println("hello");
+                Drink drink = drinkRepository.getClientDrinkByCode(code);
+                newComment.setDrink(drink);
                 break;
         }
 

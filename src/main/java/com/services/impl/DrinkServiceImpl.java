@@ -58,4 +58,11 @@ public class DrinkServiceImpl implements DrinkService {
         result.put("data", drinks);
         return result;
     }
+
+    @Override
+    public Map<String, Object> getClientDrinkByCode(String code) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("result", drinkRepository.getClientDrinkByCode(code));
+        return data;
+    }
 }

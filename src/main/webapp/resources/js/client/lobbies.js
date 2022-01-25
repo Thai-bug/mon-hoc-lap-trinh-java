@@ -15,7 +15,6 @@ function renderLobbiesList(data) {
     });
 
     html+=`</div>`
-
     return html;
 }
 

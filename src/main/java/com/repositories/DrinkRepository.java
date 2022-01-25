@@ -20,4 +20,6 @@ public interface DrinkRepository {
     Set<Drink> getDrinksForClient(int page, int limit, String kw);
 
     int countDrinkClient(String kw);
+
+    Drink getClientDrinkByCode(String code);
 }
