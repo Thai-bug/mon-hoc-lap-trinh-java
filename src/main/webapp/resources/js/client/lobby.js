@@ -18,21 +18,34 @@ $('#add-comment').on('click', async function(){
     const response = await axios.post('/restaurant_war_exploded/api/v1/comments/add',{
         content: editor.getData(),
         code: lobbyCode,
-        type: 1
+        type: 1,
+        stars: $("#rating").val()
     });
     editor.setData('');
+    $("#rating").val(0)
     $(this).attr('disabled', false);
 })
 
 function renderLobbiesList(data) {
-    let html = `<ul>`
+    let html = `<div class="mb-4 ">`
     $.each(data, function (index, item) {
         html += `
-    <li>${item.content}</li>
+    <div  style="border-radius: 8px; border: 1px solid gray; margin-bottom: 10px; padding: 10px">
+        <div class="text-muted fs-6 mt-3">Người vô danh</div>
+        <div>${item.content}</div>
+        <div class="d-flex justify-content-between fs-6 fw-lighter fst-italic">
+        <div class="fs-4" style="margin-top: -15px !important;">${item.stars}/5 stars</div>
+            <div>${moment(item.createdAt).format('HH:mm DD/MM/YYYY')}</div>
+        </div>
+    </div>
 `
+
+        let str = "#rating-"+item.id;
+        console.log(str)
+        $(str).val(2);
     });
 
-    html+=`</ul>`
+    html+=`</div>`
 
     return html;
 }
@@ -48,11 +61,10 @@ $(document).ready(async function () {
     $('#max-tables').html(dottedMoney(lobbyDetail.seats / 10));
 
     const container = $('#lobby-detail-comments');
-
     const setting = {
         showPrevious: true,
         showNext: true,
-        pageSize: 8,
+        pageSize: 5,
         pageNumber: 8,
         dataSource: `/restaurant_war_exploded/api/v1/comments?code=${lobbyCode}&type=1`,
         totalNumberLocator: (response) => {
@@ -69,7 +81,6 @@ $(document).ready(async function () {
             }
         },
         callback: function (response, pagination) {
-            console.log(response)
             container.prev().html(renderLobbiesList(response));
         }
     }

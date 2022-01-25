@@ -48,7 +48,7 @@ public class CommentRepositoryImpl implements CommentRepository {
         queryStr += (statsType == 1) ? " and comment.status = true\n" : "";
 
         Query q = session.createNativeQuery(
-                queryStr + "order by created_at desc\n " +
+                queryStr + "order by comment.created_at desc\n " +
                         "limit :limit offset :offset", Comment.class
         );
         q.setParameter("kw", "%" + kw + "%");

@@ -21,17 +21,19 @@ public class CommentServiceImpl implements CommentService {
     private LobbyRepository lobbyRepository;
 
     @Override
-    public boolean addComment(int type, String code, String content) {
+    public boolean addComment(int type, String code, String content, int stars) {
         Comment newComment = new Comment();
         switch (type) {
             case 1: //lobby
                 Lobby lobby = lobbyRepository.getClientLobbyByCode(code);
                 newComment.setLobby(lobby);
-                newComment.setContent(content);
-                newComment.setCode(content);
-                newComment.setCode(UUID.randomUUID().toString());
                 break;
         }
+
+        newComment.setContent(content);
+        newComment.setCode(content);
+        newComment.setCode(UUID.randomUUID().toString());
+        newComment.setStars(stars);
 
         return commentRepository.addComment(newComment);
     }

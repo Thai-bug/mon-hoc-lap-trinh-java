@@ -19,16 +19,20 @@
         <div>Mô tả</div>
     </div>
 
-    <textarea id="comment"></textarea>
-    <div class=" d-flex justify-content-end">
-    <button type="button" class="btn btn-success mt-4" id="add-comment">Thêm bình luận</button>
-    </div>
 
     <div>
         Danh sách các bàn luận:
     </div>
     <div></div>
     <div id="lobby-detail-comments"></div>
+    <div class="mt-5">
+        <textarea id="comment"></textarea>
+        <input id="rating" name="rating" type="number" class="rating" min=1 max=5 step=1 data-size="md" >
+        <div class=" d-flex justify-content-end">
+            <button type="button" class="btn btn-success mt-4" id="add-comment">Thêm bình luận</button>
+        </div>
+    </div>
+
 </div>
 
 <script src="<c:url value="/js/client/lobby.js"/>"></script>

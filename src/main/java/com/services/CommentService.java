@@ -5,7 +5,7 @@ import com.pojos.Comment;
 import java.util.Set;
 
 public interface CommentService {
-    boolean addComment(int type, String code, String content);
+    boolean addComment(int type, String code, String content, int stars);
 
     Set<Comment> listComments(int statusType , String kw, int page, int limit, int codeType, String code);
 

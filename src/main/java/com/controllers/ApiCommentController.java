@@ -23,11 +23,12 @@ public class ApiCommentController {
     ResponseEntity<Map<String, Object>> addComment(@RequestBody Map<String, Object> json) {
         String content = json.get("content") == null ? "" : json.get("content").toString();
         String code = json.get("code") == null ? "" : json.get("code").toString();
+        int stars = json.get("stars") == null ? 1 : Integer.parseInt(json.get("stars").toString());
         int type = json.get("type") == null ? 0 : Integer.parseInt(json.get("type").toString());
         if (code == "" || type == 0)
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
-        boolean addComment = commentService.addComment(type, code, content);
+        boolean addComment = commentService.addComment(type, code, content, stars);
         if (addComment)
             return new ResponseEntity<>(null, HttpStatus.OK);
 

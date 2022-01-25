@@ -33,9 +33,20 @@ public class Comment implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     Date createdAt;
 
+    @Column(name = "stars")
+    int stars;
+
     public Comment() {
         createdAt = new Date();
         status = true;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 
     public int getId() {
