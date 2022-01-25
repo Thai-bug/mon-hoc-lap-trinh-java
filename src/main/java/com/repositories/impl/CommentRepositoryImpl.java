@@ -109,4 +109,31 @@ public class CommentRepositoryImpl implements CommentRepository {
         q.setParameter("code", code);
         return ((Number) q.getSingleResult()).intValue();
     }
+
+    @Override
+    public Set<Comment> getComments(String kw, int page, int limit) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Comment> query = builder.createQuery(Comment.class);
+        Root root = query.from(Comment.class);
+        query = query.select(root);
+
+        Predicate p = builder.or(
+                builder.like(root.get("code").as(String.class), "%" + kw +"%"),
+                builder.like(root.get("content").as(String.class), "%" + kw +"%")
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * limit ).setMaxResults(limit);
+        return (Set<Comment>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public int getTotal(String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("select count(*) from Comment where code like :kw or content like :kw");
+
+        q.setParameter("kw", "%" + kw + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
+    }
 }

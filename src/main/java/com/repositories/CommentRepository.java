@@ -10,4 +10,8 @@ public interface CommentRepository {
     Set<Comment> listComment(int statsType, String kw, int page, int pageSize, int codeType, String code);
 
     int countComments(int statsType, String kw, int codeType, String code);
+
+    Set<Comment> getComments(String kw, int page, int limit);
+
+    int getTotal(String kw);
 }

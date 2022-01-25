@@ -1,6 +1,7 @@
 package com.controllers;
 
 import com.pojos.Comment;
+import com.pojos.Drink;
 import com.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,25 @@ public class ApiCommentController {
             return new ResponseEntity<>(null, HttpStatus.OK);
 
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value = "/admin/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getAll(
+            @RequestBody Map<String, Object> json
+    ) {
+        int start = json.get("start") == null ? 1 : Integer.parseInt(json.get("start").toString()) + 1;
+        int length = json.get("length") == null ? 0 : Integer.parseInt(json.get("length").toString());
+        Map<String, String> searchObj = (Map<String, String>) json.get("search");
+        Set<Comment> comments = commentService.getComments(searchObj.get("value").toString(), start, length);
+        int total = commentService.getTotal(searchObj.get("value").toString());
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", comments);
+        result.put("recordsFiltered", total);
+        result.put("recordsTotal", total);
+        result.put("draw", json.get("draw"));
+        return new ResponseEntity(
+                result,
+                HttpStatus.OK);
     }
 
     @GetMapping(value = "")

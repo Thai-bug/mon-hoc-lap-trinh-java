@@ -561,6 +561,28 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sider.jsp"/>
     </definition>
 
+    <!--  find comments  -->
+    <definition name="comments" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý bình luận"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/jsp/comment/index.jsp" name="findComments" extends="comments">
+                <put-attribute name="find-comments"
+                               value="/WEB-INF/jsp/components/comment-find.jsp"/>
+            </definition>
+        </put-attribute>
+
+        <put-attribute name="header">
+            <definition template="/WEB-INF/layout/header.jsp" name="header" extends="header">
+                <put-attribute name="breadCrumb"
+                               value="Quản lý nhân viên"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp"/>
+        <put-attribute name="sider"
+                       value="/WEB-INF/layout/sider.jsp"/>
+    </definition>
+
     <!--  general page  -->
     <definition name="generalPage" extends="baseLayout">
         <put-attribute name="title" value="Quản lý đơn hàng"/>

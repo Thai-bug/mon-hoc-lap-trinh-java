@@ -48,6 +48,10 @@ ${_csrf.token}${_csrf.parameterName}
                         <a href="<c:url value="/admin/bills"/>" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Quản lý đơn hàng</span></a>
                     </li>
+                    <li>
+                        <a href="<c:url value="/admin/comments"/>" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Quản lý bình luận</span></a>
+                    </li>
 
                 </ul>
                 <hr>
