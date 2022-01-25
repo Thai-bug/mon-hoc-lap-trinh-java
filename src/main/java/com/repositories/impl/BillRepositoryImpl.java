@@ -215,7 +215,7 @@ public class BillRepositoryImpl implements BillRepository {
     }
 
     @Override
-    public Set<Bill> getBills(String keyword, int page, int length) {
+    public Set<Bill> getBills(String keyword, int start, int length) {
         Session session = sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Bill> query = builder.createQuery(Bill.class);
@@ -228,7 +228,7 @@ public class BillRepositoryImpl implements BillRepository {
                 builder.like(
                         root.get("name").as(String.class), "%" + keyword + "%"));
         query = query.where(p);
-        Query q = session.createQuery(query).setFirstResult((page - 1) * length).setMaxResults(length);
+        Query q = session.createQuery(query).setFirstResult(start).setMaxResults(length);
         return (Set<Bill>) new HashSet<>(q.getResultList());
     }
 

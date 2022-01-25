@@ -60,20 +60,20 @@ $(document).ready(function(){
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return lobby.status === true ?  'Hoạt động' :'Tạm dừng';
+                data: (bill) => {
+                    return bill.status?.title;
                 }
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return moment(lobby?.created_at).format('HH:mm DD/MM/YYYY');
+                data: (bill) => {
+                    return moment(bill?.createdAt).format('HH:mm DD/MM/YYYY');
                 }
             },
             {
                 class: 'text-center',
-                data: (lobby) => {
-                    return '<a data-id="' + lobby?.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/bills/detail?id=' + lobby?.id +'"><i class="fa fas fa-edit"></i></a>';
+                data: (bill) => {
+                    return '<a data-id="' + bill?.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/bills/detail?id=' + bill?.id +'"><i class="fa fas fa-edit"></i></a>';
                 }
             }
         ]

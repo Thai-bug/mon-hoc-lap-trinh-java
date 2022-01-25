@@ -179,7 +179,7 @@ public class ApiBillController {
     public ResponseEntity<Map<String, Object>> getAll(
             @RequestBody Map<String, Object> json
     ) {
-        int start = json.get("start") == null ? 1 : Integer.parseInt(json.get("start").toString()) + 1;
+        int start = json.get("start") == null ? 1 : Integer.parseInt(json.get("start").toString());
         int length = json.get("length") == null ? 0 : Integer.parseInt(json.get("length").toString());
         Map<String, String> searchObj= (Map<String, String>) json.get("search");
         long total = billService.countBill(searchObj.get("value"));
