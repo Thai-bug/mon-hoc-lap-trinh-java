@@ -43,6 +43,29 @@ public class Drink implements Serializable {
     @JsonIgnore
     private Set<Bill> billList;
 
+    @Column(name = "code")
+    private String code;
+
+    @OneToMany(mappedBy = "drink")
+    @JsonIgnore
+    private Set<Comment> comments;
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

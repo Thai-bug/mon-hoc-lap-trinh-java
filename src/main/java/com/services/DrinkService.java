@@ -2,6 +2,7 @@ package com.services;
 
 import com.pojos.Drink;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface DrinkService {
@@ -16,4 +17,6 @@ public interface DrinkService {
     boolean add(Drink drink);
 
     Set<Drink> getDrinkByName(String name, boolean status, int page);
+
+    Map<String, Object> getDrinksForClient(int page, int limit, String kw);
 }

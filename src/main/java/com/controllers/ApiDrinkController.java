@@ -10,16 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/admin/drinks")
+@RequestMapping("/api/v1")
 public class ApiDrinkController {
     @Autowired
     private DrinkService drinkService;
 
-    @GetMapping("/select2/drink-by-name")
+    @GetMapping("/admin/drinks/select2/drink-by-name")
     public ResponseEntity<Set<Drink>> getFoodsByName(
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -32,7 +33,7 @@ public class ApiDrinkController {
                 HttpStatus.OK);
     }
 
-    @PostMapping(value = "/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/drinks/get_all", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getAll(
             @RequestBody Map<String, Object> json
     ) {
@@ -49,5 +50,24 @@ public class ApiDrinkController {
         return new ResponseEntity(
                 result,
                 HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/drinks")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> getLobbiesForClient(
+            @RequestParam(required = false) Map<String, String> params
+    ){
+        try{
+            int page = params.get("page") == null ? 1 : Integer.parseInt(params.get("page"));
+            int limit = params.get("limit") == null ? 10 : Integer.parseInt(params.get("limit"));
+            String kw = params.get("kw") == null ? "" : params.get("kw").toLowerCase(Locale.ROOT);
+            Map<String, Object> result = drinkService.getDrinksForClient(page, limit, kw);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+        }
+
     }
 }

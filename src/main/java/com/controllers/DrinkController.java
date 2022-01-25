@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/drinks")
+@RequestMapping("")
 public class DrinkController {
     @Autowired
     private DrinkService drinkService;
 
-    @RequestMapping("")
+    @RequestMapping("/admin/drinks")
     public String showDrinks(
             Model model,
             @RequestParam(required = false) Map<String, String> params
@@ -26,7 +26,7 @@ public class DrinkController {
         return "drinks";
     }
 
-    @RequestMapping("/detail/{id}")
+    @RequestMapping("/admin/drinks/detail/{id}")
     public String drinkDetail(Model model,
                               @PathVariable(value = "id") int id) {
         Drink drink = drinkService.getDrinkById(id);
@@ -35,7 +35,7 @@ public class DrinkController {
         return "drinkDetail";
     }
 
-    @RequestMapping("/update/{id}")
+    @RequestMapping("/admin/drinks/update/{id}")
     public String getUpdateDrink(Model model, @PathVariable(value = "id") int id) {
         Drink drink = drinkService.getDrinkById(id);
 
@@ -43,7 +43,7 @@ public class DrinkController {
         return "drinkUpdate";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/admin/drinks/update/{id}")
     public String updateDrink(
             Model model,
             @ModelAttribute(value = "drink") Drink drink) {
@@ -55,7 +55,7 @@ public class DrinkController {
         return "drinkUpdate";
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/admin/drinks/add")
     public String addDrink(
             Model model) {
         model.addAttribute("drink", new Drink());
@@ -63,7 +63,7 @@ public class DrinkController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/admin/drinks/add")
     public String add(
             Model model,
             @ModelAttribute(value = "drink") Drink drink) {
@@ -74,4 +74,13 @@ public class DrinkController {
         return "drinkAdd";
     }
 
+    @GetMapping("/drinks")
+    public String clientDrinks(){
+        return "client-drink";
+    }
+
+    @GetMapping("/drinks/{code}")
+    public String clientDrinkDetail(){
+        return "client-drink-detail";
+    }
 }

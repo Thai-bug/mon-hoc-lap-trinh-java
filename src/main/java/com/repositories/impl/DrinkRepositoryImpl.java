@@ -3,6 +3,7 @@ package com.repositories.impl;
 import com.pojos.Drink;
 import com.pojos.Employee;
 import com.pojos.Food;
+import com.pojos.Lobby;
 import com.repositories.DrinkRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -109,5 +107,35 @@ public class DrinkRepositoryImpl implements DrinkRepository {
                 .setMaxResults(5);
 
         return (Set<Drink>) new HashSet<>( q.getResultList());
+    }
+
+    @Override
+    public Set<Drink> getDrinksForClient(int page, int limit, String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
+        Root root = query.from(Drink.class);
+        query = query.select(root);
+
+        Expression<String> lower = builder.lower(root.get("name"));
+
+        Predicate p = builder.and(
+                builder.isTrue(root.<Boolean>get("status")),
+                builder.like(
+                        lower, "%" + kw + "%")
+        );
+
+        query = query.where(p);
+        Query q = session.createQuery(query).setFirstResult((page - 1) * limit).setMaxResults(limit);
+        return (Set<Drink>) new HashSet<>(q.getResultList());
+    }
+
+    @Override
+    public int countDrinkClient(String kw) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("select count(*) from Drink where lower(name) like :kw and status = true");
+
+        q.setParameter("kw", "%" + kw + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
     }
 }

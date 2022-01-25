@@ -32,7 +32,7 @@ function renderLobbiesList(data) {
         html += `
     <div  style="border-radius: 8px; border: 1px solid gray; margin-bottom: 10px; padding: 10px">
         <div class="text-muted fs-6 mt-3">Người vô danh</div>
-        <div>${item.content}</div>
+        <div >${item.content}</div>
         <div class="d-flex justify-content-between fs-6 fw-lighter fst-italic">
         <div class="fs-4" style="margin-top: -15px !important;">${item.stars}/5 stars</div>
             <div>${moment(item.createdAt).format('HH:mm DD/MM/YYYY')}</div>

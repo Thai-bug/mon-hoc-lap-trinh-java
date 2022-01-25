@@ -16,4 +16,8 @@ public interface DrinkRepository {
     public boolean add(Drink drink);
 
     public Set<Drink> getDrinksByName(String name, boolean status, int page);
+
+    Set<Drink> getDrinksForClient(int page, int limit, String kw);
+
+    int countDrinkClient(String kw);
 }
