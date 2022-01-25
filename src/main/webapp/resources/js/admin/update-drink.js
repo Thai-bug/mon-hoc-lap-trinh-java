@@ -4,7 +4,7 @@ let editor;
 
 ClassicEditor
     .create(document.querySelector('#description'), {
-        placeholder: 'Cập nhật mô tả sảnh'
+        placeholder: 'Cập nhật mô tả đồ uống'
     })
     .then(newEditor => {
         editor = newEditor;

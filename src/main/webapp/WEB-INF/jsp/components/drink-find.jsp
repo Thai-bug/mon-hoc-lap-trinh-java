@@ -21,7 +21,7 @@
             Mã số
         </th>
         <th class="drink">
-            Tên đồ uồng
+            Tên đồ uống
         </th>
         <th class="drink">
             Giá tiền (VNĐ)

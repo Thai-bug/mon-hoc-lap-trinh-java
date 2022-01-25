@@ -55,13 +55,13 @@ $(document).ready(function(){
             {
                 class: 'text-center',
                 data: (service) => {
-                    return moment(service.created_at).format('HH:mm DD/MM/YYYY');
+                    return moment(service.createdAt).format('HH:mm DD/MM/YYYY');
                 }
             },
             {
                 class: 'text-center',
                 data: (service) => {
-                    return '<a data-id="' + service.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/services/detail/' + service.id +'"><i class="fa fas fa-edit"></i></a>';
+                    return '<a data-id="' + service.id + '" class="btn btn-outline-info mr-1 mb-3 edit" href="/restaurant_war_exploded/admin/services/detail/' + service.code +'"><i class="fa fas fa-edit"></i></a>';
                 }
             }
         ]

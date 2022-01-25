@@ -19,7 +19,7 @@
             Mã số
         </th>
         <th class="drink">
-            Tên thức ăn
+            Tên dịch vụ
         </th>
         <th class="drink">
             Giá tiền

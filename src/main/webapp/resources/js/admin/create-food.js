@@ -1,10 +1,10 @@
-let foodCode = window.location.pathname.split('/').at(-1);
 let foodDetail = {};
 let editor;
+let foodCode = window.location.pathname.split('/').at(-1);
 
 ClassicEditor
     .create(document.querySelector('#description'), {
-        placeholder: 'Cập nhật mô tả thức ăn'
+        placeholder: 'Thêm mô tả thức ăn'
     })
     .then(newEditor => {
         editor = newEditor;
@@ -14,9 +14,6 @@ ClassicEditor
     });
 
 const schemaUpdate = joi.object({
-    code: joi.string().required().messages({
-        "any.required": "Mã đồ uống không hợp lệ!!",
-    }),
     name: joi.string().required().messages({
         "any.required": "Vui lòng nhập tên đồ uống!!",
     }),
@@ -34,29 +31,11 @@ const schemaUpdate = joi.object({
     description: joi.string().allow(null, '')
 })
 
-$(document).ready(async function () {
-    const response = await axios.get(`/restaurant_war_exploded/api/v1/admin/foods/${foodCode}`).catch(e=>e);
-    if(response instanceof Error)
-        return notifyToast('Có lỗi xảy ra. Vui lòng thử lai', 'error');
-
-    foodDetail = response.data.result;
-
-    $('#food-code').val(foodDetail.code);
-
-    $('#food-name').val(foodDetail.name);
-
-    $('#food-status').val(foodDetail.status ? 1 : 0);
-
-    $('#retail-price').val(foodDetail.price);
-
-    $('#unit').val(foodDetail.unit);
-
-    editor.setData(foodDetail.description);
+$(document).ready(async function(){
 })
 
 $('#update-btn').on('click', async function () {
-    const requestData = {
-        code: $('#food-code').val(),
+    const requestData ={
         name: $('#food-name').val(),
         status: +$('#food-status').val() === 1 ? true : false,
         price: $('#retail-price').val(),
@@ -67,14 +46,14 @@ $('#update-btn').on('click', async function () {
     const validate = await schemaUpdate.validateAsync(requestData).catch(e=>e);
     if(validate instanceof Error)
         return notifyToast(validate.message, 'error');
-
+    //
     $('#update-btn').attr('disabled', true);
-    const updateResponse = await axios.post('/restaurant_war_exploded/api/v1/admin/foods/update',
+    const updateResponse = await axios.post('/restaurant_war_exploded/api/v1/admin/foods/create',
         requestData).catch(e=>e);
     $('#update-btn').attr('disabled', false);
-
+    //
     if(updateResponse instanceof Error)
         return notifyToast('Có lỗi xảy ra. Vui lòng thử lại', 'error');
 
-    return notifyToast('Cập nhật thành công', 'success');
+    return notifyToast('Thêm thức ăn thành công', 'success');
 })

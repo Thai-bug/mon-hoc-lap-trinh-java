@@ -4,7 +4,7 @@ let drinkCode = window.location.pathname.split('/').at(-1);
 
 ClassicEditor
     .create(document.querySelector('#description'), {
-        placeholder: 'Thêm mô tả sảnh'
+        placeholder: 'Thêm mô tả đồ uống'
     })
     .then(newEditor => {
         editor = newEditor;
@@ -55,5 +55,5 @@ $('#update-btn').on('click', async function () {
     if(updateResponse instanceof Error)
         return notifyToast('Có lỗi xảy ra. Vui lòng thử lại', 'error');
 
-    return notifyToast('Thêm sảnh thành công', 'success');
+    return notifyToast('Thêm đồ uống thành công', 'success');
 })
