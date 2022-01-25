@@ -10,8 +10,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="w-8/12  bg-gray-200 p-8 rounded-xl border-gray-300 border border-solid shadow-xl">
-    <div class="text-center font-semibold text-2xl uppercase">Thông tin nhân viên</div>
+<div style="">
+    <div class="text-center fw-bold fs-2 text-uppercase">Thông tin nhân viên</div>
     <div class="leading-10 mt-8">
         <div class="grid grid-cols-2">
             <div>
@@ -70,7 +70,8 @@
             </div>
         </div>
         <div class="text-center mt-3">
-            <a href="<c:url value="/admin/employee/update/${employee.id}"/>" class="btn btn-outline btn-success w-36">Cập nhật</a>
+            <a href="<c:url value="/admin/employee/update/${employee.id}"/>" class="btn btn-outline btn-success w-36">Cập
+                nhật</a>
             <button class="btn btn-outline btn-warning w-36">Đổi mật khẩu</button>
         </div>
     </div>

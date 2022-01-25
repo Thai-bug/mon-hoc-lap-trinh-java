@@ -104,13 +104,13 @@ function preprocessToggle() {
  * */
 
 $('#change-avatar').on("click", function () {
-    $('#avatar-user').addClass("hidden")
-    $('#avatar-upload').removeClass("hidden")
+    $('#avatar-user').addClass("d-none")
+    $('#avatar-upload').removeClass("d-none")
 })
 
 $('#cancel-avatar').on("click", function () {
-    $('#avatar-user').removeClass("hidden")
-    $('#avatar-upload').addClass("hidden")
+    $('#avatar-user').removeClass("d-none")
+    $('#avatar-upload').addClass("d-none")
 })
 
 $('#avatar').on('change', function (e) {

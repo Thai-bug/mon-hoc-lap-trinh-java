@@ -11,39 +11,45 @@
 
 <c:url value="/admin/employee/update-avatar" var="action"/>
 
-<div class="rounded  bg-transparent " id="avatar-user">
-    <img class="w-auto mx-auto h-64 object-cover object-center" src="${employee.avatarLink}"
-" alt="avatar"
-    style="border-radius: 50%"
-    />
-  <div class="mt-5 w-full text-center">
-    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="change-avatar">
-      Thay đổi
-    </button>
-  </div>
-</div>
+<div style="width: 40%;">
 
-<div class="rounded bg-transparent hidden" id="avatar-upload">
-  <div class="bg-transparent rounded-lg text-center w-64">
-    <label class="cursor-pointer mt-4">
-      <img class="w-auto mx-auto h-64 object-cover object-center" style="border-radius: 50%" src="${employee.avatarLink}" alt="Avatar Upload" id="show-avatar" />
-      <form:form modelAttribute="employee" method="post" enctype="multipart/form-data" action="${action}">
-      <form:input path="avatar" type='file' cssClass="hidden" id="avatar" accept="image/*"/>
-        <form:input path="id" type="hidden"/>
-        <div class="mt-5 w-full text-center">
-          <button type="submit"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-5/12"
-                  id="update-avatar"
-          disabled>
-            Cập nhật
-          </button>
-          <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-5/12" id="cancel-avatar">
-            Huỷ
-          </button>
+    <div class="" id="avatar-user">
+        <img class="" src="${employee.avatarLink}" alt="avatar"
+             style="border-radius: 50%"
+        />
+        <div class="mt-5 w-full">
+            <button type="button" class="btn btn-info" id="change-avatar" style="margin-left: 80px" ;>
+                Thay đổi
+            </button>
+        </div>
+    </div>
+
+    <div class=" d-none" id="avatar-upload">
+        <div class="">
+            <label class="">
+                <img class="" style="border-radius: 50%"
+                     src="${employee.avatarLink}" alt="Avatar Upload" id="show-avatar"/>
+                <form:form modelAttribute="employee" method="post" enctype="multipart/form-data" action="${action}">
+                    <form:input path="avatar" type='file' cssClass="hidden" id="avatar" accept="image/*" cssStyle="display: none;"/>
+                    <form:input path="id" type="hidden"/>
+                    <div class="mt-5 text-center">
+                        <button type="submit"
+                                class="btn btn-secondary"
+                                id="update-avatar"
+                                disabled>
+                            Cập nhật
+                        </button>
+                        <button type="button"
+                                class="btn btn-danger"
+                                id="cancel-avatar">
+                            Huỷ
+                        </button>
+                    </div>
+
+                </form:form>
+            </label>
         </div>
 
-      </form:form>
-    </label>
-  </div>
+    </div>
 
 </div>

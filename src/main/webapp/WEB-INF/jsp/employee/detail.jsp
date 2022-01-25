@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="text-sm text-gray-400 mb-8">Quản lý nhân viên</div>
-<div class="flex justify-around h-1/2">
+<div class="container d-flex">
   <tiles:insertAttribute name="avatar" />
 
   <tiles:insertAttribute name="detailInfo" />
