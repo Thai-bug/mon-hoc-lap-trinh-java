@@ -129,6 +129,7 @@
         <button type="button" class="btn btn-success" id="update-bill">Cập nhật đơn
             hàng</button>
         <button type="button" type="button" class="btn btn-danger" id="cancel-bill">Huỷ đơn hàng</button>
+        <button type="button" type="button" class="btn btn-info" id="paid-bill">Thanh toán</button>
     </div>
 </div>
 

@@ -27,4 +27,8 @@ public interface BillService {
     Set<Bill> getBillsByLobbyCode(String lobbyCode, int page, int length);
 
     int countBillsByLobbyCode(String lobbyCode);
+
+    boolean cancelBill(String code);
+
+    boolean paidBill(String code);
 }

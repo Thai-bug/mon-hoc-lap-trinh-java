@@ -2,6 +2,7 @@ package com.services.impl;
 
 import com.SubClass;
 import com.pojos.Bill;
+import com.pojos.Status;
 import com.repositories.BillRepository;
 import com.services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +75,23 @@ public class BillServiceImpl implements BillService {
     @Override
     public int countBillsByLobbyCode(String lobbyCode) {
         return billRepository.countBillsByLobbyCode(lobbyCode);
+    }
+
+    @Override
+    public boolean cancelBill(String code) {
+        Bill bill = billRepository.getBill(code);
+        Status status = new Status();
+        status.setId(4);
+        bill.setStatus(status);
+        return billRepository.update(bill);
+    }
+
+    @Override
+    public boolean paidBill(String code) {
+        Bill bill = billRepository.getBill(code);
+        Status status = new Status();
+        status.setId(3);
+        bill.setStatus(status);
+        return billRepository.update(bill);
     }
 }

@@ -194,4 +194,34 @@ public class ApiBillController {
                 result,
                 HttpStatus.OK);
     }
+
+    @PutMapping(value = "/cancel/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> cancelBill(
+            @PathVariable("code") String code
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        boolean result = billService.cancelBill(code);
+        if (result) {
+            response.put("result", "Huỷ đơn hàng thành công");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("result", "Huỷ đơn hàng thất bại");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping(value = "/paid/{code}")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> paidBill(
+            @PathVariable("code") String code
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        boolean result = billService.paidBill(code);
+        if (result) {
+            response.put("result", "Huỷ đơn hàng thành công");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("result", "Huỷ đơn hàng thất bại");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

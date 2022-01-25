@@ -24,56 +24,36 @@ const callApi = async (identity) => {
     }
 }
 
-const updateAction = async () => {
-    const data = {
-        code: $('#code').val(),
-        customerName: $('#customer-name').val(),
-        name: $('#name').val(),
-        employee: {id: +$('#employee').attr('employee-id')},
-        lobby: {id: +$('#lobby-select').val()},
+const validateCreateSchema = joi.object({
+    code: joi.string().required(),
+    tables: joi.number().required(),
+    total: joi.number().required(),
+    deposit: joi.number().required(),
+    name: joi.string().required(),
+    customerName: joi.string().required(),
+    employee: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    lobby: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    type: joi.object({
+        id: joi.number().required(),
+    }).required(),
+    addedFoods: joi.array().allow(),
+    addedDrinks: joi.array().allow(),
+    addedServices: joi.array().allow(),
+    deletedFoods: joi.array().allow(),
+    deletedDrinks: joi.array().allow(),
+    deletedServices: joi.array().allow(),
+})
 
-        total: total,
-        deposit: preOrder,
-        tables: tables,
-
-        type: {id: +$('#type').val()},
-
-        addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item => {
-            return {id: item?.id}
-        }),
-        deletedFoods: JSON.parse(localStorage.getItem('deletedFood')).map(item => {
-            return {id: item?.id}
-        }),
-
-        addedDrinks: JSON.parse(localStorage.getItem('addedDrink')).map(item => {
-            return {id: item?.id}
-        }),
-        deletedDrinks: JSON.parse(localStorage.getItem('deletedDrink')).map(item => {
-            return {id: item?.id}
-        }),
-
-        addedServices: JSON.parse(localStorage.getItem('addedService')).map(item => {
-            return {id: item?.id}
-        }),
-        deletedServices: JSON.parse(localStorage.getItem('deletedService')).map(item => {
-            return {id: item?.id}
-        })
-    }
-
+const updateAction = async (request) => {
     const response = await axios.post('/restaurant_war_exploded/api/v1/admin/bills/update', {
-        ...data
+        ...request
     }).catch(e => e)
 
-    if (response instanceof Error) {
-        return notifyToast(response?.data.message, null, null, 'danger'
-        );
-    }
-    notifyToast(response?.data.message,
-        null, null, 'success'
-    );
-    return setTimeout(() => {
-        window.reload()
-    }, 1000);
+    return response
 }
 
 const passData = (orderInfo) => {
@@ -434,10 +414,86 @@ const deleteService = (id) => {
 }
 
 $('#update-bill').on('click', async function () {
+    if (data.status?.code === 'CANCEL' || data.status?.code === 'DONE') {
+        return notifyToast('Không thể cập nhật đơn hàng!', 'error');
+    }
+    const request = {
+        code: $('#code').val(),
+        customerName: $('#customer-name').val(),
+        name: $('#name').val(),
+        employee: {id: +$('#employee').attr('employee-id')},
+        lobby: {id: +$('#lobby-select').val()},
+
+        total: total,
+        deposit: preOrder,
+        tables: tables,
+
+        type: {id: +$('#type').val()},
+
+        addedFoods: JSON.parse(localStorage.getItem('addedFood')).map(item => {
+            return {id: item?.id}
+        }),
+        deletedFoods: JSON.parse(localStorage.getItem('deletedFood')).map(item => {
+            return {id: item?.id}
+        }),
+
+        addedDrinks: JSON.parse(localStorage.getItem('addedDrink')).map(item => {
+            return {id: item?.id}
+        }),
+        deletedDrinks: JSON.parse(localStorage.getItem('deletedDrink')).map(item => {
+            return {id: item?.id}
+        }),
+
+        addedServices: JSON.parse(localStorage.getItem('addedService')).map(item => {
+            return {id: item?.id}
+        }),
+        deletedServices: JSON.parse(localStorage.getItem('deletedService')).map(item => {
+            return {id: item?.id}
+        })
+    }
+
+    const validate = await validateCreateSchema.validateAsync(request).catch(e => e);
+    if (validate instanceof Error)
+        return notifyToast(validate.message, 'error')
+
     $('#update-bill').attr('disabled', true);
-    const response = await updateAction().catch(e => e);
+    const response = await updateAction(validate);
     $('#update-bill').removeAttr('disabled');
     if (response instanceof Error)
         return notifyToast('Cập nhật đơn hàng thất bại!', 'error');
-    return notifyToast('Cập nhật đơn hàng thành công!', 'success');
+
+    notifyToast('Cập nhật đơn hàng thành công!', 'success');
+    return setTimeout(() => {
+        window.location.reload()
+    }, 1500)
+})
+
+$('#cancel-bill').on('click', async function () {
+    if (data.status?.code === 'CANCEL' || data.status?.code === 'DONE') {
+        return notifyToast('Không thể huỷ đơn hàng!', 'error');
+    }
+    $('#cancel-bill').attr('disabled', true);
+    const response = await axios.put(`/restaurant_war_exploded/api/v1/admin/bills/cancel/${$('#code').val()}`).catch(e => e);
+    $('#cancel-bill').attr('disabled', false);
+    if (response instanceof Error)
+        return notifyToast('Huỷ đơn hàng thất bại!', 'error');
+    notifyToast('Huỷ đơn hàng thành công!', 'success');
+    return setTimeout(() => {
+        window.location.reload()
+    }, 1500)
+})
+
+$('#paid-bill').on('click', async function () {
+    if (data.status?.code === 'CANCEL' || data.status?.code === 'DONE') {
+        return notifyToast('Không thể thanh toán đơn hàng!', 'error');
+    }
+    $('#paid-bill').attr('disabled', true);
+    const response = await axios.put(`/restaurant_war_exploded/api/v1/admin/bills/paid/${$('#code').val()}`).catch(e => e);
+    $('#paid-bill').attr('disabled', false);
+    if (response instanceof Error)
+        return notifyToast('Thanh toán đơn hàng thất bại!', 'error');
+    notifyToast('Thanh toán đơn hàng thành công!', 'success');
+    return setTimeout(() => {
+        window.location.reload()
+    }, 1500)
 })
